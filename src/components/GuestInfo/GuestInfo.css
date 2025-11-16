@@ -1,0 +1,256 @@
+/* Обёртка секции (плюс к .section из App.css) */
+.guest-info {
+    /* если в App.css уже есть паддинги у .section — можно это убрать */
+}
+
+/* Основной аккордеон */
+
+.guest_info_accordion {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+/* Карточка секции (верхний уровень) */
+
+.gi_section {
+    border-radius: 1rem;
+    border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.35));
+    background: var(--bg-elevated, rgba(15, 23, 42, 0.9));
+    box-shadow: var(--shadow-soft, 0 10px 25px rgba(15, 23, 42, 0.25));
+    overflow: hidden;
+}
+
+.gi_section_header {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.gi_section_header:hover {
+    background: rgba(148, 163, 184, 0.08);
+}
+
+.gi_section_header_text {
+    text-align: left;
+}
+
+.gi_section_title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.98rem;
+}
+
+.gi_section_intro {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.85rem;
+    color: var(--text-muted, #94a3b8);
+}
+
+.gi_section_icon {
+    font-size: 1.2rem;
+}
+
+/* Тело секции */
+
+.gi_section_body {
+    padding: 0.35rem 1rem 0.85rem;
+    border-top: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.35));
+}
+
+/* subitems for before/arrival */
+
+.gi_subitem + .gi_subitem {
+    margin-top: 0.65rem;
+}
+
+.gi_subitem_title {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.gi_subitem_body {
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--text-muted, #94a3b8);
+}
+
+/* groups for safety */
+
+.gi_groups {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.gi_group {
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.3));
+    /* background: var(--bg-alt, rgba(15, 23, 42, 0.7)); */
+}
+
+.gi_group_header {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.gi_group_header:hover {
+    background: rgba(148, 163, 184, 0.1);
+}
+
+.gi_group_title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.gi_group_icon {
+    font-size: 1rem;
+}
+
+.gi_group_body {
+    padding: 0.5rem 0.75rem 0.75rem;
+}
+
+/* third level rules */
+
+.gi_rule + .gi_rule {
+    margin-top: 0.4rem;
+}
+
+.gi_rule_header {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.6rem;
+    border: none;
+    background: rgba(148, 163, 184, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.gi_rule_header:hover {
+    background: rgba(148, 163, 184, 0.16);
+}
+
+.gi_rule_title {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.gi_rule_icon {
+    font-size: 0.9rem;
+}
+
+.gi_rule_body {
+    margin-top: 0.25rem;
+    padding: 0.4rem 0.6rem 0.25rem;
+    font-size: 0.8rem;
+    color: var(--text-muted, #94a3b8);
+    line-height: 1.5;
+}
+
+/* Блок с ссылкой на TouchStay внизу секции */
+
+.guest_info_guide {
+    margin-top: 1.75rem;
+    padding: 1rem 1.1rem;
+    border-radius: 0.9rem;
+    border: 1px dashed var(--border-subtle, rgba(148, 163, 184, 0.6));
+    background: var(--bg-elevated, rgba(15, 23, 42, 0.85));
+}
+
+.guest_info_guide_text {
+    font-size: 0.9rem;
+    color: var(--text-muted, #94a3b8);
+    margin-bottom: 0.55rem;
+}
+
+.guest_info_guide_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    color: var(--primary, #22c55e);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.guest_info_guide_link:hover {
+    text-decoration: underline;
+}
+
+.gi_rule_body p,
+.gi_subitem_body p,
+.gi_group_text p {
+    margin: 0 0 0.4rem;
+}
+
+/* Адаптив */
+
+@media (max-width: 768px) {
+    .gi_section {
+        border-radius: 0.85rem;
+    }
+
+    .gi_section_header {
+        padding: 0.75rem 0.8rem;
+    }
+
+    .gi_section_body {
+        padding: 0.3rem 0.8rem 0.8rem;
+    }
+
+    .guest_info_guide {
+        padding: 0.85rem 0.9rem;
+    }
+}
+
+/* .guest-info {
+  padding: 4.5rem 0;
+}
+
+.guest-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.guest-info-card {
+  border-radius: 1.25rem;
+  padding: 1.4rem 1.5rem 1.5rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+}
+
+.guest-info-link {
+  display: inline-flex;
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .guest-info-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+} */
