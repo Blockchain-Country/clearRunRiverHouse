@@ -1,32 +1,39 @@
 .location {
-  padding: 4.5rem 0;
+    padding: 4.5rem 0;
 }
 
 .location-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-  gap: 2.25rem;
-  align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+    gap: 2.25rem;
+    align-items: center;
 }
 
 .location-text ul {
-  margin: 0;
-  padding-left: 1.25rem;
-  color: var(--muted);
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text);
 }
 
 .location-map-placeholder {
-  border-radius: 1.5rem;
-  min-height: 220px;
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.5), transparent 60%),
-    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.55), transparent 60%),
-    linear-gradient(135deg, #020617, #0f172a);
-  box-shadow: var(--shadow-soft);
+    border-radius: 1.5rem;
+    min-height: 220px;
+    background: radial-gradient(
+            circle at top left,
+            rgba(56, 189, 248, 0.5),
+            transparent 60%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(16, 185, 129, 0.55),
+            transparent 60%
+        ),
+        linear-gradient(135deg, #020617, #0f172a);
+    box-shadow: var(--shadow-soft);
 }
 
 @media (max-width: 900px) {
-  .location-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+    .location-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }

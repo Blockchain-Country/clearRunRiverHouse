@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ReactMarkdown } from 'react-markdown'
+import ReactMarkdown from 'react-markdown'
 import { GUEST_INFO } from './GuestInfoObj.jsx'
 import './GuestInfo.css'
 
@@ -27,8 +27,8 @@ const GuestInfo = () => {
                 <div className="section_header">
                     <h2 className="section_title">Guest information</h2>
                     <p className="section_lead">
-                        All important details for your stay: before you leave
-                        home, arrival, safety, rules and troubleshooting.
+                        All important details for your stay: before Arrival,
+                        Check-In, Safety rules and Check-Out.
                     </p>
                     <div className="section_divider" />
                 </div>
@@ -213,53 +213,3 @@ const GuestInfo = () => {
 }
 
 export default GuestInfo
-
-// import React from 'react';
-// import './GuestInfo.css';
-
-// const GuestInfo = () => {
-//   return (
-//     <section id="guest-info" className="guest-info">
-//       <div className="section-inner">
-//         <div className="section-header">
-//           <h2 className="section-title">Guest Information</h2>
-//           <p className="section-subtitle">
-//             All the details you need before and during your stay.
-//           </p>
-//         </div>
-
-//         <div className="guest-info-grid">
-//           <article className="guest-info-card">
-//             <h3>Before you leave home</h3>
-//             <p>What to pack, how to prepare and useful tips for your trip.</p>
-//           </article>
-//           <article className="guest-info-card">
-//             <h3>Arrival information</h3>
-//             <p>Driving directions, gate code and smart lock instructions.</p>
-//           </article>
-//           <article className="guest-info-card">
-//             <h3>Safety info &amp; house rules</h3>
-//             <p>Sauna &amp; hot tub rules, fireplace details and quiet hours.</p>
-//           </article>
-//           <article className="guest-info-card">
-//             <h3>Digital guidebook</h3>
-//             <p>
-//               Full guide with photos and step‑by‑step instructions is available in our TouchStay
-//               guidebook.
-//             </p>
-//             <a
-//               href="https://guide.touchstay.com/guest/bIw4qHNd5G5o9/info/780424"
-//               target="_blank"
-//               rel="noreferrer"
-//               className="guest-info-link"
-//             >
-//               Open TouchStay guide
-//             </a>
-//           </article>
-//         </div>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default GuestInfo;

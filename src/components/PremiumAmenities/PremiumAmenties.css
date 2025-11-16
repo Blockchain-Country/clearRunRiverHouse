@@ -1,0 +1,24 @@
+.premium-amenity-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Картинка под Premium Amenities чуть более «геройская» */
+.premium-amenity-card .card__image-wrapper {
+    border-radius: 0.9rem;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+}
+
+.premium-amenity-card .card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Текст компактнее */
+.premium-amenity-card .card__text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
