@@ -5,6 +5,7 @@ import PremiumAmenties from './components/PremiumAmenities/PremiumAmenties.jsx'
 import GuestInfo from './components/GuestInfo/GuestInfo.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import './App.css'
+import Rooms from './components/rooms/Rooms.jsx'
 
 const App = () => {
     const [theme, setTheme] = useState('light')
@@ -193,43 +194,7 @@ const App = () => {
                             </p>
                         </div>
                         <div className="rooms-grid">
-                            <article className="room-card">
-                                <h3 className="room-title">Master bedroom</h3>
-                                <p className="room-text">
-                                    King bed, forest views, ensuite bathroom.
-                                </p>
-                            </article>
-                            <article className="room-card">
-                                <h3 className="room-title">Guest bedroom 1</h3>
-                                <p className="room-text">
-                                    Queen bed, shared bathroom.
-                                </p>
-                            </article>
-                            <article className="room-card">
-                                <h3 className="room-title">Guest bedroom 2</h3>
-                                <p className="room-text">
-                                    Two twin beds, perfect for kids.
-                                </p>
-                            </article>
-                            <article className="room-card">
-                                <h3 className="room-title">Guest bedroom 3</h3>
-                                <p className="room-text">
-                                    Queen bed, quiet corner of the house.
-                                </p>
-                            </article>
-                            <article className="room-card">
-                                <h3 className="room-title">Guest bedroom 4</h3>
-                                <p className="room-text">
-                                    Queen bed, easy access to bathroom.
-                                </p>
-                            </article>
-                            <article className="room-card">
-                                <h3 className="room-title">Kids bunk room</h3>
-                                <p className="room-text">
-                                    Bunk beds and play space for the little
-                                    ones.
-                                </p>
-                            </article>
+                            <Rooms></Rooms>
                         </div>
                     </div>
                 </section>
