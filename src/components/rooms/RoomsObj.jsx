@@ -32,7 +32,7 @@ export const ROOMS = [
         imageSrc: br4_img,
     },
     {
-        title: 'Guest Bedroom 4',
+        title: 'Guest Bedroom 5',
         text: 'Bedroom at the 2nd floor. Good for the little ones.  balk bed and a computer desk with 27" monintor, shared bathroom.',
         imageSrc: br5_img,
     },
