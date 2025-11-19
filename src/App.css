@@ -282,29 +282,6 @@ main {
     color: var(--muted);
 }
 
-/* Amenities */
-
-.amenities-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.5rem;
-}
-
-/* Rooms */
-
-.rooms-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
-}
-
-.room-card {
-    border-radius: 1rem;
-    padding: 1.2rem 1.35rem;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
-}
-
 /* Footer */
 
 .footer {
@@ -345,12 +322,6 @@ main {
     .hero-inner {
         grid-template-columns: minmax(0, 1fr);
     }
-    .amenities-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .rooms-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
     main {
         padding-inline: 1rem;
     }
@@ -360,8 +331,7 @@ main {
     .hero-stats {
         flex-direction: column;
     }
-    .amenities-grid,
-    .rooms-grid {
+    .amenities-grid {
         grid-template-columns: minmax(0, 1fr);
     }
 }

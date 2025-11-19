@@ -52,9 +52,9 @@ const App = () => {
                         <a href="#rooms" className="nav-link">
                             Rooms
                         </a>
-                        <a href="#gallery" className="nav-link">
+                        {/* <a href="#gallery" className="nav-link">
                             Gallery
-                        </a>
+                        </a> */}
                         <a href="#location" className="nav-link">
                             Location
                         </a>
@@ -89,13 +89,13 @@ const App = () => {
                     <div className="hero-inner">
                         <div className="hero-text">
                             <p className="hero-kicker">
-                                Your forest retreat awaits
+                                Escape to nature — in style
                             </p>
                             <h1 className="hero-title">Clear Run Riverhouse</h1>
                             <p className="hero-subtitle">
-                                Modern 6-bedroom home on a private creek in
-                                Tobyhanna, PA. Hot tub, sauna, game room and a
-                                cozy fireplace for unforgettable stays.
+                                Spacious 6-bedroom getaway with HotTub, Outdoor
+                                Sauna, Game Room, Billiard Room, a private creek
+                                with forest — perfect for family and friends.
                             </p>
                             <div className="hero-actions">
                                 <a
@@ -139,27 +139,25 @@ const App = () => {
                     <div className="section-inner">
                         <div className="section-header">
                             <h2 className="section-title">
-                                Welcome to Clear Run River House
+                                Welcome to Your Pocono Hideaway
                             </h2>
                             <p className="section-subtitle">
-                                A spacious, modern home surrounded by forest and
-                                a private creek.
+                                Modern comfort meets forest charm — with a
+                                private creek and forest in the backyard.
                             </p>
                         </div>
                         <div className="about-grid">
                             <p>
-                                Clear Run Riverhouse is designed for families
-                                and groups who want to slow down, reconnect and
-                                enjoy nature without sacrificing comfort. Start
-                                your mornings with coffee on the deck, spend the
-                                day exploring Poconos attractions, and finish
-                                with a soak in the hot tub or a sauna session.
+                                Designed for families and groups to slow down,
+                                recharge, and enjoy nature without sacrificing
+                                comfort. Start your day with coffee on the deck,
+                                explore Poconos adventures, and unwind in the
+                                sauna or hot tub at night.
                             </p>
                             <p>
-                                The house features a fully equipped kitchen,
-                                high-speed Wi‑Fi, a dedicated game room,
-                                kids-friendly spaces and multiple lounge areas
-                                to spread out and relax.
+                                The home features a fully stocked kitchen, fast
+                                Wi‑Fi, a game room, kid-friendly zones, and cozy
+                                indoor and outdoor spaces to gather or relax.
                             </p>
                         </div>
                     </div>
@@ -189,8 +187,8 @@ const App = () => {
                                 Comfortable Accommodations
                             </h2>
                             <p className="section-subtitle">
-                                Six thoughtfully designed bedrooms for up to 14
-                                guests.
+                                Six cozy bedrooms designed for up to 14 guests —
+                                space for everyone to unwind.
                             </p>
                         </div>
                         <div className="rooms-grid">
