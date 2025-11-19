@@ -258,17 +258,8 @@ main {
 
 .hero-image-placeholder {
     border-radius: 1.5rem;
-    background: radial-gradient(
-            circle at top left,
-            rgba(52, 211, 153, 0.5),
-            transparent 55%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            rgba(59, 130, 246, 0.6),
-            transparent 55%
-        ),
-        url('./assets/images/heroImage/HeroImage.JPG') center/cover no-repeat;
+    background: url('./assets/images/heroImage/HeroImage.JPG') center/cover
+        no-repeat;
     min-height: 260px;
     box-shadow: var(--shadow-soft);
 }
