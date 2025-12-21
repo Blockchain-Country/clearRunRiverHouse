@@ -18,11 +18,11 @@ const Header = () => {
                     <a href="#rooms" className="nav-link">
                         Rooms
                     </a>
-                    <a href="#location" className="nav-link">
-                        Location
-                    </a>
                     <a href="#guest-info" className="nav-link">
                         Guest info
+                    </a>
+                    <a href="#location" className="nav-link">
+                        Location
                     </a>
                 </nav>
                 <div className="header-actions">
