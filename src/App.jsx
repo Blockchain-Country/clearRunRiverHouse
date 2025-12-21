@@ -1,91 +1,21 @@
-import { useEffect, useState } from 'react'
 import GallerySection from './components/Gallery/GallerySection.jsx'
 import LocationSection from './components/LocationSection/LocationSection.jsx'
 import PremiumAmenties from './components/PremiumAmenities/PremiumAmenties.jsx'
 import GuestInfo from './components/GuestInfo/GuestInfo.jsx'
 import Footer from './components/Footer/Footer.jsx'
+import Header from './components/Header/Header.jsx'
 import './App.css'
 import Rooms from './components/rooms/Rooms.jsx'
 
 const App = () => {
-    const [theme, setTheme] = useState('light')
-
-    useEffect(() => {
-        const stored = window.localStorage.getItem('crr-theme')
-        if (stored === 'light' || stored === 'dark') {
-            setTheme(stored)
-            document.documentElement.dataset.theme = stored
-            return
-        }
-        const prefersDark =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches
-        const next = prefersDark ? 'dark' : 'light'
-        setTheme(next)
-        document.documentElement.dataset.theme = next
-    }, [])
-
-    useEffect(() => {
-        document.documentElement.dataset.theme = theme
-        window.localStorage.setItem('crr-theme', theme)
-    }, [theme])
-
-    const toggleTheme = () => {
-        setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))
-    }
-
     return (
         <div className="app">
-            <header className="header">
-                <div className="header-inner">
-                    <a href="#hero" className="logo">
-                        <span className="logo-icon">🏡</span>
-                        <span className="logo-text">Clear Run River House</span>
-                    </a>
-                    <nav className="nav">
-                        <a href="#about" className="nav-link">
-                            About
-                        </a>
-                        <a href="#amenities" className="nav-link">
-                            Amenities
-                        </a>
-                        <a href="#rooms" className="nav-link">
-                            Rooms
-                        </a>
-                        {/* <a href="#gallery" className="nav-link">
-                            Gallery
-                        </a> */}
-                        <a href="#location" className="nav-link">
-                            Location
-                        </a>
-                        <a href="#guest-info" className="nav-link">
-                            Guest info
-                        </a>
-                    </nav>
-                    <div className="header-actions">
-                        <a
-                            className="button button-outline"
-                            href="https://airbnb.com/h/clearrunriverhouse"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            Book on Airbnb
-                        </a>
-                        <button
-                            type="button"
-                            className="theme-toggle"
-                            onClick={toggleTheme}
-                            aria-label="Toggle color theme"
-                        >
-                            {theme === 'light' ? '🌙' : '☀️'}
-                        </button>
-                    </div>
-                </div>
-            </header>
+            <Header />
 
             <main>
                 {/* Hero */}
                 <section id="hero" className="hero">
+                    <div className="hero-image-container"></div>
                     <div className="hero-inner">
                         <div className="hero-text">
                             <p className="hero-kicker">
@@ -127,9 +57,6 @@ const App = () => {
                                     <dd>Tobyhanna, PA</dd>
                                 </div>
                             </dl>
-                        </div>
-                        <div className="hero-image-placeholder">
-                            {/* Replace with a real hero photo via CSS background-image if you like */}
                         </div>
                     </div>
                 </section>
@@ -199,11 +126,11 @@ const App = () => {
 
                 {/* <GallerySection /> */}
 
-                {/* Location */}
-                <LocationSection />
-
                 {/* Guest info */}
                 <GuestInfo />
+
+                {/* Location */}
+                <LocationSection />
             </main>
 
             <Footer />

@@ -11,7 +11,7 @@
     justify-content: space-between;
     gap: 1rem;
     font-size: 0.85rem;
-    color: var(--muted);
+    color: var(--text-muted);
 }
 
 .footer-links {
@@ -20,8 +20,13 @@
 }
 
 .footer-links a {
-    color: var(--muted);
+    color: var(--text-muted);
     text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-accent);
 }
 
 @media (max-width: 640px) {
