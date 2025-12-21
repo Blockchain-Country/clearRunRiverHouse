@@ -16,10 +16,16 @@
 
 .gi_section {
     border-radius: 1rem;
-    border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.35));
-    background: var(--bg-elevated, rgba(15, 23, 42, 0.9));
-    box-shadow: var(--shadow-soft, 0 10px 25px rgba(15, 23, 42, 0.25));
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow-soft);
     overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.gi_section:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: var(--border-medium);
 }
 
 .gi_section_header {
@@ -36,7 +42,7 @@
 }
 
 .gi_section_header:hover {
-    background: rgba(148, 163, 184, 0.08);
+    background: var(--hover-bg);
 }
 
 .gi_section_header_text {
@@ -51,14 +57,14 @@
 }
 
 .section_lead {
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
 }
 
 .gi_section_intro {
     display: block;
     margin-top: 2px;
     font-size: 0.85rem;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
 }
 
 .gi_section_icon {
@@ -69,7 +75,7 @@
 
 .gi_section_body {
     padding: 0.35rem 1rem 0.85rem;
-    border-top: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.35));
+    border-top: 1px solid var(--border-subtle);
 }
 
 /* subitems for before/arrival */
@@ -86,7 +92,9 @@
 .gi_subitem_body {
     margin-top: 0.25rem;
     font-size: 0.85rem;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 400;
 }
 
 /* groups for safety */
@@ -100,8 +108,14 @@
 
 .gi_group {
     border-radius: 0.75rem;
-    border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.3));
-    /* background: var(--bg-alt, rgba(15, 23, 42, 0.7)); */
+    border: 1px solid var(--border-subtle);
+    background: rgba(248, 246, 242, 0.5);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.gi_group:hover {
+    border-color: var(--border-medium);
+    background: rgba(248, 246, 242, 0.7);
 }
 
 .gi_group_header {
@@ -117,7 +131,7 @@
 }
 
 .gi_group_header:hover {
-    background: rgba(148, 163, 184, 0.1);
+    background: var(--hover-bg);
 }
 
 .gi_group_title {
@@ -144,16 +158,17 @@
     padding: 0.45rem 0.6rem;
     border-radius: 0.6rem;
     border: none;
-    background: rgba(148, 163, 184, 0.08);
+    background: var(--hover-bg);
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     text-align: left;
+    transition: background 0.2s ease;
 }
 
 .gi_rule_header:hover {
-    background: rgba(148, 163, 184, 0.16);
+    background: rgba(212, 201, 184, 0.25);
 }
 
 .gi_rule_title {
@@ -169,8 +184,9 @@
     margin-top: 0.25rem;
     padding: 0.4rem 0.6rem 0.25rem;
     font-size: 0.8rem;
-    color: var(--text, #94a3b8);
-    line-height: 1.5;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 400;
 }
 
 /* Блок с ссылкой на TouchStay внизу секции */
@@ -179,13 +195,19 @@
     margin-top: 1.75rem;
     padding: 1rem 1.1rem;
     border-radius: 0.9rem;
-    border: 1px dashed var(--border-subtle, rgba(148, 163, 184, 0.6));
-    background: var(--bg-elevated, rgba(15, 23, 42, 0.85));
+    border: 1px dashed var(--border-medium);
+    background: rgba(248, 246, 242, 0.6);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.guest_info_guide:hover {
+    border-color: var(--primary-accent);
+    background: rgba(248, 246, 242, 0.8);
 }
 
 .guest_info_guide_text {
     font-size: 0.9rem;
-    color: var(--text-muted, #94a3b8);
+    color: var(--text-muted);
     margin-bottom: 0.55rem;
 }
 
@@ -194,12 +216,14 @@
     align-items: center;
     gap: 0.35rem;
     font-size: 0.9rem;
-    color: var(--primary, #22c55e);
+    color: var(--primary-accent);
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .guest_info_guide_link:hover {
+    color: var(--accent-green);
     text-decoration: underline;
 }
 

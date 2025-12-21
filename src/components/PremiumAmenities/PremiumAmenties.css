@@ -1,47 +1,11 @@
-.amenities-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.5rem;
-}
-
-.premium-amenity-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.premium-amenity-card .card__title {
-    font-size: 1rem;
-    margin-top: 0.4rem;
-}
-
-.premium-amenity-card .card__image-wrapper {
-    border-radius: 0.9rem;
-    overflow: hidden;
-    aspect-ratio: 4 / 3;
-}
-
-.premium-amenity-card .card__image {
+.premium-amenities-swiper {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.premium-amenity-card .card__text {
-    font-size: 0.9rem;
-    line-height: 1.5;
+    margin: 0 auto;
 }
 
 /* Responsive */
-
 @media (max-width: 900px) {
-    .amenities-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 640px) {
-    .amenities-grid {
-        grid-template-columns: minmax(0, 1fr);
+    .premium-amenities-swiper {
+        padding: 0;
     }
 }

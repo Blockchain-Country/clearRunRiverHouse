@@ -1,20 +1,18 @@
-import Card from '../Cards/Card/Card'
+import Swiper from '../Swiper/Swiper'
 import { PREMIUM_AMENITIES } from './PremiumAmentiesObj'
 import './PremiumAmenties.css'
 
 const PremiumAmenties = () => {
+    const swiperItems = PREMIUM_AMENITIES.map((amenity) => ({
+        title: amenity.title,
+        text: amenity.text,
+        image: amenity.imageSrc,
+    }))
+
     return (
-        <>
-            {PREMIUM_AMENITIES.map((obj) => (
-                <Card
-                    key={obj.title}
-                    title={obj.title}
-                    text={obj.text}
-                    imageSrc={obj.imageSrc}
-                    className="premium-amenity-card"
-                ></Card>
-            ))}
-        </>
+        <div className="premium-amenities-swiper">
+            <Swiper items={swiperItems} autoPlayInterval={3000} showDots={true} />
+        </div>
     )
 }
 

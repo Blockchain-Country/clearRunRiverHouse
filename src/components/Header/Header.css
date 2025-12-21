@@ -1,0 +1,104 @@
+/* Header styles - iOS glassmorphism (underwater effect) */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    background: rgba(255, 255, 255, 0.7);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0.75rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: radial-gradient(
+        circle at 30% 0%,
+        var(--accent-green) 0,
+        var(--primary-accent) 30%,
+        var(--primary)
+    );
+    display: grid;
+    place-items: center;
+    font-size: 0.9rem;
+}
+
+.logo-text {
+    letter-spacing: 0.03em;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-left: auto;
+}
+
+.nav-link {
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.2s ease-out;
+}
+
+.nav-link:hover {
+    color: var(--text);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.3rem;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+    transition: width 0.2s ease-out;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .header-inner {
+        flex-wrap: wrap;
+    }
+    .nav {
+        display: none;
+    }
+}
