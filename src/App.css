@@ -7,14 +7,14 @@
     --muted: #6b5d47;
     --primary: #2d5016;
     --primary-soft: rgba(45, 80, 22, 0.08);
-    --primary-accent: #4a7c2a;
+    --primary-accent: #556fee;
     --border-subtle: #d4c9b8;
     --border-medium: #b8a896;
     --shadow-soft: 0 18px 40px rgba(44, 36, 22, 0.08);
     --shadow-medium: 0 12px 28px rgba(44, 36, 22, 0.12);
     --shadow-strong: 0 8px 24px rgba(44, 36, 22, 0.15);
     --accent-green: #5a8a3a;
-    --accent-blue: #4a7c8a;
+    --accent-blue: #1a9dea;
     --hover-bg: rgba(212, 201, 184, 0.15);
     --wood-light: #f5e6d3;
     --wood-medium: #d4c9b8;
@@ -233,13 +233,14 @@ main {
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
+    border-radius: 1.25rem;
 }
 
 .hero-image-container::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: url('./assets/images/heroImage/HeroImage.JPG') center/cover
+    background: url('./assets/images/heroImage/heroImage.jpg') center/cover
         no-repeat;
     z-index: -2;
 }

@@ -36,7 +36,7 @@
     border-radius: 999px;
     background: radial-gradient(
         circle at 30% 0%,
-        var(--accent-green) 0,
+        var(--accent-blue) 0,
         var(--primary-accent) 30%,
         var(--primary)
     );
