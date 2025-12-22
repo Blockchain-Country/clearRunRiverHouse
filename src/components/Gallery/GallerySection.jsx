@@ -11,10 +11,28 @@ const GALLERY_ITEMS = [
   { label: 'Master bedroom', folder: 'master_bedroom', description: 'Main suite with king bed.' },
 ];
 
-const GallerySection = () => {
+const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'Photo Gallery', sectionSubtitle = null }) => {
+  const galleryItems = items || GALLERY_ITEMS;
   const [isOpen, setIsOpen] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Normalize items to have consistent structure
+  const normalizedItems = useMemo(() => {
+    return galleryItems.map((item, index) => {
+      if (item.folder) {
+        return item; // Already in correct format
+      }
+      // Convert room-style items to gallery format
+      const folderId = item.title?.toLowerCase().replace(/\s+/g, '_') || `item_${index}`;
+      return {
+        label: item.title,
+        description: item.text,
+        folder: folderId,
+        imageSrc: item.imageSrc,
+      };
+    });
+  }, [galleryItems]);
 
   const imagesByFolder = useMemo(() => {
     const modules = import.meta.glob('../../assets/images/*/*.{jpg,jpeg,png}', {
@@ -30,8 +48,21 @@ const GallerySection = () => {
       grouped[folder].push(url);
     });
     Object.values(grouped).forEach(list => list.sort());
+    
+    // Also add direct image sources from items
+    normalizedItems.forEach((item) => {
+      if (item.imageSrc) {
+        if (!grouped[item.folder]) {
+          grouped[item.folder] = [];
+        }
+        if (!grouped[item.folder].includes(item.imageSrc)) {
+          grouped[item.folder].push(item.imageSrc);
+        }
+      }
+    });
+    
     return grouped;
-  }, []);
+  }, [normalizedItems]);
 
   const handleOpen = (folder) => {
     const list = imagesByFolder[folder];
@@ -58,23 +89,26 @@ const GallerySection = () => {
   };
 
   const activeItem = currentFolder
-    ? GALLERY_ITEMS.find((i) => i.folder === currentFolder)
+    ? normalizedItems.find((i) => i.folder === currentFolder)
     : null;
   const activeImages = currentFolder ? imagesByFolder[currentFolder] || [] : [];
 
+  const defaultSubtitle = sectionSubtitle || 'Click any card to open a fullscreen gallery. Images are loaded automatically from folders in src/assets/images.';
+
   return (
-    <section id="gallery" className="gallery">
+    <section id={sectionId} className="gallery">
       <div className="section-inner">
         <div className="section-header">
-          <h2 className="section-title">Photo Gallery</h2>
-          <p className="section-subtitle">
-            Click any card to open a fullscreen gallery. Images are loaded automatically
-            from folders in <code>src/assets/images</code>.
-          </p>
+          <h2 className="section-title">{sectionTitle}</h2>
+          {sectionSubtitle !== false && (
+            <p className="section-subtitle">
+              {defaultSubtitle}
+            </p>
+          )}
         </div>
 
         <div className="gallery-grid">
-          {GALLERY_ITEMS.map((item) => {
+          {normalizedItems.map((item) => {
             const hasImages =
               imagesByFolder[item.folder] && imagesByFolder[item.folder].length > 0;
             return (
@@ -85,7 +119,14 @@ const GallerySection = () => {
                 onClick={() => handleOpen(item.folder)}
                 disabled={!hasImages}
               >
-                <div className="gallery-card-thumb" />
+                <div 
+                  className="gallery-card-thumb"
+                  style={item.imageSrc ? {
+                    backgroundImage: `url(${item.imageSrc})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  } : {}}
+                />
                 <div className="gallery-card-body">
                   <h3 className="gallery-card-title">{item.label}</h3>
                   <p className="gallery-card-text">{item.description}</p>
@@ -103,12 +144,14 @@ const GallerySection = () => {
 
       <ModalGallery
         open={isOpen}
-        title={activeItem?.label || ''}
+        title={activeItem?.label || activeItem?.title || ''}
         images={activeImages}
         index={currentIndex}
         onClose={handleClose}
         onPrev={handlePrev}
         onNext={handleNext}
+        useSwiper={sectionId === 'rooms'}
+        description={activeItem?.description || activeItem?.text || ''}
       />
     </section>
   );

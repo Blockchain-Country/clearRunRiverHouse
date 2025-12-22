@@ -1,26 +1,30 @@
 import React, { useEffect } from 'react';
+import Swiper from '../Swiper/Swiper';
 import './ModalGallery.css';
 
-const ModalGallery = ({ open, title, images, index, onClose, onPrev, onNext }) => {
+const ModalGallery = ({ open, title, images, index, onClose, onPrev, onNext, useSwiper = false, description = '' }) => {
   useEffect(() => {
     if (!open) return;
     const handler = (event) => {
       if (event.key === 'Escape') onClose();
-      if (event.key === 'ArrowLeft') onPrev();
-      if (event.key === 'ArrowRight') onNext();
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [open, onClose, onPrev, onNext]);
+  }, [open, onClose]);
 
   if (!open) return null;
   if (!images || images.length === 0) return null;
 
-  const current = images[index];
-
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) onClose();
   };
+
+  // Convert images to Swiper format
+  const swiperItems = images.map((img, idx) => ({
+    title: idx === 0 ? title : '',
+    text: idx === 0 ? description : '',
+    image: img,
+  }));
 
   return (
     <div className="modal-gallery-backdrop" onClick={handleBackdropClick}>
@@ -38,18 +42,30 @@ const ModalGallery = ({ open, title, images, index, onClose, onPrev, onNext }) =
         </header>
 
         <div className="modal-gallery-body">
-          <button type="button" className="modal-gallery-nav prev" onClick={onPrev}>
-            ‹
-          </button>
-          <figure className="modal-gallery-figure">
-            <img src={current} alt={title} />
-            <figcaption className="modal-gallery-caption">
-              {index + 1} / {images.length}
-            </figcaption>
-          </figure>
-          <button type="button" className="modal-gallery-nav next" onClick={onNext}>
-            ›
-          </button>
+          {useSwiper ? (
+            <div className="modal-gallery-swiper">
+              <Swiper 
+                items={swiperItems} 
+                autoPlayInterval={0} 
+                showDots={true}
+              />
+            </div>
+          ) : (
+            <>
+              <button type="button" className="modal-gallery-nav prev" onClick={onPrev}>
+                ‹
+              </button>
+              <figure className="modal-gallery-figure">
+                <img src={images[index]} alt={title} />
+                <figcaption className="modal-gallery-caption">
+                  {index + 1} / {images.length}
+                </figcaption>
+              </figure>
+              <button type="button" className="modal-gallery-nav next" onClick={onNext}>
+                ›
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

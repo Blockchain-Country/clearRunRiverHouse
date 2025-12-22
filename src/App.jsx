@@ -5,7 +5,7 @@ import GuestInfo from './components/GuestInfo/GuestInfo.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Header from './components/Header/Header.jsx'
 import './App.css'
-import Rooms from './components/rooms/Rooms.jsx'
+import { ROOMS } from './components/rooms/RoomsObj.jsx'
 
 const App = () => {
     return (
@@ -107,22 +107,12 @@ const App = () => {
                 </section>
 
                 {/* Rooms */}
-                <section id="rooms" className="rooms section">
-                    <div className="section-inner">
-                        <div className="section-header">
-                            <h2 className="section-title">
-                                Comfortable Accommodations
-                            </h2>
-                            <p className="section-subtitle">
-                                Six cozy bedrooms designed for up to 14 guests —
-                                space for everyone to unwind.
-                            </p>
-                        </div>
-                        <div className="rooms-grid">
-                            <Rooms></Rooms>
-                        </div>
-                    </div>
-                </section>
+                <GallerySection
+                    items={ROOMS}
+                    sectionId="rooms"
+                    sectionTitle="Comfortable Accommodations"
+                    sectionSubtitle="Six cozy bedrooms designed for up to 14 guests — space for everyone to unwind."
+                />
 
                 {/* <GallerySection /> */}
 

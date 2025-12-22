@@ -189,44 +189,6 @@
     font-weight: 400;
 }
 
-/* Блок с ссылкой на TouchStay внизу секции */
-
-.guest_info_guide {
-    margin-top: 1.75rem;
-    padding: 1rem 1.1rem;
-    border-radius: 0.9rem;
-    border: 1px dashed var(--border-medium);
-    background: rgba(248, 246, 242, 0.6);
-    transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.guest_info_guide:hover {
-    border-color: var(--primary-accent);
-    background: rgba(248, 246, 242, 0.8);
-}
-
-.guest_info_guide_text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-bottom: 0.55rem;
-}
-
-.guest_info_guide_link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-size: 0.9rem;
-    color: var(--primary-accent);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.guest_info_guide_link:hover {
-    color: var(--accent-green);
-    text-decoration: underline;
-}
-
 .gi_rule_body p,
 .gi_subitem_body p,
 .gi_group_text p {
@@ -246,9 +208,5 @@
 
     .gi_section_body {
         padding: 0.3rem 0.8rem 0.8rem;
-    }
-
-    .guest_info_guide {
-        padding: 0.85rem 0.9rem;
     }
 }
