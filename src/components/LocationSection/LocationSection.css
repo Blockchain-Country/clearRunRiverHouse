@@ -35,8 +35,33 @@
     border: 1px solid var(--border-subtle);
 }
 
-@media (max-width: 900px) {
+/* Responsive - iPad */
+@media (max-width: 1024px) {
+    .location-grid {
+        gap: var(--spacing-2xl);
+    }
+
+    .location-map-placeholder {
+        min-height: 300px;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
     .location-grid {
         grid-template-columns: minmax(0, 1fr);
+        gap: var(--spacing-xl);
+    }
+
+    .location-map-placeholder {
+        min-height: 250px;
+    }
+}
+
+/* Responsive - iPhone */
+@media (max-width: 428px) {
+    .location-map-placeholder {
+        min-height: 220px;
+        border-radius: 1rem;
     }
 }

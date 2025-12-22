@@ -1,0 +1,124 @@
+.weather-widget {
+    padding: var(--spacing-lg) 0;
+}
+
+.weather-location {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.weather-forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--spacing-sm);
+    justify-items: center;
+}
+
+.weather-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    border-radius: 0.75rem;
+    transition: background 0.2s ease;
+}
+
+.weather-day:hover {
+    background: var(--hover-bg);
+}
+
+.weather-day-name {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: center;
+}
+
+.weather-icon {
+    font-size: 2rem;
+    line-height: 1;
+    margin: var(--spacing-xs) 0;
+}
+
+.weather-temp {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.weather-loading,
+.weather-error {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+}
+
+.weather-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(26, 157, 234, 0.06);
+    border-radius: 0.5rem;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.weather-note code {
+    background: rgba(26, 157, 234, 0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+    font-family: 'Monaco', 'Menlo', monospace;
+}
+
+/* Responsive - iPad */
+@media (max-width: 1024px) {
+    .weather-forecast {
+        grid-template-columns: repeat(7, 1fr);
+        gap: var(--spacing-sm);
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .weather-forecast {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .weather-location {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* Responsive - iPhone */
+@media (max-width: 428px) {
+    .weather-forecast {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-xs);
+    }
+
+    .weather-icon {
+        font-size: 1.5rem;
+    }
+
+    .weather-temp {
+        font-size: var(--font-size-base);
+    }
+
+    .weather-day-name {
+        font-size: var(--font-size-xs);
+    }
+
+    .weather-location {
+        font-size: var(--font-size-sm);
+    }
+}
+

@@ -10,21 +10,22 @@
 
 .modal-gallery {
     width: min(960px, 100% - 2rem);
-    max-height: min(90vh, 900px);
+    max-height: min(85vh, 700px);
     background: var(--bg-elevated);
     border-radius: 1.25rem;
-    padding: 1.25rem 20px 20px 20px;
+    padding: 0.75rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-soft);
     overflow: visible;
+    overflow-y: auto;
 }
 
 .modal-gallery-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .modal-gallery-title {
@@ -52,36 +53,45 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.75rem;
-    column-gap: 12px;
+    gap: 0.5rem;
+    column-gap: 8px;
     flex: 1;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .modal-gallery-swiper {
     grid-column: 1 / -1;
     width: 100%;
     height: 100%;
-    min-height: 500px;
+    min-height: 400px;
     overflow: visible;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-gallery-swiper .swiper-container {
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     width: 100%;
     border-radius: 1.5rem;
     box-shadow: var(--shadow-soft);
     background: var(--bg-elevated);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    padding-bottom: 8px;
+    max-height: 100%;
 }
 
 .modal-gallery-swiper .swiper-slide-text {
     display: flex !important;
-    padding: var(--spacing-xl) var(--spacing-2xl);
+    padding: var(--spacing-md) var(--spacing-lg);
     background: rgba(255, 250, 240, 0.95);
     backdrop-filter: blur(10px);
-    margin-bottom: var(--spacing-5xl);
-    border-radius: 0 0 1.5rem 1.5rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 .modal-gallery-swiper .swiper-slide-title {
@@ -97,13 +107,14 @@
 }
 
 .modal-gallery-swiper .swiper-slide-image {
-    height: 60vh;
-    min-height: 400px;
-    max-height: 600px;
-    margin: 0 var(--spacing-xl);
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    max-height: 500px;
+    margin: 0;
     overflow: hidden;
     position: relative;
-    border-radius: 1rem;
+    border-radius: 16px 16px 0px 0px;
 }
 
 .modal-gallery-swiper .swiper-slide-image img {
@@ -121,15 +132,39 @@
 }
 
 .modal-gallery-swiper .swiper-button-prev {
-    left: calc(var(--spacing-xl) + 1.5rem);
+    left: 1rem;
 }
 
 .modal-gallery-swiper .swiper-button-next {
-    right: calc(var(--spacing-xl) + 1.5rem);
+    right: 1rem;
+}
+
+.modal-gallery-swiper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-gallery-swiper .swiper-container {
+    flex: 1;
+    min-height: 0;
 }
 
 .modal-gallery-swiper .swiper-dots {
-    bottom: var(--spacing-2xl);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0 var(--spacing-md);
+    padding-top: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    width: fit-content;
 }
 
 .modal-gallery-figure {
@@ -171,13 +206,140 @@
     border-color: var(--border-medium);
 }
 
-@media (max-width: 640px) {
-    .modal-gallery {
-        padding-inline: 1rem;
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .modal-gallery-backdrop {
+        padding: 0.75rem;
     }
+
+    .modal-gallery {
+        max-height: min(95vh, 600px);
+        padding: 0.5rem 0.75rem 0.75rem;
+        width: 100%;
+        margin: 0;
+        border-radius: 1rem;
+        overflow-y: auto;
+    }
+
+    .modal-gallery-header {
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-gallery-body {
+        gap: 0.4rem;
+        column-gap: 6px;
+        overflow: visible;
+    }
+
+    .modal-gallery-swiper {
+        min-height: 350px;
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-container {
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-slide-image {
+        height: auto;
+        min-height: 250px;
+        max-height: 400px;
+        margin: 0;
+        border-radius: 16px 16px 0px 0px;
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-slide-text {
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        flex-shrink: 0;
+        display: flex !important;
+    }
+
+    .modal-gallery-swiper .swiper-slide-description {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .modal-gallery-swiper .swiper-button-prev {
+        left: 0.5rem;
+    }
+
+    .modal-gallery-swiper .swiper-button-next {
+        right: 0.5rem;
+    }
+}
+
+/* Responsive - iPhone */
+@media (max-width: 428px) {
+    .modal-gallery-backdrop {
+        padding: 0.5rem;
+    }
+
+    .modal-gallery {
+        max-height: min(95vh, 500px);
+        padding: 0.5rem 0.625rem 0.625rem;
+        margin: 0;
+        border-radius: 0.875rem;
+        overflow-y: auto;
+    }
+
+    .modal-gallery-header {
+        margin-bottom: 0.4rem;
+    }
+
+    .modal-gallery-title {
+        font-size: var(--font-size-lg);
+    }
+
     .modal-gallery-body {
         grid-template-columns: minmax(0, 1fr);
+        gap: 0.3rem;
+        overflow: visible;
     }
+
+    .modal-gallery-swiper {
+        min-height: 300px;
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-container {
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-slide-image {
+        height: auto;
+        min-height: 200px;
+        max-height: 350px;
+        margin: 0;
+        border-radius: 16px 16px 0px 0px;
+        flex-shrink: 0;
+    }
+
+    .modal-gallery-swiper .swiper-slide-text {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        margin-bottom: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+        flex-shrink: 0;
+        display: flex !important;
+    }
+
+    .modal-gallery-swiper .swiper-slide-description {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: var(--font-size-sm);
+    }
+
+    .modal-gallery-swiper .swiper-button-prev {
+        left: 0.375rem;
+    }
+
+    .modal-gallery-swiper .swiper-button-next {
+        right: 0.375rem;
+    }
+
     .modal-gallery-nav {
         display: none;
     }

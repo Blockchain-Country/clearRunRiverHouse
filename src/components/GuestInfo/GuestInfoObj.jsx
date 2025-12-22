@@ -1,75 +1,75 @@
 export const GUEST_INFO = [
     {
         id: 'before_arrival_info_card',
-        title: '🧳 Before Arrival Information',
+        title: '✈️ Before Arrival Information',
         intro: 'What to prepare before your trip to Clear Run River House.',
         groups: [
             {
                 id: 'packing_checklist_group',
-                title: '🧳 Packing Checklist',
+                title: '🎒 Packing Checklist',
                 body: 'Here you will put your real packing checklist: swimsuits for hot tub and sauna, warm clothes, etc.',
             },
             {
                 id: 'add_guide_to_phone_group',
-                title: '📱 Add This Guide To Your Phone',
+                title: '📲 Add This Guide To Your Phone',
                 body: 'When you first access this digital guidebook on your phone, follow the prompt to add it to your home screen.\nThis makes it:\n✅ faster\n✅ easier to access\n✅ available offline\nOnce on your phone it behaves just like any other app, but without you needing to download anything or sign in.',
             },
             {
                 id: 'local_weather_group',
-                title: '☀️ Local Weather',
-                body: 'Here you will put how to find booking details, host contact info, and emergency contacts.',
+                title: '🌤️ Local Weather',
+                body: '', // WeatherWidget component will be rendered instead
             },
         ],
     },
     {
         id: 'arrival_info_card',
-        title: '🛬 Arrival & Check-In',
+        title: '🚪 Arrival & Check-In',
         intro: 'Check-in, access codes and first steps when you arrive.',
         groups: [
             {
                 id: 'home_access_group',
-                title: '🔑 Home Access',
+                title: '🏠 Home Access',
                 sections: [
                     {
                         id: 'property_address_section',
-                        title: '📍 Property Address',
+                        title: '🗺️ Property Address',
                         body: '5974 Seneca Way, Tobyhanna, PA 18466.',
                     },
                     {
                         id: 'check_in_time_section',
-                        title: '🕓 Check-In Time',
+                        title: '⏰ Check-In Time',
                         body: 'Your check-in time is 4:00 PM. Early check-in and late check-out may be available upon request, subject to availability and an additional fee.',
                     },
                     {
                         id: 'parking_section',
-                        title: '🚗 Parking',
+                        title: '🅿️ Parking',
                         body: 'There is ample parking for multiple cars (10+) during your stay. Please get in touch with your host if you have concerns about a specific number of vehicles. There is NO street parking.',
                     },
                     {
                         id: 'access_code_instructions',
-                        title: '🔐 Access Code / Instructions',
+                        title: '🔢 Access Code / Instructions',
                         body: 'Use the Smart Lock code sent before arrival to unlock any of the 4 doors. Your code will be the last four digits of the phone number you used to book your reservation.',
                     },
                 ],
             },
             {
                 id: 'todo_upon_arrival_group',
-                title: '✅ To-Do Upon Arrival',
+                title: '📋 To-Do Upon Arrival',
                 sections: [
                     {
                         id: 'home_access_section',
-                        title: '✅ Upon Arrival',
+                        title: '🔍 Upon Arrival',
                         body: 'Walk around and check the home (indoor and outdoor) for any damages and notify the Host of any concerns within 3 hours of checking in.',
                     },
                 ],
             },
             {
                 id: 'contact_us_group',
-                title: '📞 Contact & Support',
+                title: '💬 Contact & Support',
                 sections: [
                     {
                         id: 'contacting_host_section',
-                        title: '📱 Contacting the Host',
+                        title: '👤 Contacting the Host',
                         body: "Contact your Host — Shanna: 484-667-0810 (texting is preferred).\nIf you can't reach Shanna, you can contact Lou at 484-667-0811.",
                     },
                 ],
@@ -78,16 +78,16 @@ export const GUEST_INFO = [
     },
     {
         id: 'safety_info_card',
-        title: '🛡️ Safety Info, Rules & Troubleshooting',
+        title: '⚖️ Safety Info, Rules & Troubleshooting',
         intro: 'Rules, quiet times, septic system and troubleshooting.',
         groups: [
             {
                 id: 'rules_regulations_group',
-                title: '📜 House Rules & Regulations',
+                title: '📋 House Rules & Regulations',
                 sections: [
                     {
                         id: 'house_rules_section',
-                        title: '🏡 House Rules',
+                        title: '📝 House Rules',
                         body: "No Smoking inside.\n\
 No Parties.\n\
 No Events.\n\
@@ -199,7 +199,7 @@ If you love your stay, tell your friends. If something can be improved, tell us 
                     },
                     {
                         id: 'important_septic_system_section',
-                        title: '🚽 Important — Sensitive Septic System',
+                        title: '💧 Important — Sensitive Septic System',
                         body: 'Flush ONLY toilet paper.\n\
 To maintain the plumbing system and avoid damage, please do NOT flush the following items:\n\
 \n\
@@ -221,7 +221,7 @@ Thank you for your cooperation in keeping the system functioning properly.',
                     },
                     {
                         id: 'smoking_policy_section',
-                        title: '🚭 Smoking Policy',
+                        title: '🚫 Smoking Policy',
                         body: 'Smoking and vaping of any kind inside the home is strictly prohibited. If there is evidence or smell of smoking indoors, fines will be incurred.\n\
 \n\
 You are welcome to smoke outside the home and use the provided smoking receptacles for proper disposal.\n\
@@ -263,7 +263,7 @@ By booking this property, you agree to follow and respect this no-smoking policy
                     },
                     {
                         id: 'quiet_times_section',
-                        title: '🔇 Quiet Times',
+                        title: '🤫 Quiet Times',
                         body: 'Neighborhood & Noise Policy\n\
 The home is located in a warm, family-friendly community. While many guests come here to relax and enjoy a getaway, it is also home to full-time residents who value a peaceful environment.\n\
 \n\
@@ -289,7 +289,7 @@ Thank you for being respectful neighbors and helping us keep the community peace
                     },
                     {
                         id: 'trash_policy_section',
-                        title: '🗑 Trash Policy',
+                        title: '♻️ Trash Policy',
                         body: '🗑 Trash & Recycling\n\
 Trash pickup takes place every **Tuesday morning**.\n\
 In front of the house, you’ll find two containers:\n\
@@ -334,7 +334,7 @@ Guests will receive documentation of any fees within **14 days of checkout**, pe
                     },
                     {
                         id: 'pets_policy_section',
-                        title: '🐾 Pet Policy (No Pets)',
+                        title: '🐕 Pet Policy (No Pets)',
                         body: '🚫 No Pets Allowed\n\
 \n\
 Please note that **pets are not permitted** at this property under any circumstances.\n\
@@ -366,7 +366,7 @@ Thank you for respecting this policy and helping us keep the home healthy, clean
                     },
                     {
                         id: 'breakages_policy_section',
-                        title: '💥 Breakages & Damages',
+                        title: '⚠️ Breakages & Damages',
                         body: 'We understand that sometimes **accidents happen** — it’s part of life, and we want your stay to be stress-free.\n\
 \n\
 If something breaks, goes missing, or gets damaged during your stay, please **let us know right away**. Reporting issues early helps us fix them quickly for you and for the next guests.\n\
@@ -392,7 +392,7 @@ Thank you for being considerate and helping us keep the home in great condition 
                     },
                     {
                         id: 'fire_pit_rules_section',
-                        title: '🔥 Fire Pit Rules',
+                        title: '🪵 Fire Pit Rules',
                         body: '🔥 Outdoor Fire Pit\n\
 We invite you to enjoy the fire pit responsibly. Please review the important safety guidelines below before use.\n\
 \n\
@@ -429,7 +429,7 @@ Thank you for helping keep the property and surrounding forest safe while enjoyi
                     },
                     {
                         id: 'hot_tub_rules_section',
-                        title: '♨️ Hot Tub Rules',
+                        title: '🛁 Hot Tub Rules',
                         body: '♨️ Hot Tub Use & Safety\n\
 Our hot tub is cleaned, sanitized, and refilled with fresh water before every stay. Because of this, the water may not reach full temperature until later in the evening on your arrival day — thank you for your patience while it warms up.\n\
 \n\
@@ -462,7 +462,7 @@ Thank you for helping keep the hot tub clean, safe, and enjoyable for everyone!'
                     },
                     {
                         id: 'sauna_rules_section',
-                        title: '🔥 Sauna Rules',
+                        title: '🧖 Sauna Rules',
                         body: '🔥 Outdoor Sauna Use & Safety\n\
 Our outdoor sauna comfortably fits up to **6 people** and offers a relaxing, traditional experience. Please read the rules below to help keep the sauna safe, clean, and enjoyable for every guest.\n\
 \n\
@@ -499,7 +499,7 @@ Thank you for helping us keep the sauna clean, safe, and comfortable for all gue
                     },
                     {
                         id: 'private_locked_areas_section',
-                        title: '🚪 Private & Locked Areas',
+                        title: '🔒 Private & Locked Areas',
                         body: '🚪 Private & Locked Areas\n\
 Some areas of the home are designated as **private** and may be locked. These spaces contain personal property and are **strictly off-limits** to guests.\n\
 \n\
@@ -517,11 +517,11 @@ Thank you for respecting the home and the privacy of its owners.',
             },
             {
                 id: 'troubleshooting_group',
-                title: '⚙️ Tips & Troubleshooting',
+                title: '🔧 Tips & Troubleshooting',
                 sections: [
                     {
                         id: 'tips_troubleshooting_section',
-                        title: '⚙️ Home Systems & Troubleshooting',
+                        title: '🛠️ Home Systems & Troubleshooting',
                         body: '⚙️ Home Systems & Troubleshooting\n\
 \n\
 🚱 Water Stops Running\n\
@@ -563,16 +563,16 @@ Please leave the lights in **ambient mode** to conserve energy.',
     },
     {
         id: 'about_accommodation_card',
-        title: '🏡 About the Home',
+        title: '🏘️ About the Home',
         intro: 'How to enjoy and use the home, inside and out.',
         groups: [
             {
                 id: 'enjoying_indoor_group',
-                title: '🏠 Enjoying Your Time Indoors',
+                title: '🛋️ Enjoying Your Time Indoors',
                 sections: [
                     {
                         id: 'tv_section',
-                        title: '📺 Television',
+                        title: '📱 Television',
                         body: `
 We are happy to provide smart TVs for your stay.  
 Feel free to log in to your preferred streaming apps and enjoy movies, shows, and more.
@@ -594,7 +594,7 @@ Please **log out of all streaming services** before checking out to protect your
                     },
                     {
                         id: 'fireplace_section',
-                        title: '🔥 Fireplace',
+                        title: '🪵 Fireplace',
                         body: `
 The home features a gas fireplace for easy and cozy use.
 
@@ -610,11 +610,11 @@ Always use the wall switches only, and turn the fireplace off when not in use or
             },
             {
                 id: 'enjoying_outdoor_group',
-                title: '🌳 Enjoying Your Time Outdoors',
+                title: '🌲 Enjoying Your Time Outdoors',
                 sections: [
                     {
                         id: 'grill_section',
-                        title: '🍔 Outdoor Grill & Smoker',
+                        title: '🍖 Outdoor Grill & Smoker',
                         body: `
 The outdoor grill includes **three cooking sections**, each with a different purpose:
 
@@ -632,7 +632,7 @@ Please clean the grill after each use and ensure all sections are **completely c
                     },
                     {
                         id: 'hot_tub_section',
-                        title: '♨️ Hot Tub',
+                        title: '🛁 Hot Tub',
                         body: `
 **Hot Tub Details**  
 Please also see **Hot Tub Rules** (Click HERE in the Rules section).
@@ -646,7 +646,7 @@ Please also see **Hot Tub Rules** (Click HERE in the Rules section).
                     },
                     {
                         id: 'deck_furniture_section',
-                        title: '🪑 Deck Furniture',
+                        title: '🪴 Deck Furniture',
                         body: `
 Outdoor cushions are stored inside the **deck box**.
 
@@ -658,7 +658,7 @@ Thank you for helping keep the outdoor space in great condition!`,
                     },
                     {
                         id: 'sauna_shower_section',
-                        title: '🧖‍♂️ Sauna & Outdoor Shower',
+                        title: '🧖 Sauna & Outdoor Shower',
                         body: `
 ### 🧖‍♀️ Sauna Rules & Operation
 
@@ -699,11 +699,11 @@ It is **shut off during the winter season** to prevent freeze damage.`,
             },
             {
                 id: 'appliance_hvac_coffee_group',
-                title: '⚙️ Appliances, Heating & Coffee',
+                title: '🔌 Appliances, Heating & Coffee',
                 sections: [
                     {
                         id: 'refrigerator_section',
-                        title: '🧊 Refrigerator',
+                        title: '❄️ Refrigerator',
                         body: `
 The refrigerator is equipped with an **automatic safety shut-off**.  
 It may temporarily turn off if:
@@ -722,7 +722,7 @@ To ensure optimal performance:
                     },
                     {
                         id: 'hvac_section',
-                        title: '🌡 Heating & Cooling',
+                        title: '🌡️ Heating & Cooling',
                         body: `
 ### 🌡 Home Heating & Cooling Systems
 
@@ -751,7 +751,7 @@ This keeps the home energy-efficient and protects the HVAC systems between stays
                     },
                     {
                         id: 'kitchen_coffee_section',
-                        title: '🍽 Kitchen & Coffee',
+                        title: '☕ Kitchen & Coffee',
                         body: `### 🍽 Kitchen & Supplies
 The kitchen is **fully stocked** with cookware, utensils, dishes, and basic essentials.  
 Everything is available for your use during the stay.
@@ -769,11 +769,11 @@ Please note that starter supplies are **minimal** — we recommend bringing addi
     },
     {
         id: 'wifi_internet_card',
-        title: '📶 Wi-Fi & Internet Details',
+        title: '📡 Wi-Fi & Internet Details',
         groups: [
             {
                 id: 'wifi_internet_group',
-                title: '📶 Wi-Fi & Internet',
+                title: '🌐 Wi-Fi & Internet',
                 body: `The Wi-Fi network for the home is:
 
 **Network:** ClearRunRiverHouse  
@@ -788,15 +788,15 @@ If the internet stops working, you can reboot the router located **under the kit
     },
     {
         id: 'community_local_info_card',
-        title: '🌲 Local Area & Activities',
+        title: '🗺️ Local Area & Activities',
         groups: [
             {
                 id: 'enjoying_indoor_group',
-                title: '🗺️ Things To Do & Eat Nearby',
+                title: '🎯 Things To Do & Eat Nearby',
                 sections: [
                     {
                         id: 'whats_around_section',
-                        title: '🗺️ What’s Around / Things To Do',
+                        title: '📍 What is Around / Things To Do',
                         body: `
 ### 🏞️ State Parks
 • Hickory Run State Park  
@@ -970,7 +970,7 @@ Enjoy exploring everything the Pocono Mountains have to offer! 🌲⛰️`,
                     },
                     {
                         id: 'wineries_breweries_section',
-                        title: '🍷 Wineries & Breweries',
+                        title: '🍺 Wineries & Breweries',
                         body: `**Local Breweries**
 • Barley Creek Brewing Company  
 Website: www.barleycreek.com  
@@ -998,11 +998,11 @@ Enjoy a relaxing day exploring the Poconos’ best local wineries and craft brew
         groups: [
             {
                 id: 'departure_info_group',
-                title: '🚪 Departure & Check-Out',
+                title: '🚶 Departure & Check-Out',
                 sections: [
                     {
                         id: 'checkout_section',
-                        title: '🕙 Check-Out Process',
+                        title: '⏰ Check-Out Process',
                         body: `
 **Checkout Time:** 10:00 AM  
 Please leave on time so our cleaning team can prepare the home for the next guests.  
@@ -1077,7 +1077,7 @@ Thank you for treating the home with care and helping us keep it in excellent co
             },
             {
                 id: 'thank_you_group',
-                title: '🙏 Thank You for Staying With Us',
+                title: '💝 Thank You for Staying With Us',
                 body: `Thank you so much for choosing to stay with us — we truly hope you had a wonderful and comfortable visit.
 
 If anything during your stay was not perfect, **please let us know directly** so we can make improvements for future guests and address any concerns right away.

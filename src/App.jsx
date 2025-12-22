@@ -1,13 +1,20 @@
+import { useEffect } from 'react'
 import GallerySection from './components/Gallery/GallerySection.jsx'
 import LocationSection from './components/LocationSection/LocationSection.jsx'
 import PremiumAmenties from './components/PremiumAmenities/PremiumAmenties.jsx'
 import GuestInfo from './components/GuestInfo/GuestInfo.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import Header from './components/Header/Header.jsx'
+import heroImage from './assets/images/heroImage/HeroImage.JPG'
 import './App.css'
 import { ROOMS } from './components/rooms/RoomsObj.jsx'
 
 const App = () => {
+    // Set hero image as CSS variable for proper Vite asset handling
+    useEffect(() => {
+        document.documentElement.style.setProperty('--hero-image', `url(${heroImage})`)
+    }, [])
+    
     return (
         <div className="app">
             <Header />
@@ -113,8 +120,6 @@ const App = () => {
                     sectionTitle="Comfortable Accommodations"
                     sectionSubtitle="Six cozy bedrooms designed for up to 14 guests — space for everyone to unwind."
                 />
-
-                {/* <GallerySection /> */}
 
                 {/* Guest info */}
                 <GuestInfo />
