@@ -1,11 +1,11 @@
 .location {
-    padding: 4.5rem 0;
+    padding: var(--spacing-5xl) 0;
 }
 
 .location-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-    gap: 2.25rem;
+    gap: var(--spacing-3xl);
     align-items: center;
 }
 

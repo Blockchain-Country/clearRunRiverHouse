@@ -1,41 +1,36 @@
 .card {
     text-align: center;
     border-radius: 1.5rem;
-    padding: 0.6rem 0.5rem;
-    background: rgba(255, 255, 255, 0.8);
+    padding: var(--spacing-md) var(--spacing-sm);
+    background: rgba(255, 250, 240, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 0.5px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06),
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    border: 0.5px solid rgba(212, 201, 184, 0.2);
+    box-shadow: 0 2px 8px rgba(44, 36, 22, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
-        0 1px 0 rgba(255, 255, 255, 0.1) inset;
-    border-color: rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 24px rgba(44, 36, 22, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.2) inset;
+    border-color: rgba(212, 201, 184, 0.4);
+    background: rgba(255, 250, 240, 0.95);
 }
 
 .card-title {
-    font-size: 1rem;
+    font-size: var(--font-size-md);
     font-weight: 600;
     color: var(--text);
+    line-height: var(--line-height-tight);
 }
 
 .card-text {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-size-base);
     color: var(--text-muted);
-    line-height: 1.45;
+    line-height: var(--line-height-normal);
 }
 
-h3 {
-    margin: 0.5rem 0 0.7rem 0;
-}
-
-.card p {
-    margin: 0.7rem 0 0 0;
-}
+/* h3 styles moved to App.css typography reset */

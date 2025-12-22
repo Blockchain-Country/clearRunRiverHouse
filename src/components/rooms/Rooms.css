@@ -1,7 +1,7 @@
 .rooms-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
+    gap: var(--spacing-xl);
 }
 
 .room-card {
@@ -11,8 +11,8 @@
 }
 
 .room-card .card__title {
-    font-size: 1rem;
-    margin-top: 0.4rem;
+    font-size: var(--font-size-md);
+    margin-top: var(--spacing-xs);
 }
 
 .room-card .card__image-wrapper {
@@ -28,8 +28,8 @@
 }
 
 .room-card .card__text {
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
 }
 
 @media (max-width: 1024px) {

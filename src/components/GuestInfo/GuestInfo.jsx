@@ -191,22 +191,6 @@ const GuestInfo = () => {
                         )
                     })}
                 </div>
-
-                {/* Внизу — аккуратная ссылка на TouchStay, как в прошлой версии */}
-                <div className="guest_info_guide">
-                    <p className="guest_info_guide_text">
-                        For full step-by-step instructions, photos and videos,
-                        open our digital guidebook.
-                    </p>
-                    <a
-                        href="https://guide.touchstay.com/guest/bIw4qHNd5G5o9/info/780424"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="guest_info_guide_link"
-                    >
-                        Open TouchStay guide
-                    </a>
-                </div>
             </div>
         </section>
     )
