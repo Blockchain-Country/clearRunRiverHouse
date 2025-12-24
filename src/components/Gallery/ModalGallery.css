@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-soft);
-    overflow: visible;
+    overflow: hidden;
     overflow-y: auto;
 }
 
@@ -57,7 +57,7 @@
     column-gap: 8px;
     flex: 1;
     min-height: 0;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .modal-gallery-swiper {
@@ -65,7 +65,7 @@
     width: 100%;
     height: 100%;
     min-height: 400px;
-    overflow: visible;
+    overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow: visible;
+    overflow: hidden;
     padding-bottom: 8px;
     max-height: 100%;
 }
@@ -228,7 +228,7 @@
     .modal-gallery-body {
         gap: 0.4rem;
         column-gap: 6px;
-        overflow: visible;
+        overflow: hidden;
     }
 
     .modal-gallery-swiper {
@@ -296,7 +296,7 @@
     .modal-gallery-body {
         grid-template-columns: minmax(0, 1fr);
         gap: 0.3rem;
-        overflow: visible;
+        overflow: hidden;
     }
 
     .modal-gallery-swiper {
