@@ -14,18 +14,17 @@
     z-index: 50;
 }
 
-/* Modal Container */
+/* Modal Container - Column Layout */
 .modal {
     width: min(960px, 100% - 2rem);
     max-height: min(85vh, 700px);
     background: var(--bg-elevated);
     border-radius: 1.25rem;
-    padding: 0.75rem 1rem 1rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     box-shadow: var(--shadow-soft);
     overflow: hidden;
-    overflow-y: auto;
 }
 
 /* Inline mode (no backdrop) */
@@ -37,16 +36,25 @@
     max-height: none;
 }
 
-/* Header */
+/* ============================================
+   Modal Structure: Header, Body, Text, Dots
+   ============================================ */
+
+/* Header Section */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    padding: 1rem 1.25rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
 }
 
 .modal-title {
     margin: 0;
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: 600;
+    color: var(--text, #2c2416);
 }
 
 .modal-close {
@@ -59,6 +67,7 @@
     cursor: pointer;
     background: transparent;
     transition: background 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
 }
 
 .modal-close:hover {
@@ -66,13 +75,14 @@
     border-color: var(--border-medium);
 }
 
-/* Body */
+/* Body Section - Contains Image Area */
 .modal-body {
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    position: relative;
 }
 
 /* Swiper Container within Modal */
@@ -80,38 +90,68 @@
     width: 100%;
     height: 100%;
     min-height: 400px;
-    overflow: hidden;
-    position: relative;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Swiper overrides for modal context */
+/* Swiper Container - Image Area */
 .modal-swiper .swiper-container {
     flex: 1;
     min-height: 0;
     width: 100%;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-soft);
-    background: var(--bg-elevated);
-    padding-bottom: 8px;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
     max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
+/* Swiper Wrapper - Contains slides */
+.modal-swiper .swiper-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    height: 100%;
+}
+
+/* Image Section - Stretched and Centered */
 .modal-swiper .swiper-slide-image {
     width: 100%;
-    height: 100%;
+    flex: 1;
     min-height: 300px;
     max-height: 500px;
-    border-radius: 16px 16px 0 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.modal-swiper .swiper-slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Text Section - Below Image */
 .modal-swiper .swiper-slide-text {
     display: flex !important;
-    padding: var(--spacing-md) var(--spacing-lg);
+    flex-direction: column;
+    padding: var(--spacing-lg, 1.5rem) var(--spacing-xl, 2rem);
     background: rgba(255, 250, 240, 0.95);
     backdrop-filter: blur(10px);
-    margin-bottom: var(--spacing-lg);
+    margin: 0;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .modal-swiper .swiper-slide-title {
@@ -120,12 +160,14 @@
 
 .modal-swiper .swiper-slide-description {
     margin: 0;
-    font-size: clamp(var(--font-size-md), 1.2vw, var(--font-size-xl));
-    color: var(--text-muted);
-    line-height: var(--line-height-normal);
-    max-width: 800px;
+    font-size: clamp(var(--font-size-md, 1rem), 1.2vw, var(--font-size-xl, 1.25rem));
+    color: var(--text-muted, #666);
+    line-height: var(--line-height-normal, 1.6);
+    max-width: 100%;
+    text-align: center;
 }
 
+/* Navigation Buttons - Over Image */
 .modal-swiper .swiper-button {
     position: absolute;
     top: 50%;
@@ -141,19 +183,41 @@
     right: 1rem;
 }
 
+/* Dots Section - Below Text */
 .modal-swiper .swiper-dots {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 10px 0;
-    padding: 0 var(--spacing-md);
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin: var(--spacing-md, 1rem) auto;
+    padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1.5rem);
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
     border-radius: 999px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    z-index: 20;
+    z-index: 5;
     width: fit-content;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Swiper Slide - Column Layout */
+.modal-swiper .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-swiper .swiper-slide-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
 }
 
 /* ============================================
@@ -168,36 +232,31 @@
 
     .modal {
         max-height: min(95vh, 600px);
-        padding: 0.5rem 0.75rem 0.75rem;
         width: 100%;
         margin: 0;
         border-radius: 1rem;
     }
 
     .modal-header {
-        margin-bottom: 0.5rem;
+        padding: 0.75rem 1rem;
     }
 
     .modal-swiper {
         min-height: 350px;
-        flex-shrink: 0;
-    }
-
-    .modal-swiper .swiper-container {
-        flex-shrink: 0;
     }
 
     .modal-swiper .swiper-slide-image {
-        height: auto;
         min-height: 250px;
         max-height: 400px;
-        flex-shrink: 0;
     }
 
     .modal-swiper .swiper-slide-text {
-        padding: var(--spacing-sm) var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-        flex-shrink: 0;
+        padding: var(--spacing-md, 1rem) var(--spacing-lg, 1.5rem);
+    }
+
+    .modal-swiper .swiper-dots {
+        margin: var(--spacing-sm, 0.5rem) auto;
+        padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
     }
 
     .modal-swiper .swiper-button-prev {
@@ -217,44 +276,39 @@
 
     .modal {
         max-height: min(95vh, 500px);
-        padding: 0.5rem 0.625rem 0.625rem;
         margin: 0;
         border-radius: 0.875rem;
     }
 
     .modal-header {
-        margin-bottom: 0.4rem;
+        padding: 0.625rem 0.875rem;
+        margin-bottom: 0;
     }
 
     .modal-title {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-lg, 1.125rem);
     }
 
     .modal-swiper {
         min-height: 300px;
-        flex-shrink: 0;
-    }
-
-    .modal-swiper .swiper-container {
-        flex-shrink: 0;
     }
 
     .modal-swiper .swiper-slide-image {
-        height: auto;
         min-height: 200px;
         max-height: 350px;
-        flex-shrink: 0;
     }
 
     .modal-swiper .swiper-slide-text {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        margin-bottom: var(--spacing-sm);
-        font-size: var(--font-size-sm);
-        flex-shrink: 0;
+        padding: var(--spacing-sm, 0.75rem) var(--spacing-md, 1rem);
     }
 
     .modal-swiper .swiper-slide-description {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-sm, 0.875rem);
+    }
+
+    .modal-swiper .swiper-dots {
+        margin: var(--spacing-xs, 0.5rem) auto;
+        padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.75rem);
     }
 
     .modal-swiper .swiper-button-prev {
