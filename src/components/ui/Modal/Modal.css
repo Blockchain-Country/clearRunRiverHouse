@@ -3,38 +3,59 @@
    Fixed size structure: Header, Image, Text, Dots
    ============================================ */
 
-/* Backdrop (overlay mode only) */
+/* Backdrop (overlay mode only) - ONLY for BedroomCard modals */
+/* Premium Amenities uses .modal-inline (no backdrop), so this doesn't affect it */
+/* Rendered via React Portal at document.body level for proper backdrop-filter */
 .modal-backdrop {
     position: fixed;
-    inset: 0;
-    background: rgba(44, 36, 22, 0.75);
-    backdrop-filter: blur(8px);
-    display: grid;
-    place-items: center;
-    z-index: 50;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    /* Dimming + blur for entire page content */
+    background: rgba(44, 36, 22, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    box-sizing: border-box;
+    margin: 0;
 }
 
-/* Remove backdrop overlay for BedroomCard modals - match PremiumAmenitiesSection appearance */
-/* Target modal when it has a close button (BedroomCard) but make backdrop transparent */
-.modal-backdrop:has(.modal .modal-header .icon-button-close),
-.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) {
-    background: transparent !important;
-    backdrop-filter: none !important;
-    pointer-events: none; /* Allow clicks through backdrop */
-    /* Keep grid layout for centering, but make overlay invisible */
+/* Modal Container - Responsive, centered for BedroomCard modals */
+.modal-backdrop .modal {
+    width: min(960px, 100%);
+    max-height: calc(100vh - 2rem);
+    min-height: 500px;
+    background: var(--bg-elevated);
+    border-radius: 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    box-sizing: border-box;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    flex: 0 0 auto;
+    align-self: center;
 }
 
-/* Re-enable pointer events on modal content */
-.modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
-.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
-    pointer-events: auto;
-}
-
-/* Modal Container - Fixed size, column layout, centered */
-/* Fixed height: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
+/* Base modal styles (also used by inline Premium Amenities) */
 .modal {
     width: min(960px, 100% - 2rem);
-    height: 620px; /* Fixed total height - all sections always rendered */
+    height: 620px;
     max-height: 620px;
     min-height: 620px;
     background: var(--bg-elevated);
@@ -42,23 +63,9 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center all children */
+    align-items: center;
     box-shadow: var(--shadow-soft);
     overflow: hidden;
-}
-
-/* Match inline modal style for BedroomCard modals (when backdrop is transparent) */
-.modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
-.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
-    position: relative;
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    /* Keep fixed height calculation: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
-    height: 620px;
-    max-height: 620px;
-    min-height: 620px;
-    box-shadow: none; /* Match inline modal - no shadow */
 }
 
 /* Inline mode (no backdrop) */
@@ -67,7 +74,6 @@
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
-    /* Keep fixed height calculation: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
     height: 620px;
     max-height: 620px;
     min-height: 620px;
@@ -83,7 +89,7 @@
     padding: 1rem 1.25rem;
     flex-shrink: 0;
     width: 100%;
-    height: 60px; /* Fixed height */
+    height: 60px;
     border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
     box-sizing: border-box;
 }
@@ -95,7 +101,6 @@
     color: var(--text, #2c2416);
 }
 
-/* Placeholder for empty title - maintains layout stability */
 .modal-title-placeholder {
     width: 0;
     height: 0;
@@ -103,11 +108,11 @@
 }
 
 /* ============================================
-   Image Container - Fixed height, relative positioning
+   Image Container - Flexible for backdrop modals, fixed for inline
    ============================================ */
 .modal-image-container {
     width: 100%;
-    height: 400px; /* Fixed height */
+    height: 400px;
     flex-shrink: 0;
     position: relative; /* For absolute positioning of buttons */
     display: flex;
@@ -117,53 +122,50 @@
     background: var(--bg, #fafafa);
 }
 
-/* Swiper inside modal image container */
-/* Override Swiper.css styles only for Modal context - scoped to prevent conflicts */
+/* Flexible height for backdrop modals (BedroomCard) */
+.modal-backdrop .modal .modal-image-container {
+    flex: 1 1 auto;
+    min-height: 250px;
+    max-height: 50vh;
+    height: auto;
+}
+
+/* Swiper inside modal image container - scoped to prevent conflicts */
 .modal-image-container .swiper-container {
     width: 100%;
     height: 100%;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
-    /* Inherit touch-action from Swiper.css (pan-y) - allows horizontal swipe */
-    /* Don't override - let Swiper handle touch gestures */
 }
 
 .modal-image-container .swiper-slide-image {
-    /* Override Swiper.css height constraints for Modal context */
     height: 100% !important;
     min-height: unset !important;
     max-height: unset !important;
     border-radius: 0;
-    /* Ensure images fill the fixed 400px container */
 }
 
 .modal-image-container .swiper-slide-text {
     display: none;
 }
 
-/* Hide Swiper's own navigation - Modal uses its own buttons */
-.modal-image-container .swiper-button {
-    display: none !important; /* Ensure Swiper buttons are hidden in Modal */
-}
-
-/* Hide Swiper's own dots - Modal uses its own dots */
+/* Hide Swiper's own navigation and dots - Modal uses its own */
+.modal-image-container .swiper-button,
 .modal-image-container .swiper-dots {
-    display: none !important; /* Ensure Swiper dots are hidden in Modal */
+    display: none !important;
 }
 
 /* ============================================
    Navigation Buttons - Overlay on image
-   Fix: prevent click area mismatch due to transforms
    ============================================ */
 .modal-nav-button {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%) !important; /* keep stable */
-    z-index: 20; /* above image */
+    transform: translateY(-50%) !important;
+    z-index: 20;
     opacity: 0.5;
     transition: opacity 0.2s ease;
-    /* ensure stable hitbox */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +173,6 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* IMPORTANT: do NOT scale / shift on hover/active (prevents "clickable below icon") */
 .modal-nav-button:hover,
 .modal-nav-button:active,
 .modal-nav-button:focus {
@@ -182,7 +183,6 @@
     opacity: 0.8;
 }
 
-/* If IconButton renders a <button> inside, normalize it */
 .modal-nav-button button {
     transform: none !important;
     display: flex;
@@ -200,10 +200,10 @@
 }
 
 /* ============================================
-   Text Block - Fixed height, scrollable
+   Text Block - Fixed height for inline, flexible for backdrop
    ============================================ */
 .modal-text-block {
-    height: 100px; /* Fixed height */
+    height: 100px;
     flex-shrink: 0;
     width: 100%;
     overflow-y: auto;
@@ -215,6 +215,15 @@
     backdrop-filter: blur(10px);
 }
 
+/* Flexible height for backdrop modals (BedroomCard) */
+.modal-backdrop .modal .modal-text-block {
+    flex: 0 0 auto;
+    max-height: 150px;
+    min-height: 60px;
+    height: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .modal-description {
     margin: 0;
     font-size: clamp(var(--font-size-md, 1rem), 1.2vw, var(--font-size-xl, 1.25rem));
@@ -223,7 +232,6 @@
     max-width: 100%;
 }
 
-/* Placeholder for empty description - maintains layout stability */
 .modal-description-placeholder {
     width: 0;
     height: 0;
@@ -272,7 +280,6 @@
     outline-offset: 2px;
 }
 
-/* Placeholder for dots when only one item - maintains layout stability */
 .modal-dots-placeholder {
     width: 0;
     height: 0;
@@ -287,7 +294,13 @@
         padding: 0.75rem;
     }
 
-    /* Fixed height: header (55px) + image (350px) + text (95px) + dots (50px) = 550px */
+    .modal-backdrop .modal {
+        max-height: calc(100vh - 1.5rem);
+        min-height: 450px;
+        width: 100%;
+        border-radius: 1rem;
+    }
+
     .modal {
         height: 550px;
         max-height: 550px;
@@ -295,14 +308,6 @@
         width: 100%;
         margin: 0;
         border-radius: 1rem;
-    }
-
-    /* Match BedroomCard modal height in responsive */
-    .modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
-    .modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
-        height: 550px;
-        max-height: 550px;
-        min-height: 550px;
     }
 
     .modal-inline {
@@ -316,8 +321,19 @@
         padding: 0.75rem 1rem;
     }
 
+    .modal-backdrop .modal .modal-image-container {
+        min-height: 200px;
+        max-height: 40vh;
+    }
+
     .modal-image-container {
         height: 350px;
+    }
+
+    .modal-backdrop .modal .modal-text-block {
+        max-height: 120px;
+        min-height: 50px;
+        padding: 0.75rem;
     }
 
     .modal-text-block {
@@ -335,21 +351,18 @@
         padding: 0.5rem;
     }
 
-    /* Fixed height: header (50px) + image (300px) + text (100px) + dots (50px) = 500px */
+    .modal-backdrop .modal {
+        max-height: calc(100vh - 1rem);
+        min-height: 400px;
+        border-radius: 0.875rem;
+    }
+
     .modal {
         height: 500px;
         max-height: 500px;
         min-height: 500px;
         margin: 0;
         border-radius: 0.875rem;
-    }
-
-    /* Match BedroomCard modal height in responsive */
-    .modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
-    .modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
-        height: 500px;
-        max-height: 500px;
-        min-height: 500px;
     }
 
     .modal-inline {
@@ -367,8 +380,19 @@
         font-size: var(--font-size-lg, 1.125rem);
     }
 
+    .modal-backdrop .modal .modal-image-container {
+        min-height: 180px;
+        max-height: 35vh;
+    }
+
     .modal-image-container {
         height: 300px;
+    }
+
+    .modal-backdrop .modal .modal-text-block {
+        max-height: 100px;
+        min-height: 40px;
+        padding: 0.75rem;
     }
 
     .modal-text-block {

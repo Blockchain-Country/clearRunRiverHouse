@@ -161,6 +161,12 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensure modal backdrop can blur body content */
+body:has(.modal-backdrop) {
+    /* When modal is open, ensure backdrop-filter works */
+    isolation: auto;
+}
+
 /* Optimize background for mobile */
 @media (max-width: 768px) {
     body {
@@ -225,6 +231,8 @@ body::before {
     min-height: 100vh;
     position: relative;
     z-index: 1;
+    /* Ensure modal backdrop can properly blur content */
+    isolation: auto;
 }
 
 /* Header styles moved to Header component */

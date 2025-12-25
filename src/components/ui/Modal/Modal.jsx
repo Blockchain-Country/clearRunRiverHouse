@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Swiper from '../Swiper/Swiper'
 import IconButton from '../Buttons/IconButton'
 import './Modal.css'
@@ -207,7 +208,8 @@ const Modal = ({
     return modalContent
   }
 
-  return (
+  // Render modal backdrop at root level using Portal for proper backdrop-filter
+  const backdrop = (
     <div 
       className="modal-backdrop" 
       onClick={handleBackdropClick}
@@ -218,6 +220,9 @@ const Modal = ({
       {modalContent}
     </div>
   )
+
+  // Use Portal to render at document.body level for proper backdrop-filter
+  return createPortal(backdrop, document.body)
 }
 
 export default Modal
