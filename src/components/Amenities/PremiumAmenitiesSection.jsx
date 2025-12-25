@@ -1,9 +1,17 @@
-import React from 'react'
-import AmenityCard from './AmenityCard'
-import { PREMIUM_AMENITIES } from './premiumAmenities.data'
+import React, { useMemo } from 'react'
+import Modal from '../ui/Modal/Modal'
+import { getAllAmenityImages } from './premiumAmenities.data'
 import './PremiumAmenitiesSection.css'
 
 const PremiumAmenitiesSection = () => {
+    // Get all images from all amenities, flattened into one array
+    const swiperItems = useMemo(() => {
+        return getAllAmenityImages()
+    }, [])
+
+    // Use generic title for modal header
+    const modalTitle = 'Premium Amenities'
+
     return (
         <section id="amenities" className="amenities section">
             <div className="section-inner">
@@ -13,10 +21,19 @@ const PremiumAmenitiesSection = () => {
                         Everything you need for a perfect Pocono getaway.
                     </p>
                 </div>
-                <div className="amenities-grid">
-                    {PREMIUM_AMENITIES.map((amenity, index) => (
-                        <AmenityCard key={index} amenity={amenity} />
-                    ))}
+                
+                {/* Single Modal - Always open, inline mode */}
+                <div className="amenities-modal-container">
+                    <Modal
+                        open={true}
+                        title={modalTitle}
+                        items={swiperItems}
+                        onClose={() => {}} // No close handler needed (always open)
+                        showCloseButton={false}
+                        autoPlayInterval={4000} // Auto-play through images
+                        showDots={swiperItems.length > 1}
+                        inline={true}
+                    />
                 </div>
             </div>
         </section>
@@ -24,4 +41,3 @@ const PremiumAmenitiesSection = () => {
 }
 
 export default PremiumAmenitiesSection
-
