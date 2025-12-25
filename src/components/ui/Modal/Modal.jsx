@@ -134,21 +134,21 @@ const Modal = ({
       ref={modalRef}
       tabIndex={-1}
     >
-      {/* Header Section */}
-      {(title || showCloseButton) && (
-        <header className="modal-header">
-          {title && (
-            <h3 id="modal-title" className="modal-title">{title}</h3>
-          )}
-          {showCloseButton && (
-            <IconButton
-              icon="close"
-              onClick={onClose}
-              ariaLabel="Close modal"
-            />
-          )}
-        </header>
-      )}
+      {/* Header Section - Always render to maintain fixed height */}
+      <header className="modal-header">
+        {title ? (
+          <h3 id="modal-title" className="modal-title">{title}</h3>
+        ) : (
+          <div className="modal-title-placeholder"></div>
+        )}
+        {showCloseButton && (
+          <IconButton
+            icon="close"
+            onClick={onClose}
+            ariaLabel="Close modal"
+          />
+        )}
+      </header>
 
       {/* Image Container - Fixed size with Swiper and overlay buttons */}
       <div className="modal-image-container" ref={swiperRef}>
@@ -156,6 +156,7 @@ const Modal = ({
           items={swiperItems}
           autoPlayInterval={autoPlayInterval}
           showDots={false}
+          showArrows={false}
         />
         <IconButton
           icon="prev"
@@ -171,26 +172,32 @@ const Modal = ({
         />
       </div>
 
-      {/* Text Block - Fixed size, scrollable */}
-      {currentText && (
-        <div className="modal-text-block">
+      {/* Text Block - Always render to maintain fixed height */}
+      <div className="modal-text-block">
+        {currentText ? (
           <p className="modal-description">{currentText}</p>
-        </div>
-      )}
+        ) : (
+          <div className="modal-description-placeholder"></div>
+        )}
+      </div>
 
-      {/* Dots Indicator */}
-      {showDots && items.length > 1 && (
+      {/* Dots Indicator - Always render when showDots is true to maintain fixed height */}
+      {showDots && (
         <div className="modal-dots">
-          {items.map((_, index) => (
-            <button
-              key={index}
-              className={`modal-dot ${index === currentIndex ? 'active' : ''}`}
-              onClick={() => handleDotClick(index)}
-              aria-label={`Go to slide ${index + 1}`}
-              aria-selected={index === currentIndex}
-              type="button"
-            />
-          ))}
+          {items.length > 1 ? (
+            items.map((_, index) => (
+              <button
+                key={index}
+                className={`modal-dot ${index === currentIndex ? 'active' : ''}`}
+                onClick={() => handleDotClick(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                aria-selected={index === currentIndex}
+                type="button"
+              />
+            ))
+          ) : (
+            <div className="modal-dots-placeholder"></div>
+          )}
         </div>
       )}
     </div>

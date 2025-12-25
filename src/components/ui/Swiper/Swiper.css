@@ -1,9 +1,7 @@
 /* ============================================
    Swiper Component Styles
-   Clean, logical, and maintainable CSS
    ============================================ */
 
-/* Container */
 .swiper-container {
     position: relative;
     width: 100%;
@@ -12,6 +10,7 @@
     border-radius: 1.5rem;
     background: var(--bg-elevated, #fff);
     box-shadow: var(--shadow-soft, 0 2px 8px rgba(0, 0, 0, 0.1));
+    touch-action: pan-y; /* allow vertical scroll, but keep horizontal swipe possible */
 }
 
 /* Wrapper */
@@ -33,12 +32,14 @@
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.3s ease;
     will-change: transform, opacity;
+    pointer-events: none;
 }
 
 .swiper-slide.active {
-    position: relative;
+    position: absolute; /* Explicit - ensures transform system works */
     opacity: 1;
     z-index: 1;
+    pointer-events: auto;
 }
 
 /* Slide Content */
@@ -67,6 +68,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Slide Text */
@@ -117,20 +120,22 @@
     align-items: center;
     justify-content: center;
     color: var(--text, #2c2416);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     opacity: 0.7;
     padding: 0;
+    touch-action: manipulation;
 }
 
+/* IMPORTANT: no transform scaling on hover/active
+   (prevents hitbox mismatch on some browsers) */
 .swiper-button:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    transform: translateY(-50%) scale(1.1);
 }
 
 .swiper-button:active {
-    transform: translateY(-50%) scale(0.95);
+    opacity: 0.95;
 }
 
 .swiper-button:focus-visible {
@@ -192,10 +197,6 @@
     outline: 2px solid var(--accent-blue, #4a90e2);
     outline-offset: 2px;
 }
-
-/* ============================================
-   Responsive Styles
-   ============================================ */
 
 /* Tablet */
 @media (max-width: 1024px) {
@@ -271,4 +272,3 @@
         padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
     }
 }
-

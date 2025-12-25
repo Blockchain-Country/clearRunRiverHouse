@@ -74,7 +74,7 @@ const BedroomCard = ({ bedroom }) => {
                 items={modalItems}
                 onClose={handleClose}
                 showCloseButton={true}
-                autoPlayInterval={0}
+                autoPlayInterval={4000}
                 showDots={modalItems.length > 1}
             />
         </>

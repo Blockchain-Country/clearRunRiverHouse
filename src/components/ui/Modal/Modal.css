@@ -14,11 +14,29 @@
     z-index: 50;
 }
 
+/* Remove backdrop overlay for BedroomCard modals - match PremiumAmenitiesSection appearance */
+/* Target modal when it has a close button (BedroomCard) but make backdrop transparent */
+.modal-backdrop:has(.modal .modal-header .icon-button-close),
+.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    pointer-events: none; /* Allow clicks through backdrop */
+    /* Keep grid layout for centering, but make overlay invisible */
+}
+
+/* Re-enable pointer events on modal content */
+.modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
+.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
+    pointer-events: auto;
+}
+
 /* Modal Container - Fixed size, column layout, centered */
+/* Fixed height: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
 .modal {
     width: min(960px, 100% - 2rem);
-    height: 600px; /* Fixed total height */
-    max-height: 600px;
+    height: 620px; /* Fixed total height - all sections always rendered */
+    max-height: 620px;
+    min-height: 620px;
     background: var(--bg-elevated);
     border-radius: 1.25rem;
     padding: 0;
@@ -29,14 +47,30 @@
     overflow: hidden;
 }
 
+/* Match inline modal style for BedroomCard modals (when backdrop is transparent) */
+.modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
+.modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    /* Keep fixed height calculation: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
+    height: 620px;
+    max-height: 620px;
+    min-height: 620px;
+    box-shadow: none; /* Match inline modal - no shadow */
+}
+
 /* Inline mode (no backdrop) */
 .modal-inline {
     position: relative;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
-    max-height: none;
-    height: auto;
+    /* Keep fixed height calculation: header (60px) + image (400px) + text (100px) + dots (60px) = 620px */
+    height: 620px;
+    max-height: 620px;
+    min-height: 620px;
 }
 
 /* ============================================
@@ -61,6 +95,13 @@
     color: var(--text, #2c2416);
 }
 
+/* Placeholder for empty title - maintains layout stability */
+.modal-title-placeholder {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 /* ============================================
    Image Container - Fixed height, relative positioning
    ============================================ */
@@ -77,45 +118,77 @@
 }
 
 /* Swiper inside modal image container */
+/* Override Swiper.css styles only for Modal context - scoped to prevent conflicts */
 .modal-image-container .swiper-container {
     width: 100%;
     height: 100%;
     border-radius: 0;
     box-shadow: none;
     background: transparent;
+    /* Inherit touch-action from Swiper.css (pan-y) - allows horizontal swipe */
+    /* Don't override - let Swiper handle touch gestures */
 }
 
 .modal-image-container .swiper-slide-image {
+    /* Override Swiper.css height constraints for Modal context */
     height: 100% !important;
     min-height: unset !important;
     max-height: unset !important;
     border-radius: 0;
+    /* Ensure images fill the fixed 400px container */
 }
 
 .modal-image-container .swiper-slide-text {
     display: none;
 }
 
+/* Hide Swiper's own navigation - Modal uses its own buttons */
 .modal-image-container .swiper-button {
-    display: none;
+    display: none !important; /* Ensure Swiper buttons are hidden in Modal */
 }
 
+/* Hide Swiper's own dots - Modal uses its own dots */
 .modal-image-container .swiper-dots {
-    display: none;
+    display: none !important; /* Ensure Swiper dots are hidden in Modal */
 }
 
-/* Navigation Buttons - Overlay on image, 50% opacity, vertically centered */
+/* ============================================
+   Navigation Buttons - Overlay on image
+   Fix: prevent click area mismatch due to transforms
+   ============================================ */
 .modal-nav-button {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%); /* Vertically centered */
-    z-index: 10;
-    opacity: 0.5; /* 50% transparent */
+    transform: translateY(-50%) !important; /* keep stable */
+    z-index: 20; /* above image */
+    opacity: 0.5;
     transition: opacity 0.2s ease;
+    /* ensure stable hitbox */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* IMPORTANT: do NOT scale / shift on hover/active (prevents "clickable below icon") */
+.modal-nav-button:hover,
+.modal-nav-button:active,
+.modal-nav-button:focus {
+    transform: translateY(-50%) !important;
 }
 
 .modal-nav-button:hover {
-    opacity: 0.8; /* Slightly more visible on hover */
+    opacity: 0.8;
+}
+
+/* If IconButton renders a <button> inside, normalize it */
+.modal-nav-button button {
+    transform: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
 .modal-nav-prev {
@@ -133,7 +206,7 @@
     height: 100px; /* Fixed height */
     flex-shrink: 0;
     width: 100%;
-    overflow-y: auto; /* Scrollable if text is long */
+    overflow-y: auto;
     overflow-x: hidden;
     text-align: center;
     padding: 1rem;
@@ -150,11 +223,18 @@
     max-width: 100%;
 }
 
+/* Placeholder for empty description - maintains layout stability */
+.modal-description-placeholder {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 /* ============================================
    Dots Indicator - Fixed height
    ============================================ */
 .modal-dots {
-    height: 60px; /* Fixed height */
+    height: 60px;
     flex-shrink: 0;
     width: 100%;
     display: flex;
@@ -192,22 +272,43 @@
     outline-offset: 2px;
 }
 
+/* Placeholder for dots when only one item - maintains layout stability */
+.modal-dots-placeholder {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
 /* ============================================
    Responsive Styles
    ============================================ */
-
-/* Tablet and Mobile */
 @media (max-width: 768px) {
     .modal-backdrop {
         padding: 0.75rem;
     }
 
+    /* Fixed height: header (55px) + image (350px) + text (95px) + dots (50px) = 550px */
     .modal {
-        height: 500px;
-        max-height: 500px;
+        height: 550px;
+        max-height: 550px;
+        min-height: 550px;
         width: 100%;
         margin: 0;
         border-radius: 1rem;
+    }
+
+    /* Match BedroomCard modal height in responsive */
+    .modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
+    .modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
+        height: 550px;
+        max-height: 550px;
+        min-height: 550px;
+    }
+
+    .modal-inline {
+        height: 550px;
+        max-height: 550px;
+        min-height: 550px;
     }
 
     .modal-header {
@@ -229,17 +330,32 @@
     }
 }
 
-/* Small Mobile */
 @media (max-width: 428px) {
     .modal-backdrop {
         padding: 0.5rem;
     }
 
+    /* Fixed height: header (50px) + image (300px) + text (100px) + dots (50px) = 500px */
     .modal {
-        height: 450px;
-        max-height: 450px;
+        height: 500px;
+        max-height: 500px;
+        min-height: 500px;
         margin: 0;
         border-radius: 0.875rem;
+    }
+
+    /* Match BedroomCard modal height in responsive */
+    .modal-backdrop:has(.modal .modal-header .icon-button-close) .modal,
+    .modal-backdrop:has(.modal .modal-header button[aria-label="Close modal"]) .modal {
+        height: 500px;
+        max-height: 500px;
+        min-height: 500px;
+    }
+
+    .modal-inline {
+        height: 500px;
+        max-height: 500px;
+        min-height: 500px;
     }
 
     .modal-header {
@@ -269,4 +385,3 @@
         padding: 0 0.75rem;
     }
 }
-
