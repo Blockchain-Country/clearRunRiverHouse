@@ -100,7 +100,12 @@ const GuestInfoSection = () => {
 
                                     {block.groups && (
                                         <div className="gi_groups">
-                                            {block.groups.map((group) => {
+                                            {/* uncommente this line to bring up local_weather_group */}
+                                            {/* {block.groups.map((group) => { */} 
+                                            {block.groups
+                                                .filter((group) => group.id !== 'local_weather_group') // Temporarily hide local_weather_group
+                                                .map((group) => {
+                                                // when need to bring up local_weather_group, just remove previous 3 lines
                                                 const group_open =
                                                     open_group_id ===
                                                     group.id

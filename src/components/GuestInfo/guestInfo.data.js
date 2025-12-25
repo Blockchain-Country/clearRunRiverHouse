@@ -246,14 +246,14 @@ The final amount depends on the extent of damage and the level of cleaning requi
 Any professional cleaning, deodorizing, or repair costs (including the use of ozone machines) will also be charged to the guest responsible.\n\
 \n\
 📡 Smoke Detection\n\
-To enforce this policy, the home is equipped with smoke detectors and exterior security cameras, compliant with Airbnb’s privacy guidelines.\n\
+To enforce this policy, the home is equipped with smoke detectors and exterior security cameras, compliant with Airbnb/VRBO’s privacy guidelines.\n\
 These devices are used solely to protect the property and ensure a safe and comfortable stay for all guests.\n\
 \n\
 🚨 Immediate Actions\n\
 If evidence of smoking is discovered during your stay:\n\
 • You may be asked to vacate the property **without refund**.\n\
 • Applicable fines will be charged immediately.\n\
-• Repeated violations may result in further actions, including an Airbnb report and negative review.\n\
+• Repeated violations may result in further actions, including an Airbnb/VRBO report and negative review.\n\
 \n\
 🧽 Professional Cleaning\n\
 Indoor smoking requires deep professional cleaning to remove smoke odor and restore the home to a clean and odor-free condition.\n\
@@ -330,7 +330,7 @@ Hazardous or prohibited items — such as electronics, furniture, or constructio
 Any excessive trash, improper disposal, or wildlife-related mess will be documented with photos and a clear itemized breakdown of charges.\n\
 Fees for these issues range from **$25 to $500**, depending on the level of cleanup required.\n\
 \n\
-Guests will receive documentation of any fees within **14 days of checkout**, per Airbnb guidelines.',
+Guests will receive documentation of any fees within **14 days of checkout**, per Airbnb/VRBO guidelines.',
                     },
                     {
                         id: 'pets_policy_section',
@@ -360,7 +360,7 @@ If a pet is found on the property, the home will require professional deep clean
 All associated costs will be billed to the guest responsible.\n\
 \n\
 📸 Documentation\n\
-Any cleaning or damage fees will include photos and an itemized report, provided within 14 days per Airbnb guidelines.\n\
+Any cleaning or damage fees will include photos and an itemized report, provided within 14 days per Airbnb/VRBO guidelines.\n\
 \n\
 Thank you for respecting this policy and helping us keep the home healthy, clean, and comfortable for all guests.',
                     },

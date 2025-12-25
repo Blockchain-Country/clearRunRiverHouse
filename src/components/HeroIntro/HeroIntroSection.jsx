@@ -8,7 +8,7 @@ const HeroIntroSection = () => {
                 <p className="hero-kicker">
                     Escape to nature — in style
                 </p>
-                <h1 className="hero-title">Clear Run Riverhouse</h1>
+                <h1 className="hero-title">"Clear Run" River House</h1>
                 <p className="hero-subtitle">
                     Spacious 6-bedroom getaway with HotTub, Outdoor
                     Sauna, Game Room, Billiard Room, a private creek
@@ -16,7 +16,7 @@ const HeroIntroSection = () => {
                 </p>
                 <div className="hero-actions">
                     <a
-                        href="https://airbnb.com/h/clearrunriverhouse"
+                        href="https://t.vrbo.io/N8kGLzBMoZb"
                         target="_blank"
                         rel="noreferrer"
                         className="button"

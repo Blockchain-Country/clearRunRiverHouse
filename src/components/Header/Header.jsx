@@ -40,7 +40,7 @@ const Header = () => {
             <div className="header-inner">
                 <a href="#hero" className="logo" onClick={closeMenu}>
                     <span className="logo-icon">🏡</span>
-                    <span className="logo-text">Clear Run River House</span>
+                    <span className="logo-text">"Clear Run" River House</span>
                 </a>
                 <button
                     className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
@@ -70,12 +70,12 @@ const Header = () => {
                     </a>
                     <a
                         className="button button-outline header-book-button"
-                        href="https://airbnb.com/h/clearrunriverhouse"
+                        href="https://t.vrbo.io/N8kGLzBMoZb"
                         target="_blank"
                         rel="noreferrer"
                         onClick={closeMenu}
                     >
-                        Book on Airbnb
+                        Book on VRBO
                     </a>
                 </nav>
             </div>
