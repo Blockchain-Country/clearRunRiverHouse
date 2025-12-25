@@ -1,0 +1,272 @@
+/* ============================================
+   Modal Component Styles
+   Fixed size structure: Header, Image, Text, Dots
+   ============================================ */
+
+/* Backdrop (overlay mode only) */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 36, 22, 0.75);
+    backdrop-filter: blur(8px);
+    display: grid;
+    place-items: center;
+    z-index: 50;
+}
+
+/* Modal Container - Fixed size, column layout, centered */
+.modal {
+    width: min(960px, 100% - 2rem);
+    height: 600px; /* Fixed total height */
+    max-height: 600px;
+    background: var(--bg-elevated);
+    border-radius: 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center all children */
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* Inline mode (no backdrop) */
+.modal-inline {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    max-height: none;
+    height: auto;
+}
+
+/* ============================================
+   Header Section - Fixed height
+   ============================================ */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    flex-shrink: 0;
+    width: 100%;
+    height: 60px; /* Fixed height */
+    border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
+    box-sizing: border-box;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: 600;
+    color: var(--text, #2c2416);
+}
+
+/* ============================================
+   Image Container - Fixed height, relative positioning
+   ============================================ */
+.modal-image-container {
+    width: 100%;
+    height: 400px; /* Fixed height */
+    flex-shrink: 0;
+    position: relative; /* For absolute positioning of buttons */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--bg, #fafafa);
+}
+
+/* Swiper inside modal image container */
+.modal-image-container .swiper-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+.modal-image-container .swiper-slide-image {
+    height: 100% !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    border-radius: 0;
+}
+
+.modal-image-container .swiper-slide-text {
+    display: none;
+}
+
+.modal-image-container .swiper-button {
+    display: none;
+}
+
+.modal-image-container .swiper-dots {
+    display: none;
+}
+
+/* Navigation Buttons - Overlay on image, 50% opacity, vertically centered */
+.modal-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Vertically centered */
+    z-index: 10;
+    opacity: 0.5; /* 50% transparent */
+    transition: opacity 0.2s ease;
+}
+
+.modal-nav-button:hover {
+    opacity: 0.8; /* Slightly more visible on hover */
+}
+
+.modal-nav-prev {
+    left: 1rem;
+}
+
+.modal-nav-next {
+    right: 1rem;
+}
+
+/* ============================================
+   Text Block - Fixed height, scrollable
+   ============================================ */
+.modal-text-block {
+    height: 100px; /* Fixed height */
+    flex-shrink: 0;
+    width: 100%;
+    overflow-y: auto; /* Scrollable if text is long */
+    overflow-x: hidden;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    background: rgba(255, 250, 240, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.modal-description {
+    margin: 0;
+    font-size: clamp(var(--font-size-md, 1rem), 1.2vw, var(--font-size-xl, 1.25rem));
+    color: var(--text-muted, #666);
+    line-height: var(--line-height-normal, 1.6);
+    max-width: 100%;
+}
+
+/* ============================================
+   Dots Indicator - Fixed height
+   ============================================ */
+.modal-dots {
+    height: 60px; /* Fixed height */
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.modal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.modal-dot.active {
+    background: var(--accent-green, #6b8e23);
+    width: 24px;
+    border-radius: 4px;
+}
+
+.modal-dot:hover:not(.active) {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-dot:focus-visible {
+    outline: 2px solid var(--accent-blue, #4a90e2);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+/* Tablet and Mobile */
+@media (max-width: 768px) {
+    .modal-backdrop {
+        padding: 0.75rem;
+    }
+
+    .modal {
+        height: 500px;
+        max-height: 500px;
+        width: 100%;
+        margin: 0;
+        border-radius: 1rem;
+    }
+
+    .modal-header {
+        height: 55px;
+        padding: 0.75rem 1rem;
+    }
+
+    .modal-image-container {
+        height: 350px;
+    }
+
+    .modal-text-block {
+        height: 95px;
+        padding: 0.75rem;
+    }
+
+    .modal-dots {
+        height: 50px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 428px) {
+    .modal-backdrop {
+        padding: 0.5rem;
+    }
+
+    .modal {
+        height: 450px;
+        max-height: 450px;
+        margin: 0;
+        border-radius: 0.875rem;
+    }
+
+    .modal-header {
+        height: 50px;
+        padding: 0.625rem 0.875rem;
+    }
+
+    .modal-title {
+        font-size: var(--font-size-lg, 1.125rem);
+    }
+
+    .modal-image-container {
+        height: 300px;
+    }
+
+    .modal-text-block {
+        height: 100px;
+        padding: 0.75rem;
+    }
+
+    .modal-description {
+        font-size: var(--font-size-sm, 0.875rem);
+    }
+
+    .modal-dots {
+        height: 50px;
+        padding: 0 0.75rem;
+    }
+}
+

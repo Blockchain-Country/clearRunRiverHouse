@@ -1,0 +1,82 @@
+/* ============================================
+   Amenity Card Styles
+   ============================================ */
+
+.amenity-card {
+    border-radius: 1.25rem;
+    border: 1px solid var(--border-subtle);
+    background: radial-gradient(
+            circle at top left,
+            var(--primary-soft),
+            transparent 70%
+        ),
+        rgba(255, 250, 240, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.amenity-card:hover:not([disabled]) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 36, 22, 0.15);
+}
+
+.amenity-card[disabled] {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.amenity-card-thumb {
+    height: 140px;
+    margin: 0;
+    background: linear-gradient(
+        135deg,
+        var(--accent-green),
+        var(--accent-blue)
+    );
+    overflow: hidden;
+}
+
+.amenity-card-body {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    background: rgba(255, 250, 240, 0.98);
+    backdrop-filter: blur(10px);
+}
+
+.amenity-card-title {
+    margin: 0 0 4px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text);
+    line-height: var(--line-height-tight);
+}
+
+.amenity-card-text {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    line-height: var(--line-height-normal);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .amenity-card-thumb {
+        height: 120px;
+    }
+
+    .amenity-card-body {
+        padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
+    }
+}
+
+@media (max-width: 428px) {
+    .amenity-card-thumb {
+        height: 140px;
+    }
+}
+

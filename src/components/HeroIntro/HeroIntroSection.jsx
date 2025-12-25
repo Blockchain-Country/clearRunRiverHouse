@@ -1,0 +1,53 @@
+import React from 'react'
+import './HeroIntroSection.css'
+
+const HeroIntroSection = () => {
+    return (
+        <div className="hero-inner">
+            <div className="hero-text">
+                <p className="hero-kicker">
+                    Escape to nature — in style
+                </p>
+                <h1 className="hero-title">Clear Run Riverhouse</h1>
+                <p className="hero-subtitle">
+                    Spacious 6-bedroom getaway with HotTub, Outdoor
+                    Sauna, Game Room, Billiard Room, a private creek
+                    with forest — perfect for family and friends.
+                </p>
+                <div className="hero-actions">
+                    <a
+                        href="https://airbnb.com/h/clearrunriverhouse"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button"
+                    >
+                        Book your stay
+                    </a>
+                    <a
+                        href="#bedrooms"
+                        className="button button-ghost"
+                    >
+                        View rooms
+                    </a>
+                </div>
+                <dl className="hero-stats">
+                    <div>
+                        <dt>Sleeps</dt>
+                        <dd>14 guests</dd>
+                    </div>
+                    <div>
+                        <dt>Bedrooms</dt>
+                        <dd>6 rooms</dd>
+                    </div>
+                    <div>
+                        <dt>Location</dt>
+                        <dd>Tobyhanna, PA</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    )
+}
+
+export default HeroIntroSection
+
