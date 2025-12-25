@@ -17,7 +17,8 @@
 /* Modal Container - Column Layout */
 .modal {
     width: min(960px, 100% - 2rem);
-    max-height: min(85vh, 700px);
+    height: 600px;
+    max-height: 600px;
     background: var(--bg-elevated);
     border-radius: 1.25rem;
     padding: 0;
@@ -83,55 +84,67 @@
     min-height: 0;
     overflow: hidden;
     position: relative;
+    height: calc(100% - 60px);
+    padding: 0;
+    margin: 0;
 }
 
 /* Swiper Container within Modal */
 .modal-swiper {
     width: 100%;
     height: 100%;
-    min-height: 400px;
+    min-height: 540px;
+    max-height: 540px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+/* Swiper Container - Image Area */
+.modal-swiper .swiper-container {
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+    max-height: 540px;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
 }
 
-/* Swiper Container - Image Area */
-.modal-swiper .swiper-container {
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-    padding: 0;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
 /* Swiper Wrapper - Contains slides */
 .modal-swiper .swiper-wrapper {
-    flex: 1;
-    min-height: 0;
-    display: flex;
+    width: 100%;
     height: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-/* Image Section - Stretched and Centered */
+/* Image Section - Fixed Size Container */
 .modal-swiper .swiper-slide-image {
     width: 100%;
-    flex: 1;
-    min-height: 300px;
-    max-height: 500px;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
     margin: 0;
+    padding: 0;
     overflow: hidden;
     position: relative;
     border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--bg, #fafafa);
+    flex-shrink: 0;
 }
 
 .modal-swiper .swiper-slide-image img {
@@ -139,6 +152,8 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    margin: 0;
+    padding: 0;
 }
 
 /* Text Section - Below Image */
@@ -151,7 +166,12 @@
     margin: 0;
     flex-shrink: 0;
     width: 100%;
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
     box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .modal-swiper .swiper-slide-title {
@@ -173,23 +193,32 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.modal-swiper .swiper-button:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .modal-swiper .swiper-button-prev {
-    left: 1rem;
+    left: 0.5rem;
 }
 
 .modal-swiper .swiper-button-next {
-    right: 1rem;
+    right: 0.5rem;
 }
 
 /* Dots Section - Below Text */
 .modal-swiper .swiper-dots {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    margin: var(--spacing-md, 1rem) auto;
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
     padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1.5rem);
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
@@ -216,8 +245,9 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    flex: 1;
-    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
 /* ============================================
@@ -231,10 +261,15 @@
     }
 
     .modal {
-        max-height: min(95vh, 600px);
+        height: 500px;
+        max-height: 500px;
         width: 100%;
         margin: 0;
         border-radius: 1rem;
+    }
+
+    .modal-body {
+        height: calc(100% - 55px);
     }
 
     .modal-header {
@@ -242,15 +277,25 @@
     }
 
     .modal-swiper {
-        min-height: 350px;
+        min-height: 445px;
+        max-height: 445px;
+    }
+
+    .modal-swiper .swiper-container {
+        min-height: 445px;
+        max-height: 445px;
     }
 
     .modal-swiper .swiper-slide-image {
-        min-height: 250px;
-        max-height: 400px;
+        height: 350px;
+        min-height: 350px;
+        max-height: 350px;
     }
 
     .modal-swiper .swiper-slide-text {
+        height: 95px;
+        min-height: 95px;
+        max-height: 95px;
         padding: var(--spacing-md, 1rem) var(--spacing-lg, 1.5rem);
     }
 
@@ -275,9 +320,14 @@
     }
 
     .modal {
-        max-height: min(95vh, 500px);
+        height: 450px;
+        max-height: 450px;
         margin: 0;
         border-radius: 0.875rem;
+    }
+
+    .modal-body {
+        height: calc(100% - 50px);
     }
 
     .modal-header {
@@ -290,15 +340,25 @@
     }
 
     .modal-swiper {
-        min-height: 300px;
+        min-height: 400px;
+        max-height: 400px;
+    }
+
+    .modal-swiper .swiper-container {
+        min-height: 400px;
+        max-height: 400px;
     }
 
     .modal-swiper .swiper-slide-image {
-        min-height: 200px;
-        max-height: 350px;
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
     }
 
     .modal-swiper .swiper-slide-text {
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
         padding: var(--spacing-sm, 0.75rem) var(--spacing-md, 1rem);
     }
 
