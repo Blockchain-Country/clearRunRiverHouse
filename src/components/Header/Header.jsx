@@ -5,15 +5,25 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     // Prevent body scroll when menu is open
+    // Note: This uses a simpler approach than modal to avoid conflicts
+    // Modal's position:fixed approach takes precedence when modal is open
     useEffect(() => {
         if (isMenuOpen) {
-            document.body.style.overflow = 'hidden'
+            // Only set overflow if body is not already position:fixed (modal case)
+            if (document.body.style.position !== 'fixed') {
+                document.body.style.overflow = 'hidden'
+            }
         } else {
-            document.body.style.overflow = ''
+            // Only restore if body is not position:fixed (modal case)
+            if (document.body.style.position !== 'fixed') {
+                document.body.style.overflow = ''
+            }
         }
         // Cleanup on unmount
         return () => {
-            document.body.style.overflow = ''
+            if (document.body.style.position !== 'fixed') {
+                document.body.style.overflow = ''
+            }
         }
     }, [isMenuOpen])
 

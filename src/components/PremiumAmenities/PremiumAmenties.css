@@ -1,11 +1,12 @@
-.premium-amenities-swiper {
+/* Premium Amenities Container */
+.premium-amenities-container {
     width: 100%;
     margin: 0 auto;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-    .premium-amenities-swiper {
+    .premium-amenities-container {
         padding: 0;
     }
 }

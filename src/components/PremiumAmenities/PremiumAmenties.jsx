@@ -1,4 +1,4 @@
-import Swiper from '../Swiper/Swiper'
+import Modal from '../Modal/Modal'
 import { PREMIUM_AMENITIES } from './PremiumAmentiesObj'
 import './PremiumAmenties.css'
 
@@ -10,8 +10,15 @@ const PremiumAmenties = () => {
     }))
 
     return (
-        <div className="premium-amenities-swiper">
-            <Swiper items={swiperItems} autoPlayInterval={3000} showDots={true} />
+        <div className="premium-amenities-container">
+            <Modal 
+                open={true}
+                items={swiperItems} 
+                autoPlayInterval={3000} 
+                showDots={true}
+                showCloseButton={false}
+                inline={true}
+            />
         </div>
     )
 }

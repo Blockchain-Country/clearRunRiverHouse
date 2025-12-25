@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import ModalGallery from './ModalGallery.jsx';
+import Modal from '../Modal/Modal.jsx';
+import Swiper from '../Swiper/Swiper.jsx';
 import './Gallery.css';
 
 const GALLERY_ITEMS = [
@@ -15,13 +16,17 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
   const galleryItems = items || GALLERY_ITEMS;
   const [isOpen, setIsOpen] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Normalize items to have consistent structure
   const normalizedItems = useMemo(() => {
     return galleryItems.map((item, index) => {
       if (item.folder) {
-        return item; // Already in correct format
+        // Ensure label and description exist even if item has folder
+        return {
+          ...item,
+          label: item.label || item.title || '',
+          description: item.description || item.text || '',
+        };
       }
       // Convert room-style items to gallery format
       const folderId = item.title?.toLowerCase().replace(/\s+/g, '_') || `item_${index}`;
@@ -35,7 +40,7 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
   }, [galleryItems]);
 
   const imagesByFolder = useMemo(() => {
-    const modules = import.meta.glob('../../assets/images/*/*.{jpg,jpeg,png}', {
+    const modules = import.meta.glob('../../assets/images/*/*.{jpg,jpeg,png,JPG,PNG}', {
       eager: true,
       as: 'url',
     });
@@ -68,30 +73,25 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
     const list = imagesByFolder[folder];
     if (!list || list.length === 0) return;
     setCurrentFolder(folder);
-    setCurrentIndex(0);
     setIsOpen(true);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-  };
-
-  const handlePrev = () => {
-    const list = imagesByFolder[currentFolder] || [];
-    if (!list.length) return;
-    setCurrentIndex((prev) => (prev - 1 + list.length) % list.length);
-  };
-
-  const handleNext = () => {
-    const list = imagesByFolder[currentFolder] || [];
-    if (!list.length) return;
-    setCurrentIndex((prev) => (prev + 1) % list.length);
+    setCurrentFolder(null);
   };
 
   const activeItem = currentFolder
     ? normalizedItems.find((i) => i.folder === currentFolder)
     : null;
   const activeImages = currentFolder ? imagesByFolder[currentFolder] || [] : [];
+  
+  // Convert images to Swiper format for Modal
+  const modalItems = activeImages.map((img, idx) => ({
+    title: idx === 0 ? (activeItem?.label || activeItem?.title || '') : '',
+    text: idx === 0 ? (activeItem?.description || activeItem?.text || '') : '',
+    image: img,
+  }));
 
   const defaultSubtitle = sectionSubtitle || 'Click any card to open a fullscreen gallery. Images are loaded automatically from folders in src/assets/images.';
 
@@ -111,6 +111,10 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
           {normalizedItems.map((item) => {
             const hasImages =
               imagesByFolder[item.folder] && imagesByFolder[item.folder].length > 0;
+            const itemImages = imagesByFolder[item.folder] || [];
+            const thumbnailImage = item.imageSrc || (itemImages.length > 0 ? itemImages[0] : null);
+            const isRoomsSection = sectionId === 'rooms';
+            
             return (
               <button
                 key={item.folder}
@@ -119,14 +123,29 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
                 onClick={() => handleOpen(item.folder)}
                 disabled={!hasImages}
               >
-                <div 
-                  className="gallery-card-thumb"
-                  style={item.imageSrc ? {
-                    backgroundImage: `url(${item.imageSrc})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                  } : {}}
-                />
+                <div className="gallery-card-thumb">
+                  {isRoomsSection && hasImages && itemImages.length > 0 ? (
+                    <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+                      <Swiper 
+                        items={itemImages.map((img) => ({
+                          image: img,
+                          title: item.label || item.title || '',
+                          text: item.description || item.text || ''
+                        }))}
+                        autoPlayInterval={4000}
+                        showDots={itemImages.length > 1}
+                      />
+                    </div>
+                  ) : thumbnailImage ? (
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundImage: `url(${thumbnailImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }} />
+                  ) : null}
+                </div>
                 <div className="gallery-card-body">
                   <h3 className="gallery-card-title">{item.label}</h3>
                   <p className="gallery-card-text">{item.description}</p>
@@ -142,16 +161,14 @@ const GallerySection = ({ items = null, sectionId = 'gallery', sectionTitle = 'P
         </div>
       </div>
 
-      <ModalGallery
+      <Modal
         open={isOpen}
         title={activeItem?.label || activeItem?.title || ''}
-        images={activeImages}
-        index={currentIndex}
+        items={modalItems}
         onClose={handleClose}
-        onPrev={handlePrev}
-        onNext={handleNext}
-        useSwiper={sectionId === 'rooms'}
-        description={activeItem?.description || activeItem?.text || ''}
+        showCloseButton={true}
+        autoPlayInterval={0}
+        showDots={activeImages.length > 1}
       />
     </section>
   );

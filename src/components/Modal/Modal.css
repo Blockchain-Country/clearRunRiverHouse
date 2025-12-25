@@ -1,0 +1,381 @@
+/* ============================================
+   Modal Component Styles
+   Shared modal component for PremiumAmenities and GallerySection
+   ============================================ */
+
+/* Backdrop (overlay mode only) */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(44, 36, 22, 0.75);
+    backdrop-filter: blur(8px);
+    display: grid;
+    place-items: center;
+    z-index: 50;
+}
+
+/* Modal Container - Column Layout */
+.modal {
+    width: min(960px, 100% - 2rem);
+    height: 600px;
+    max-height: 600px;
+    background: var(--bg-elevated);
+    border-radius: 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* Inline mode (no backdrop) */
+.modal-inline {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    max-height: none;
+}
+
+/* ============================================
+   Modal Structure: Header, Body, Text, Dots
+   ============================================ */
+
+/* Header Section */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
+}
+
+.modal-title {
+    margin: 0;
+    font-size: var(--font-size-xl, 1.25rem);
+    font-weight: 600;
+    color: var(--text, #2c2416);
+}
+
+.modal-close {
+    border-radius: 999px;
+    border: 1px solid var(--border-subtle);
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background: transparent;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.modal-close:hover {
+    background: var(--hover-bg);
+    border-color: var(--border-medium);
+}
+
+/* Body Section - Contains Image Area */
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+    height: calc(100% - 60px);
+    padding: 0;
+    margin: 0;
+}
+
+/* Swiper Container within Modal */
+.modal-swiper {
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+    max-height: 540px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+/* Swiper Container - Image Area */
+.modal-swiper .swiper-container {
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+    max-height: 540px;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Swiper Wrapper - Contains slides */
+.modal-swiper .swiper-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+/* Image Section - Fixed Size Container */
+.modal-swiper .swiper-slide-image {
+    width: 100%;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg, #fafafa);
+    flex-shrink: 0;
+}
+
+.modal-swiper .swiper-slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Text Section - Below Image */
+.modal-swiper .swiper-slide-text {
+    display: flex !important;
+    flex-direction: column;
+    padding: var(--spacing-lg, 1.5rem) var(--spacing-xl, 2rem);
+    background: rgba(255, 250, 240, 0.95);
+    backdrop-filter: blur(10px);
+    margin: 0;
+    flex-shrink: 0;
+    width: 100%;
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-swiper .swiper-slide-title {
+    display: none;
+}
+
+.modal-swiper .swiper-slide-description {
+    margin: 0;
+    font-size: clamp(var(--font-size-md, 1rem), 1.2vw, var(--font-size-xl, 1.25rem));
+    color: var(--text-muted, #666);
+    line-height: var(--line-height-normal, 1.6);
+    max-width: 100%;
+    text-align: center;
+}
+
+/* Navigation Buttons - Over Image */
+.modal-swiper .swiper-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.modal-swiper .swiper-button:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.modal-swiper .swiper-button-prev {
+    left: 0.5rem;
+}
+
+.modal-swiper .swiper-button-next {
+    right: 0.5rem;
+}
+
+/* Dots Section - Below Text */
+.modal-swiper .swiper-dots {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1.5rem);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    width: fit-content;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Swiper Slide - Column Layout */
+.modal-swiper .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-swiper .swiper-slide-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+
+/* Tablet and Mobile */
+@media (max-width: 768px) {
+    .modal-backdrop {
+        padding: 0.75rem;
+    }
+
+    .modal {
+        height: 500px;
+        max-height: 500px;
+        width: 100%;
+        margin: 0;
+        border-radius: 1rem;
+    }
+
+    .modal-body {
+        height: calc(100% - 55px);
+    }
+
+    .modal-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .modal-swiper {
+        min-height: 445px;
+        max-height: 445px;
+    }
+
+    .modal-swiper .swiper-container {
+        min-height: 445px;
+        max-height: 445px;
+    }
+
+    .modal-swiper .swiper-slide-image {
+        height: 350px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+
+    .modal-swiper .swiper-slide-text {
+        height: 95px;
+        min-height: 95px;
+        max-height: 95px;
+        padding: var(--spacing-md, 1rem) var(--spacing-lg, 1.5rem);
+    }
+
+    .modal-swiper .swiper-dots {
+        margin: var(--spacing-sm, 0.5rem) auto;
+        padding: var(--spacing-xs, 0.25rem) var(--spacing-md, 1rem);
+    }
+
+    .modal-swiper .swiper-button-prev {
+        left: 0.5rem;
+    }
+
+    .modal-swiper .swiper-button-next {
+        right: 0.5rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 428px) {
+    .modal-backdrop {
+        padding: 0.5rem;
+    }
+
+    .modal {
+        height: 450px;
+        max-height: 450px;
+        margin: 0;
+        border-radius: 0.875rem;
+    }
+
+    .modal-body {
+        height: calc(100% - 50px);
+    }
+
+    .modal-header {
+        padding: 0.625rem 0.875rem;
+        margin-bottom: 0;
+    }
+
+    .modal-title {
+        font-size: var(--font-size-lg, 1.125rem);
+    }
+
+    .modal-swiper {
+        min-height: 400px;
+        max-height: 400px;
+    }
+
+    .modal-swiper .swiper-container {
+        min-height: 400px;
+        max-height: 400px;
+    }
+
+    .modal-swiper .swiper-slide-image {
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
+    }
+
+    .modal-swiper .swiper-slide-text {
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        padding: var(--spacing-sm, 0.75rem) var(--spacing-md, 1rem);
+    }
+
+    .modal-swiper .swiper-slide-description {
+        font-size: var(--font-size-sm, 0.875rem);
+    }
+
+    .modal-swiper .swiper-dots {
+        margin: var(--spacing-xs, 0.5rem) auto;
+        padding: var(--spacing-xs, 0.25rem) var(--spacing-sm, 0.75rem);
+    }
+
+    .modal-swiper .swiper-button-prev {
+        left: 0.375rem;
+    }
+
+    .modal-swiper .swiper-button-next {
+        right: 0.375rem;
+    }
+}

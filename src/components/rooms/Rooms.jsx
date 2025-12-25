@@ -10,7 +10,7 @@ const Rooms = () => {
                     key={obj.title}
                     title={obj.title}
                     text={obj.text}
-                    imageSrc={obj.imageSrc}
+                    images={obj.images}
                     className="room-card"
                 ></Card>
             ))}
