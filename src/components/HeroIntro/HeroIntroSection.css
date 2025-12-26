@@ -1,0 +1,144 @@
+.hero-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.75rem;
+    width: 100%;
+}
+
+.hero-text {
+    padding: 3rem 0 2rem;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.hero-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: var(--font-size-xs);
+    color: var(--accent-green);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-title {
+    margin-top: var(--spacing-sm);
+    font-size: clamp(2.4rem, 4vw, var(--font-size-5xl));
+    color: var(--text);
+    font-weight: 700;
+    line-height: var(--line-height-tight);
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    margin-top: var(--spacing-lg);
+    color: var(--text-muted);
+    font-size: clamp(var(--font-size-md), 1.2vw, 1.1rem);
+    line-height: var(--line-height-normal);
+    max-width: 90%;
+}
+
+.hero-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.hero-stats {
+    margin: var(--spacing-3xl) 0 0;
+    display: flex;
+    gap: var(--spacing-3xl);
+    font-size: var(--font-size-sm);
+    flex-wrap: wrap;
+}
+
+.hero-stats dt {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: var(--font-size-xs);
+    display: block;
+}
+
+.hero-stats dd {
+    margin: var(--spacing-xs) 0 0;
+    font-weight: 600;
+    color: var(--text);
+    font-size: var(--font-size-base);
+}
+
+/* Responsive Hero - iPad */
+@media (max-width: 1024px) {
+    .hero-text {
+        padding: 2.5rem 1.5rem 2rem;
+    }
+}
+
+/* Responsive Hero - Mobile */
+@media (max-width: 768px) {
+    .hero-text {
+        padding: 2rem 1.25rem 1.5rem;
+        text-align: center;
+    }
+
+    .hero-subtitle {
+        max-width: 100%;
+    }
+
+    .hero-actions {
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-actions .button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-stats {
+        justify-content: center;
+        gap: var(--spacing-2xl);
+    }
+}
+
+/* Responsive Hero - iPhone */
+@media (max-width: 428px) {
+    .hero-text {
+        padding: 1.5rem 1rem 1.25rem;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .hero-subtitle {
+        font-size: var(--font-size-sm);
+    }
+
+    .hero-actions {
+        gap: var(--spacing-sm);
+    }
+
+    .hero-actions .button {
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: var(--font-size-sm);
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        align-items: center;
+        text-align: center;
+        margin-top: var(--spacing-2xl);
+    }
+
+    .hero-stats dt {
+        font-size: 0.65rem;
+    }
+
+    .hero-stats dd {
+        font-size: var(--font-size-sm);
+    }
+}
+

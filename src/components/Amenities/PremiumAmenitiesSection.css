@@ -1,0 +1,11 @@
+.amenities-modal-container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* Ensure inline modal takes full width */
+.amenities-modal-container .modal-inline {
+    width: 100%;
+    max-width: 100%;
+}

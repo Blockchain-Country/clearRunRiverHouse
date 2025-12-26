@@ -1,0 +1,114 @@
+/* ============================================
+   Bedroom Card Styles
+   ============================================ */
+
+.bedroom-card {
+    border-radius: 1.25rem;
+    border: 1px solid var(--border-subtle);
+    background: radial-gradient(
+            circle at top left,
+            var(--primary-soft),
+            transparent 70%
+        ),
+        rgba(255, 250, 240, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bedroom-card:hover:not([disabled]) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 36, 22, 0.15);
+}
+
+.bedroom-card[disabled] {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.bedroom-card-thumb {
+    height: 140px;
+    margin: 0;
+    background: linear-gradient(
+        135deg,
+        var(--accent-green),
+        var(--accent-blue)
+    );
+    overflow: hidden;
+}
+
+.bedroom-card-body {
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    background: rgba(255, 250, 240, 0.98);
+    backdrop-filter: blur(10px);
+}
+
+.bedroom-card-title {
+    margin: 0 0 4px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text);
+    line-height: var(--line-height-tight);
+}
+
+.bedroom-card-text {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    line-height: var(--line-height-normal);
+}
+
+.bedroom-card-empty {
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* Swiper overrides for thumbnail cards */
+.bedroom-card-thumb .swiper-container {
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.bedroom-card-thumb .swiper-slide-image {
+    height: 100% !important;
+    min-height: unset !important;
+    max-height: unset !important;
+}
+
+.bedroom-card-thumb .swiper-slide-text {
+    display: none;
+}
+
+.bedroom-card-thumb .swiper-dots {
+    bottom: 4px;
+    padding: 2px 6px;
+}
+
+.bedroom-card-thumb .swiper-button {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bedroom-card-thumb {
+        height: 120px;
+    }
+
+    .bedroom-card-body {
+        padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-sm);
+    }
+}
+
+@media (max-width: 428px) {
+    .bedroom-card-thumb {
+        height: 140px;
+    }
+}
+

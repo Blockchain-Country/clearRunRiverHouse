@@ -1,0 +1,38 @@
+/* ============================================
+   Bedroom Section Styles
+   ============================================ */
+
+.bedroom-section {
+    padding: var(--spacing-5xl) 0;
+}
+
+.bedroom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-2xl);
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+    .bedroom-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--spacing-xl);
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .bedroom-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--spacing-lg);
+    }
+}
+
+/* Responsive - Small Mobile */
+@media (max-width: 428px) {
+    .bedroom-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--spacing-md);
+    }
+}
+
