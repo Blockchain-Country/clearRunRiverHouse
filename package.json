@@ -7,7 +7,8 @@
     "build": "npm run optimize-images && vite build",
     "preview": "vite preview",
     "optimize-images": "node scripts/optimize-images.js",
-    "optimize-images:apply": "npm run optimize-images && node scripts/apply-optimized-images.js"
+    "optimize-images:apply": "npm run optimize-images && node scripts/apply-optimized-images.js",
+    "remove-duplicates": "node scripts/remove-duplicate-formats.js"
   },
   "dependencies": {
     "react": "^18.3.1",

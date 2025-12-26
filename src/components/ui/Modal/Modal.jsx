@@ -100,6 +100,7 @@ const Modal = ({
 
   const currentItem = items[currentIndex] || items[0]
   const currentText = currentItem?.text || currentItem?.description || ''
+  const currentTitle = currentItem?.title || title || ''
 
   const handlePrev = () => {
     const swiperContainer = swiperRef.current?.querySelector('.swiper-container')
@@ -137,8 +138,8 @@ const Modal = ({
     >
       {/* Header Section - Always render to maintain fixed height */}
       <header className="modal-header">
-        {title ? (
-          <h3 id="modal-title" className="modal-title">{title}</h3>
+        {currentTitle ? (
+          <h3 id="modal-title" className="modal-title">{currentTitle}</h3>
         ) : (
           <div className="modal-title-placeholder"></div>
         )}
@@ -215,7 +216,7 @@ const Modal = ({
       onClick={handleBackdropClick}
       role="dialog"
       aria-modal="true"
-      aria-labelledby={title ? "modal-title" : undefined}
+      aria-labelledby={currentTitle ? "modal-title" : undefined}
     >
       {modalContent}
     </div>

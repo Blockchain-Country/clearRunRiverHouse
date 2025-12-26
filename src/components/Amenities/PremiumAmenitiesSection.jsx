@@ -9,7 +9,7 @@ const PremiumAmenitiesSection = () => {
         return getAllAmenityImages()
     }, [])
 
-    // Use generic title for modal header
+    // Fallback title for modal header (items have their own titles that will be used dynamically)
     const modalTitle = 'Premium Amenities'
 
     return (
