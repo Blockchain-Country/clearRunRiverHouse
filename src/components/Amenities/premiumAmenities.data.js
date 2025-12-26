@@ -40,7 +40,7 @@ export const PREMIUM_AMENITIES = [
         imagePrefix: 'living_room',
     },
     {
-        title: 'Spacious Sunroom Dining',
+        title: 'Sunroom Dining',
         text: 'A bright sunroom with a large table for fourteen, surrounded by forest-view windows and direct access to the deck—perfect for unforgettable gatherings.',
         imagePrefix: 'sunroom',
     },
