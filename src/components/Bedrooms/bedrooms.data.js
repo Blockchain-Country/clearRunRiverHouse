@@ -9,7 +9,7 @@ const getImagesFromFolder = (folderName) => {
     const images = []
     Object.entries(allImageModules).forEach(([path, url]) => {
         // Match the folder name in the path
-        // Path format: ../../../public/images/br_master/mb_1.png
+        // Path format: ../../../public/images/master_bedroom/mb_1.png
         const match = path.match(/images\/([^/]+)\//)
         if (match && match[1] === folderName) {
             images.push(url)
@@ -20,14 +20,14 @@ const getImagesFromFolder = (folderName) => {
     return images.sort()
 }
 
-// Room folder mappings
+// Room folder mappings - maps bedroom titles to folder names
 const ROOM_FOLDERS = {
-    'Master Bedroom': 'br_master',
-    'Guest Bedroom 1': 'br_1',
-    'Guest Bedroom 2': 'br_2',
-    'Guest Bedroom 3': 'br_3',
-    'Guest Bedroom 4': 'br_4',
-    'Guest Bedroom 5': 'br_5',
+    'Master Bedroom': 'master_bedroom',
+    'Warm Bedroom': 'warm_bedroom',
+    'Side Bedroom': 'side_bedroom',
+    'Sun Bedroom': 'sun_bedroom',
+    'Passage Bedroom': 'passage_bedroom',
+    'Kids Bedroom': 'kids_bedroom',
 }
 
 // Function to get all images for a room
@@ -41,38 +41,37 @@ export const BEDROOMS = [
     {
         title: 'Master Bedroom',
         text: 'King bed, forest views, ensuite bathroom.',
-        folder: 'br_master',
+        folder: 'master_bedroom',
         images: getRoomImages('Master Bedroom'),
     },
     {
-        title: 'Guest Bedroom 1',
-        text: 'Bedroom at the 1st Floor. King bed, shared bathroom.',
-        folder: 'br_1',
-        images: getRoomImages('Guest Bedroom 1'),
+        title: 'Warm Bedroom',
+        text: 'Bedroom on the 1st floor. King bed, shared bathroom. The warmest bedroom in the house.',
+        folder: 'warm_bedroom',
+        images: getRoomImages('Warm Bedroom'),
     },
     {
-        title: 'Guest Bedroom 2',
-        text: 'A huge Side Bedroom at the 1st floor. King bed, with couch, quiet corner of the house and has a side door',
-        folder: 'br_2',
-        images: getRoomImages('Guest Bedroom 2'),
+        title: 'Side Bedroom',
+        text: 'Spacious side bedroom on the 1st floor. King bed, couch, quiet corner of the house with a side entrance.',
+        folder: 'side_bedroom',
+        images: getRoomImages('Side Bedroom'),
     },
     {
-        title: 'Guest Bedroom 3',
-        text: 'Bedroom at the 2nd floor. Sunshine Room. King bed, shared bathroom.',
-        folder: 'br_3',
-        images: getRoomImages('Guest Bedroom 3'),
+        title: 'Sun Bedroom',
+        text: 'Sunny bedroom on the 2nd floor. King bed, shared bathroom.',
+        folder: 'sun_bedroom',
+        images: getRoomImages('Sun Bedroom'),
     },
     {
-        title: 'Guest Bedroom 4',
-        text: 'Bedroom at the 2nd floor with two Full size beds, shared bathroom.',
-        folder: 'br_4',
-        images: getRoomImages('Guest Bedroom 4'),
+        title: 'Passage Bedroom',
+        text: 'Pass-through bedroom on the 2nd floor with two full-size beds. Shared bathroom.',
+        folder: 'passage_bedroom',
+        images: getRoomImages('Passage Bedroom'),
     },
     {
-        title: 'Guest Bedroom 5',
-        text: 'Bedroom at the 2nd floor. Good for the little ones.  balk bed and a computer desk with 27" monintor, shared bathroom.',
-        folder: 'br_5',
-        images: getRoomImages('Guest Bedroom 5'),
+        title: 'Kids Bedroom',
+        text: 'Kids bedroom on the 2nd floor with a bunk bed and a computer desk with a 27" monitor. Shared bathroom.',
+        folder: 'kids_bedroom',
+        images: getRoomImages('Kids Bedroom'),
     },
 ]
-
