@@ -13,7 +13,7 @@ npm install
 # Optimize images (creates optimized versions without modifying originals)
 npm run optimize-images
 
-# Review optimized images in: public/images-optimized/
+# Review optimized images in: src/assets/images-optimized/
 
 # Apply optimized images (backs up originals first)
 npm run optimize-images:apply
@@ -23,21 +23,25 @@ npm run optimize-images:apply
 
 | Script | Description |
 |--------|-------------|
-| `npm run optimize-images` | Optimizes all images in `public/images/` and saves to `public/images-optimized/` |
+| `npm run optimize-images` | Optimizes all images in `src/assets/images/` and saves to `src/assets/images-optimized/` |
 | `npm run optimize-images:apply` | Backs up originals and applies optimized images |
 | `npm run build` | Automatically runs image optimization before building |
 
 ## How It Works
 
 The optimization script (`scripts/optimize-images.js`) uses:
+- **sharp**: Converts all image formats (HEIC, PNG, etc.) to JPG format
 - **imagemin-mozjpeg**: Compresses JPG images (quality: 85%, progressive)
-- **imagemin-pngquant**: Compresses PNG images (quality: 60-80%)
-- **imagemin-webp**: Creates WebP versions for even better compression
+
+**Behavior**:
+- **All images are converted to JPG format** (HEIC, PNG, etc. → JPG)
+- **Images ≥ 5MB**: Converted to JPG AND optimized/compressed
+- **Images < 5MB**: Converted to JPG only (no compression/optimization applied)
 
 ## Directory Structure
 
 ```
-public/
+src/assets/
 ├── images/              # Original images (source)
 ├── images-optimized/    # Optimized versions (created by script, gitignored)
 └── images-backup/       # Backup of originals (created when applying, gitignored)
@@ -53,20 +57,14 @@ const config = {
     quality: 85,
     progressive: true,
   },
-  png: {
-    quality: [0.6, 0.8],
-  },
-  webp: {
-    quality: 85,
-  },
 };
 ```
 
 ## Workflow
 
-1. **Development**: Work with original images in `public/images/`
+1. **Development**: Work with original images in `src/assets/images/`
 2. **Before Build**: Run `npm run optimize-images` to create optimized versions
-3. **Review**: Check `public/images-optimized/` to ensure quality is acceptable
+3. **Review**: Check `src/assets/images-optimized/` to ensure quality is acceptable
 4. **Apply**: Run `npm run optimize-images:apply` to replace originals
 5. **Build**: Run `npm run build` (optimization runs automatically)
 
@@ -95,7 +93,7 @@ npm install
 ### Restore original images
 ```bash
 # If you have a backup
-mv public/images-backup public/images
+mv src/assets/images-backup src/assets/images
 ```
 
 ### Customize optimization settings
@@ -104,6 +102,7 @@ Edit `scripts/optimize-images.js` and adjust the `config` object.
 ## Notes
 
 - Original images are never modified until you run `optimize-images:apply`
-- WebP versions are created but not used by default (you can update code to use them)
+- All images (HEIC, PNG, etc.) are converted to JPG format only
+- HEIC files (like `mb_2.heic`) are automatically converted to JPG during optimization
 - The build process automatically optimizes images, so you don't need to run it manually before deployment
 

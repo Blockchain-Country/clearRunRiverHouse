@@ -3,8 +3,8 @@
 /**
  * Image Optimization Script
  * 
- * Compresses images in public/images/ directory using imagemin
- * Supports: JPG, PNG, and creates WebP versions
+ * Converts and compresses images in src/assets/images/ directory
+ * Converts all formats (HEIC, PNG, etc.) to JPG format only
  * 
  * Usage: npm run optimize-images
  */
@@ -12,8 +12,8 @@
 const path = require('path');
 const fs = require('fs');
 
-const IMAGES_DIR = path.join(__dirname, '../public/images');
-const OUTPUT_DIR = path.join(__dirname, '../public/images-optimized');
+const IMAGES_DIR = path.join(__dirname, '../src/assets/images');
+const OUTPUT_DIR = path.join(__dirname, '../src/assets/images-optimized');
 
 // Configuration
 const MIN_SIZE_TO_OPTIMIZE = 5 * 1024 * 1024; // 5MB in bytes - skip smaller images
@@ -24,89 +24,38 @@ if (fs.existsSync(OUTPUT_DIR)) {
 }
 fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
+// Cleanup function to remove any leftover temp files
+function cleanupTempFiles(dir) {
+  if (!fs.existsSync(dir)) return;
+  
+  const files = fs.readdirSync(dir, { withFileTypes: true });
+  for (const file of files) {
+    const filePath = path.join(dir, file.name);
+    if (file.isDirectory()) {
+      cleanupTempFiles(filePath);
+    } else if (file.name.startsWith('temp_')) {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (e) {
+        // Ignore errors during cleanup
+      }
+    }
+  }
+}
+
+// Clean up any temp files in source directory (shouldn't be there, but just in case)
+cleanupTempFiles(IMAGES_DIR);
+
 // Configuration
 const config = {
   jpeg: {
     quality: 85,
     progressive: true,
   },
-  webp: {
-    quality: 85,
-  },
 };
 
-// Format priority for duplicate removal (lower number = higher priority)
-const FORMAT_PRIORITY = {
-  'jpg': 1, 'jpeg': 1, 'JPG': 1, 'JPEG': 1,
-  'png': 2, 'PNG': 2,
-  'webp': 3, 'WEBP': 3,
-};
-
-function getBaseName(filename) {
-  return filename.replace(/\.(jpg|jpeg|png|JPG|JPEG|PNG|webp|WEBP)$/i, '');
-}
-
-function getExtension(filename) {
-  const match = filename.match(/\.([^.]+)$/);
-  return match ? match[1] : '';
-}
-
-function getPriority(ext) {
-  return FORMAT_PRIORITY[ext] || 999;
-}
-
-function removeDuplicateFormats() {
-  let totalRemoved = 0;
-  let totalSaved = 0;
-
-  const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
-
-  for (const subdir of subdirs) {
-    const subdirPath = path.join(IMAGES_DIR, subdir);
-    const files = fs.readdirSync(subdirPath, { withFileTypes: true })
-      .filter(dirent => dirent.isFile())
-      .map(dirent => dirent.name)
-      .filter(name => /\.(jpg|jpeg|png|JPG|JPEG|PNG)$/i.test(name));
-
-    const fileGroups = {};
-    files.forEach(file => {
-      const baseName = getBaseName(file);
-      if (!fileGroups[baseName]) {
-        fileGroups[baseName] = [];
-      }
-      fileGroups[baseName].push(file);
-    });
-
-    Object.keys(fileGroups).forEach(baseName => {
-      const group = fileGroups[baseName];
-      if (group.length > 1) {
-        group.sort((a, b) => {
-          const extA = getExtension(a);
-          const extB = getExtension(b);
-          return getPriority(extA) - getPriority(extB);
-        });
-
-        const keepFile = group[0];
-        const removeFiles = group.slice(1);
-
-        removeFiles.forEach(file => {
-          const filePath = path.join(subdirPath, file);
-          const stats = fs.statSync(filePath);
-          fs.unlinkSync(filePath);
-          totalRemoved++;
-          totalSaved += stats.size;
-        });
-      }
-    });
-  }
-
-  if (totalRemoved > 0) {
-    const savedMB = (totalSaved / (1024 * 1024)).toFixed(2);
-    console.log(`🔍 Removed ${totalRemoved} duplicate format(s), freed ${savedMB} MB\n`);
-  }
-}
+// Supported image formats (including HEIC)
+const IMAGE_EXTENSIONS = /\.(jpg|jpeg|png|heic|HEIC|JPG|JPEG|PNG)$/i;
 
 // Helper to get module (handles both CommonJS and ES modules)
 async function getModule(moduleName) {
@@ -123,14 +72,68 @@ async function getModule(moduleName) {
     } catch (e2) {
       console.error(`❌ Failed to load ${moduleName}`);
       console.error('Please ensure dependencies are installed:');
-      console.error('npm install --save-dev imagemin imagemin-mozjpeg imagemin-pngquant imagemin-webp');
+      console.error('npm install --save-dev imagemin imagemin-mozjpeg sharp heic-convert');
       throw e2;
     }
   }
 }
 
+// Convert image to JPG using sharp (handles PNG, etc.) or heic-convert (for HEIC)
+// Uses reasonable quality for conversion (will be optimized later if >= 5MB)
+async function convertToJpg(inputPath, outputPath, sharp, heicConvert) {
+  try {
+    const ext = path.extname(inputPath).toLowerCase();
+    
+    // Use heic-convert for HEIC files (sharp doesn't support HEIC without libheif)
+    if (ext === '.heic' || ext === '.heif') {
+      const fs = require('fs').promises;
+      const inputBuffer = await fs.readFile(inputPath);
+      const outputBuffer = await heicConvert({
+        buffer: inputBuffer,
+        format: 'JPEG',
+        quality: 0.9
+      });
+      await fs.writeFile(outputPath, outputBuffer);
+      return true;
+    } else {
+      // Use sharp for other formats (PNG, etc.)
+      const image = sharp(inputPath);
+      await image
+        .jpeg({ quality: 90, progressive: true })
+        .toFile(outputPath);
+      return true;
+    }
+  } catch (error) {
+    console.error(`   ⚠️  Failed to convert ${path.basename(inputPath)}: ${error.message}`);
+    return false;
+  }
+}
+
+// Optimize JPG using imagemin-mozjpeg
+async function optimizeJpg(inputPath, outputPath, mozjpegPlugin, imagemin) {
+  try {
+    const result = await imagemin([inputPath], {
+      destination: path.dirname(outputPath),
+      plugins: [mozjpegPlugin],
+    });
+    
+    if (result && result.length > 0) {
+      // Rename to desired output name if needed
+      const optimizedPath = result[0].destinationPath;
+      if (optimizedPath !== outputPath) {
+        fs.renameSync(optimizedPath, outputPath);
+      }
+      return true;
+    }
+    return false;
+  } catch (error) {
+    console.error(`   ⚠️  Failed to optimize ${path.basename(inputPath)}: ${error.message}`);
+    return false;
+  }
+}
+
 async function optimizeImages() {
-  console.log('🖼️  Starting image optimization...\n');
+  console.log('🖼️  Starting image optimization (JPG format only)...\n');
   console.log(`📁 Source: ${IMAGES_DIR}`);
   console.log(`📁 Output: ${OUTPUT_DIR}\n`);
 
@@ -139,39 +142,27 @@ async function optimizeImages() {
     process.exit(1);
   }
 
-  // Remove duplicate formats before optimizing
-  console.log('🔍 Checking for duplicate image formats...');
-  removeDuplicateFormats();
-
   try {
-    // Load imagemin and plugins (all may be ES modules)
-    // Only JPG and WebP since we remove PNG duplicates
-    console.log('📦 Loading imagemin and plugins...');
-    const [imagemin, imageminMozjpeg, imageminWebp] = await Promise.all([
+    // Load required modules
+    console.log('📦 Loading modules...');
+    const [imagemin, imageminMozjpeg, sharp, heicConvert] = await Promise.all([
       getModule('imagemin'),
       getModule('imagemin-mozjpeg'),
-      getModule('imagemin-webp'),
+      getModule('sharp'),
+      getModule('heic-convert'),
     ]);
 
-    // Create plugin instances
+    // Create plugin instance
     const mozjpegPlugin = typeof imageminMozjpeg === 'function' 
       ? imageminMozjpeg(config.jpeg) 
       : imageminMozjpeg.default(config.jpeg);
-    
-    const webpPlugin = typeof imageminWebp === 'function'
-      ? imageminWebp(config.webp)
-      : imageminWebp.default(config.webp);
 
     console.log('   ✓ All modules loaded\n');
 
-    let totalJpg = 0;
+    let totalConverted = 0;
+    let totalOptimized = 0;
     let totalSkipped = 0;
-    let totalWebp = 0;
-
-    // Process each subdirectory to preserve structure
-    const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+    let totalErrors = 0;
 
     // Helper function to check if image should be optimized
     function shouldOptimize(filePath) {
@@ -179,50 +170,101 @@ async function optimizeImages() {
       return stats.size >= MIN_SIZE_TO_OPTIMIZE;
     }
 
-    // Process root level images (only JPG since we remove PNG duplicates)
+    // Helper to get output filename (always .jpg)
+    function getOutputFilename(inputFilename) {
+      const baseName = path.basename(inputFilename, path.extname(inputFilename));
+      return `${baseName}.jpg`;
+    }
+
+    // Process root level images
     const rootImages = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
-      .filter(dirent => dirent.isFile() && /\.(jpg|jpeg|JPG|JPEG)$/i.test(dirent.name))
+      .filter(dirent => dirent.isFile() && IMAGE_EXTENSIONS.test(dirent.name))
       .map(dirent => dirent.name);
 
     if (rootImages.length > 0) {
-      const imagesToOptimize = rootImages.filter(img => {
-        const imgPath = path.join(IMAGES_DIR, img);
-        return shouldOptimize(imgPath);
-      });
+      console.log(`📸 Processing ${rootImages.length} root level image(s)...`);
+      
+      for (const imageFile of rootImages) {
+        const inputPath = path.join(IMAGES_DIR, imageFile);
+        const outputFilename = getOutputFilename(imageFile);
+        const outputPath = path.join(OUTPUT_DIR, outputFilename);
+        const isJpg = /\.(jpg|jpeg)$/i.test(imageFile);
+        const needsConversion = !isJpg;
+        const needsOptimization = shouldOptimize(inputPath);
 
-      const imagesToSkip = rootImages.filter(img => {
-        const imgPath = path.join(IMAGES_DIR, img);
-        return !shouldOptimize(imgPath);
-      });
-
-      totalSkipped += imagesToSkip.length;
-      if (imagesToSkip.length > 0) {
-        console.log(`   ⏭️  Skipped ${imagesToSkip.length} small image(s) (< 5MB)`);
-      }
-
-      if (imagesToOptimize.length > 0) {
-        const rootJpg = await imagemin(
-          imagesToOptimize.map(img => path.join(IMAGES_DIR, img)),
-          {
-            destination: OUTPUT_DIR,
-            plugins: [mozjpegPlugin],
+          // Always convert to JPG first (if needed)
+          if (needsConversion) {
+            const tempJpgPath = path.join(OUTPUT_DIR, `temp_${outputFilename}`);
+            let tempFileCreated = false;
+            try {
+              const converted = await convertToJpg(inputPath, tempJpgPath, sharp, heicConvert);
+              if (converted) {
+                tempFileCreated = true;
+                totalConverted++;
+                // If >= 5MB, optimize the converted JPG
+                if (needsOptimization) {
+                  const optimized = await optimizeJpg(tempJpgPath, outputPath, mozjpegPlugin, imagemin);
+                  if (optimized) {
+                    totalOptimized++;
+                  } else {
+                    // If optimization failed, keep the converted file
+                    if (fs.existsSync(tempJpgPath)) {
+                      fs.renameSync(tempJpgPath, outputPath);
+                    }
+                    totalOptimized++;
+                  }
+                } else {
+                  // < 5MB, just use the converted file without optimization
+                  if (fs.existsSync(tempJpgPath)) {
+                    fs.renameSync(tempJpgPath, outputPath);
+                  }
+                  totalSkipped++;
+                }
+                // Always remove temp file after processing
+                if (fs.existsSync(tempJpgPath)) {
+                  fs.unlinkSync(tempJpgPath);
+                }
+              } else {
+                totalErrors++;
+              }
+            } catch (error) {
+              // Ensure temp file is cleaned up even on error
+              if (tempFileCreated && fs.existsSync(tempJpgPath)) {
+                try {
+                  fs.unlinkSync(tempJpgPath);
+                } catch (e) {
+                  // Ignore cleanup errors
+                }
+              }
+              totalErrors++;
+              console.error(`   ⚠️  Error processing ${imageFile}: ${error.message}`);
+            }
+        } else {
+          // Already JPG
+          if (needsOptimization) {
+            // >= 5MB, optimize it
+            const optimized = await optimizeJpg(inputPath, outputPath, mozjpegPlugin, imagemin);
+            if (optimized) {
+              totalOptimized++;
+            } else {
+              // If optimization failed, copy original
+              fs.copyFileSync(inputPath, outputPath);
+              totalOptimized++;
+            }
+          } else {
+            // < 5MB, just copy without optimization
+            fs.copyFileSync(inputPath, outputPath);
+            totalSkipped++;
           }
-        );
-        totalJpg += rootJpg.length;
-
-        // Create WebP versions only for optimized images
-        const rootWebp = await imagemin(
-          imagesToOptimize.map(img => path.join(IMAGES_DIR, img)),
-          {
-            destination: OUTPUT_DIR,
-            plugins: [webpPlugin],
-          }
-        );
-        totalWebp += rootWebp.length;
+        }
       }
     }
 
-    // Process each subdirectory (only JPG files, skip small ones)
+    // Process each subdirectory to preserve structure
+    const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
+
     for (const subdir of subdirs) {
       const subdirPath = path.join(IMAGES_DIR, subdir);
       const outputSubdirPath = path.join(OUTPUT_DIR, subdir);
@@ -232,65 +274,118 @@ async function optimizeImages() {
         fs.mkdirSync(outputSubdirPath, { recursive: true });
       }
 
-      // Get all JPG files in subdirectory
-      const jpgFiles = fs.readdirSync(subdirPath, { withFileTypes: true })
-        .filter(dirent => dirent.isFile() && /\.(jpg|jpeg|JPG|JPEG)$/i.test(dirent.name))
+      // Get all image files in subdirectory
+      const imageFiles = fs.readdirSync(subdirPath, { withFileTypes: true })
+        .filter(dirent => dirent.isFile() && IMAGE_EXTENSIONS.test(dirent.name))
         .map(dirent => dirent.name);
 
-      if (jpgFiles.length > 0) {
-        // Separate files by size
-        const filesToOptimize = [];
-        const filesToSkip = [];
+      if (imageFiles.length > 0) {
+        console.log(`📸 Processing ${imageFiles.length} image(s) in ${subdir}/...`);
 
-        jpgFiles.forEach(file => {
-          const filePath = path.join(subdirPath, file);
-          if (shouldOptimize(filePath)) {
-            filesToOptimize.push(filePath);
+        for (const imageFile of imageFiles) {
+          const inputPath = path.join(subdirPath, imageFile);
+          const outputFilename = getOutputFilename(imageFile);
+          const outputPath = path.join(outputSubdirPath, outputFilename);
+          const isJpg = /\.(jpg|jpeg)$/i.test(imageFile);
+          const needsConversion = !isJpg;
+          const needsOptimization = shouldOptimize(inputPath);
+
+          // Always convert to JPG first (if needed)
+          if (needsConversion) {
+            const tempJpgPath = path.join(outputSubdirPath, `temp_${outputFilename}`);
+            let tempFileCreated = false;
+            try {
+              const converted = await convertToJpg(inputPath, tempJpgPath, sharp, heicConvert);
+              if (converted) {
+                tempFileCreated = true;
+                totalConverted++;
+                // If >= 5MB, optimize the converted JPG
+                if (needsOptimization) {
+                  const optimized = await optimizeJpg(tempJpgPath, outputPath, mozjpegPlugin, imagemin);
+                  if (optimized) {
+                    totalOptimized++;
+                  } else {
+                    // If optimization failed, keep the converted file
+                    if (fs.existsSync(tempJpgPath)) {
+                      fs.renameSync(tempJpgPath, outputPath);
+                    }
+                    totalOptimized++;
+                  }
+                } else {
+                  // < 5MB, just use the converted file without optimization
+                  if (fs.existsSync(tempJpgPath)) {
+                    fs.renameSync(tempJpgPath, outputPath);
+                  }
+                  totalSkipped++;
+                }
+                // Always remove temp file after processing
+                if (fs.existsSync(tempJpgPath)) {
+                  fs.unlinkSync(tempJpgPath);
+                }
+              } else {
+                totalErrors++;
+              }
+            } catch (error) {
+              // Ensure temp file is cleaned up even on error
+              if (tempFileCreated && fs.existsSync(tempJpgPath)) {
+                try {
+                  fs.unlinkSync(tempJpgPath);
+                } catch (e) {
+                  // Ignore cleanup errors
+                }
+              }
+              totalErrors++;
+              console.error(`   ⚠️  Error processing ${imageFile}: ${error.message}`);
+            }
           } else {
-            filesToSkip.push(file);
-            totalSkipped++;
+            // Already JPG
+            if (needsOptimization) {
+              // >= 5MB, optimize it
+              const optimized = await optimizeJpg(inputPath, outputPath, mozjpegPlugin, imagemin);
+              if (optimized) {
+                totalOptimized++;
+              } else {
+                // If optimization failed, copy original
+                fs.copyFileSync(inputPath, outputPath);
+                totalOptimized++;
+              }
+            } else {
+              // < 5MB, just copy without optimization
+              fs.copyFileSync(inputPath, outputPath);
+              totalSkipped++;
+            }
           }
-        });
-
-        if (filesToSkip.length > 0) {
-          console.log(`   ⏭️  Skipped ${filesToSkip.length} small file(s) in ${subdir}/`);
-        }
-
-        // Optimize only large JPG images
-        if (filesToOptimize.length > 0) {
-          const optimizedJpg = await imagemin(filesToOptimize, {
-            destination: outputSubdirPath,
-            plugins: [mozjpegPlugin],
-          });
-          totalJpg += optimizedJpg.length;
-
-          // Create WebP versions only for optimized images
-          const webpFiles = await imagemin(filesToOptimize, {
-            destination: outputSubdirPath,
-            plugins: [webpPlugin],
-          });
-          totalWebp += webpFiles.length;
         }
       }
     }
 
-    console.log(`   ✓ Optimized ${totalJpg} JPG file(s) (≥ 5MB)`);
-    if (totalSkipped > 0) {
-      console.log(`   ⏭️  Skipped ${totalSkipped} small file(s) (< 5MB - already optimized)`);
+    console.log('\n✨ Optimization complete!');
+    if (totalConverted > 0) {
+      console.log(`🔄 Converted ${totalConverted} file(s) to JPG format`);
     }
-    console.log(`   ✓ Created ${totalWebp} WebP file(s)`);
+    console.log(`📊 Optimized ${totalOptimized} JPG file(s) (≥ 5MB)`);
+    if (totalSkipped > 0) {
+      console.log(`⏭️  Copied ${totalSkipped} file(s) without optimization (< 5MB)`);
+    }
+    if (totalErrors > 0) {
+      console.log(`⚠️  ${totalErrors} error(s) encountered`);
+    }
 
     // Calculate size reduction
     const originalSize = getDirectorySize(IMAGES_DIR);
     const optimizedSize = getDirectorySize(OUTPUT_DIR);
-    const reduction = ((originalSize - optimizedSize) / originalSize * 100).toFixed(1);
+    const reduction = originalSize > 0 
+      ? ((originalSize - optimizedSize) / originalSize * 100).toFixed(1)
+      : 0;
 
-    console.log('\n✨ Optimization complete!');
-    console.log(`📊 Original size: ${formatBytes(originalSize)}`);
+    console.log(`\n📊 Original size: ${formatBytes(originalSize)}`);
     console.log(`📊 Optimized size: ${formatBytes(optimizedSize)}`);
     console.log(`📊 Reduction: ${reduction}%\n`);
     console.log(`💡 Review optimized images in: ${OUTPUT_DIR}`);
     console.log(`💡 To apply: Run "npm run optimize-images:apply"\n`);
+
+    // Final cleanup of any remaining temp files
+    cleanupTempFiles(OUTPUT_DIR);
 
   } catch (error) {
     console.error('❌ Error optimizing images:', error.message);

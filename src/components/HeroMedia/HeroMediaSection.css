@@ -23,7 +23,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--hero-image, url('./assets/images/heroImage/heroImage.jpg')) center/cover
+    background: var(--hero-image, url('../../assets/images/heroImage/HeroImage.JPG')) center/cover
         no-repeat;
     z-index: -2;
 }

@@ -149,7 +149,7 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
         'Segoe UI', sans-serif;
     background: var(--bg);
-    background-image: url('/images/background/background.jpg');
+    background-image: url('./assets/images/background/background.jpg');
     background-repeat: repeat;
     background-attachment: fixed;
     background-size: auto;
@@ -444,7 +444,7 @@ main {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--hero-image, url('./assets/images/heroImage/heroImage.jpg')) center/cover
+    background: var(--hero-image, url('./assets/images/heroImage/HeroImage.JPG')) center/cover
         no-repeat;
     z-index: -2;
 }
