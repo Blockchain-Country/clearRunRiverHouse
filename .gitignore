@@ -87,3 +87,7 @@ storybook-static/
 tmp/
 temp/
 
+# Image optimization outputs
+public/images-optimized/
+public/images-backup/
+
