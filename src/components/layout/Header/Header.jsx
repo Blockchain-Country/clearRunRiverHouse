@@ -40,7 +40,7 @@ const Header = () => {
             <div className="header-inner">
                 <a href="#hero" className="logo" onClick={closeMenu}>
                     <span className="logo-icon">🏡</span>
-                    <span className="logo-text">"Clear Run" River House</span>
+                    <span className="logo-text">Clear Run River House</span>
                 </a>
                 <button
                     className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
