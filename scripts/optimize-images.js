@@ -15,10 +15,14 @@ const fs = require('fs');
 const IMAGES_DIR = path.join(__dirname, '../public/images');
 const OUTPUT_DIR = path.join(__dirname, '../public/images-optimized');
 
-// Ensure output directory exists
-if (!fs.existsSync(OUTPUT_DIR)) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+// Configuration
+const MIN_SIZE_TO_OPTIMIZE = 5 * 1024 * 1024; // 5MB in bytes - skip smaller images
+
+// Clean and ensure output directory exists
+if (fs.existsSync(OUTPUT_DIR)) {
+  fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
 }
+fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 // Configuration
 const config = {
@@ -26,13 +30,83 @@ const config = {
     quality: 85,
     progressive: true,
   },
-  png: {
-    quality: [0.6, 0.8],
-  },
   webp: {
     quality: 85,
   },
 };
+
+// Format priority for duplicate removal (lower number = higher priority)
+const FORMAT_PRIORITY = {
+  'jpg': 1, 'jpeg': 1, 'JPG': 1, 'JPEG': 1,
+  'png': 2, 'PNG': 2,
+  'webp': 3, 'WEBP': 3,
+};
+
+function getBaseName(filename) {
+  return filename.replace(/\.(jpg|jpeg|png|JPG|JPEG|PNG|webp|WEBP)$/i, '');
+}
+
+function getExtension(filename) {
+  const match = filename.match(/\.([^.]+)$/);
+  return match ? match[1] : '';
+}
+
+function getPriority(ext) {
+  return FORMAT_PRIORITY[ext] || 999;
+}
+
+function removeDuplicateFormats() {
+  let totalRemoved = 0;
+  let totalSaved = 0;
+
+  const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subdir of subdirs) {
+    const subdirPath = path.join(IMAGES_DIR, subdir);
+    const files = fs.readdirSync(subdirPath, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(jpg|jpeg|png|JPG|JPEG|PNG)$/i.test(name));
+
+    const fileGroups = {};
+    files.forEach(file => {
+      const baseName = getBaseName(file);
+      if (!fileGroups[baseName]) {
+        fileGroups[baseName] = [];
+      }
+      fileGroups[baseName].push(file);
+    });
+
+    Object.keys(fileGroups).forEach(baseName => {
+      const group = fileGroups[baseName];
+      if (group.length > 1) {
+        group.sort((a, b) => {
+          const extA = getExtension(a);
+          const extB = getExtension(b);
+          return getPriority(extA) - getPriority(extB);
+        });
+
+        const keepFile = group[0];
+        const removeFiles = group.slice(1);
+
+        removeFiles.forEach(file => {
+          const filePath = path.join(subdirPath, file);
+          const stats = fs.statSync(filePath);
+          fs.unlinkSync(filePath);
+          totalRemoved++;
+          totalSaved += stats.size;
+        });
+      }
+    });
+  }
+
+  if (totalRemoved > 0) {
+    const savedMB = (totalSaved / (1024 * 1024)).toFixed(2);
+    console.log(`🔍 Removed ${totalRemoved} duplicate format(s), freed ${savedMB} MB\n`);
+  }
+}
 
 // Helper to get module (handles both CommonJS and ES modules)
 async function getModule(moduleName) {
@@ -65,13 +139,17 @@ async function optimizeImages() {
     process.exit(1);
   }
 
+  // Remove duplicate formats before optimizing
+  console.log('🔍 Checking for duplicate image formats...');
+  removeDuplicateFormats();
+
   try {
     // Load imagemin and plugins (all may be ES modules)
+    // Only JPG and WebP since we remove PNG duplicates
     console.log('📦 Loading imagemin and plugins...');
-    const [imagemin, imageminMozjpeg, imageminPngquant, imageminWebp] = await Promise.all([
+    const [imagemin, imageminMozjpeg, imageminWebp] = await Promise.all([
       getModule('imagemin'),
       getModule('imagemin-mozjpeg'),
-      getModule('imagemin-pngquant'),
       getModule('imagemin-webp'),
     ]);
 
@@ -80,10 +158,6 @@ async function optimizeImages() {
       ? imageminMozjpeg(config.jpeg) 
       : imageminMozjpeg.default(config.jpeg);
     
-    const pngquantPlugin = typeof imageminPngquant === 'function'
-      ? imageminPngquant(config.png)
-      : imageminPngquant.default(config.png);
-    
     const webpPlugin = typeof imageminWebp === 'function'
       ? imageminWebp(config.webp)
       : imageminWebp.default(config.webp);
@@ -91,7 +165,7 @@ async function optimizeImages() {
     console.log('   ✓ All modules loaded\n');
 
     let totalJpg = 0;
-    let totalPng = 0;
+    let totalSkipped = 0;
     let totalWebp = 0;
 
     // Process each subdirectory to preserve structure
@@ -99,61 +173,111 @@ async function optimizeImages() {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
-    // Also process root level images
-    const rootImages = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
-      .filter(dirent => dirent.isFile() && /\.(jpg|jpeg|png|JPG|JPEG|PNG)$/i.test(dirent.name))
-      .map(dirent => dirent.name);
-
-    // Process root level images
-    if (rootImages.length > 0) {
-      const rootJpg = await imagemin([`${IMAGES_DIR}/*.{jpg,JPG,jpeg,JPEG}`], {
-        destination: OUTPUT_DIR,
-        plugins: [mozjpegPlugin],
-      });
-      totalJpg += rootJpg.length;
-
-      const rootPng = await imagemin([`${IMAGES_DIR}/*.{png,PNG}`], {
-        destination: OUTPUT_DIR,
-        plugins: [pngquantPlugin],
-      });
-      totalPng += rootPng.length;
-
-      const rootWebp = await imagemin([`${IMAGES_DIR}/*.{jpg,jpeg,png,JPG,JPEG,PNG}`], {
-        destination: OUTPUT_DIR,
-        plugins: [webpPlugin],
-      });
-      totalWebp += rootWebp.length;
+    // Helper function to check if image should be optimized
+    function shouldOptimize(filePath) {
+      const stats = fs.statSync(filePath);
+      return stats.size >= MIN_SIZE_TO_OPTIMIZE;
     }
 
-    // Process each subdirectory
+    // Process root level images (only JPG since we remove PNG duplicates)
+    const rootImages = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+      .filter(dirent => dirent.isFile() && /\.(jpg|jpeg|JPG|JPEG)$/i.test(dirent.name))
+      .map(dirent => dirent.name);
+
+    if (rootImages.length > 0) {
+      const imagesToOptimize = rootImages.filter(img => {
+        const imgPath = path.join(IMAGES_DIR, img);
+        return shouldOptimize(imgPath);
+      });
+
+      const imagesToSkip = rootImages.filter(img => {
+        const imgPath = path.join(IMAGES_DIR, img);
+        return !shouldOptimize(imgPath);
+      });
+
+      totalSkipped += imagesToSkip.length;
+      if (imagesToSkip.length > 0) {
+        console.log(`   ⏭️  Skipped ${imagesToSkip.length} small image(s) (< 5MB)`);
+      }
+
+      if (imagesToOptimize.length > 0) {
+        const rootJpg = await imagemin(
+          imagesToOptimize.map(img => path.join(IMAGES_DIR, img)),
+          {
+            destination: OUTPUT_DIR,
+            plugins: [mozjpegPlugin],
+          }
+        );
+        totalJpg += rootJpg.length;
+
+        // Create WebP versions only for optimized images
+        const rootWebp = await imagemin(
+          imagesToOptimize.map(img => path.join(IMAGES_DIR, img)),
+          {
+            destination: OUTPUT_DIR,
+            plugins: [webpPlugin],
+          }
+        );
+        totalWebp += rootWebp.length;
+      }
+    }
+
+    // Process each subdirectory (only JPG files, skip small ones)
     for (const subdir of subdirs) {
       const subdirPath = path.join(IMAGES_DIR, subdir);
       const outputSubdirPath = path.join(OUTPUT_DIR, subdir);
 
-      // Optimize JPG images in subdirectory
-      const jpgFiles = await imagemin([`${subdirPath}/**/*.{jpg,JPG,jpeg,JPEG}`], {
-        destination: outputSubdirPath,
-        plugins: [mozjpegPlugin],
-      });
-      totalJpg += jpgFiles.length;
+      // Ensure output subdirectory exists
+      if (!fs.existsSync(outputSubdirPath)) {
+        fs.mkdirSync(outputSubdirPath, { recursive: true });
+      }
 
-      // Optimize PNG images in subdirectory
-      const pngFiles = await imagemin([`${subdirPath}/**/*.{png,PNG}`], {
-        destination: outputSubdirPath,
-        plugins: [pngquantPlugin],
-      });
-      totalPng += pngFiles.length;
+      // Get all JPG files in subdirectory
+      const jpgFiles = fs.readdirSync(subdirPath, { withFileTypes: true })
+        .filter(dirent => dirent.isFile() && /\.(jpg|jpeg|JPG|JPEG)$/i.test(dirent.name))
+        .map(dirent => dirent.name);
 
-      // Create WebP versions in subdirectory
-      const webpFiles = await imagemin([`${subdirPath}/**/*.{jpg,jpeg,png,JPG,JPEG,PNG}`], {
-        destination: outputSubdirPath,
-        plugins: [webpPlugin],
-      });
-      totalWebp += webpFiles.length;
+      if (jpgFiles.length > 0) {
+        // Separate files by size
+        const filesToOptimize = [];
+        const filesToSkip = [];
+
+        jpgFiles.forEach(file => {
+          const filePath = path.join(subdirPath, file);
+          if (shouldOptimize(filePath)) {
+            filesToOptimize.push(filePath);
+          } else {
+            filesToSkip.push(file);
+            totalSkipped++;
+          }
+        });
+
+        if (filesToSkip.length > 0) {
+          console.log(`   ⏭️  Skipped ${filesToSkip.length} small file(s) in ${subdir}/`);
+        }
+
+        // Optimize only large JPG images
+        if (filesToOptimize.length > 0) {
+          const optimizedJpg = await imagemin(filesToOptimize, {
+            destination: outputSubdirPath,
+            plugins: [mozjpegPlugin],
+          });
+          totalJpg += optimizedJpg.length;
+
+          // Create WebP versions only for optimized images
+          const webpFiles = await imagemin(filesToOptimize, {
+            destination: outputSubdirPath,
+            plugins: [webpPlugin],
+          });
+          totalWebp += webpFiles.length;
+        }
+      }
     }
 
-    console.log(`   ✓ Optimized ${totalJpg} JPG file(s)`);
-    console.log(`   ✓ Optimized ${totalPng} PNG file(s)`);
+    console.log(`   ✓ Optimized ${totalJpg} JPG file(s) (≥ 5MB)`);
+    if (totalSkipped > 0) {
+      console.log(`   ⏭️  Skipped ${totalSkipped} small file(s) (< 5MB - already optimized)`);
+    }
     console.log(`   ✓ Created ${totalWebp} WebP file(s)`);
 
     // Calculate size reduction
