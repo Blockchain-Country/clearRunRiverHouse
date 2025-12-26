@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import heroImage from '../../../public/images/heroImage/HeroImage.JPG'
+import heroImage from '../../assets/images/heroImage/HeroImage.JPG'
 import './HeroMediaSection.css'
 
 const HeroMediaSection = () => {

@@ -1,6 +1,6 @@
 // Dynamically load all images from premiumAmenities folder
 const allImageModules = import.meta.glob(
-    '../../../public/images/premiumAmenities/*.{jpg,jpeg,png,JPG,PNG}',
+    '../../assets/images/premiumAmenities/*.{jpg,jpeg,png,JPG,PNG}',
     {
         eager: true,
         as: 'url',
@@ -11,7 +11,7 @@ const allImageModules = import.meta.glob(
 const getImagesByPrefix = (prefix) => {
     const images = []
     Object.entries(allImageModules).forEach(([path, url]) => {
-        // Extract filename from path: ../../../public/images/premiumAmenities/hot_tub_1.png
+        // Extract filename from path: ../../assets/images/premiumAmenities/hot_tub_1.png
         const filename = path.split('/').pop()
         if (filename.startsWith(prefix)) {
             images.push({

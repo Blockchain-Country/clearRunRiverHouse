@@ -1,5 +1,5 @@
 // Import all images at module level (import.meta.glob must be called at top level)
-const allImageModules = import.meta.glob('../../../public/images/*/*.{jpg,jpeg,png,JPG,PNG}', {
+const allImageModules = import.meta.glob('../../assets/images/*/*.{jpg,jpeg,png,JPG,PNG}', {
     eager: true,
     as: 'url',
 })
@@ -9,7 +9,7 @@ const getImagesFromFolder = (folderName) => {
     const images = []
     Object.entries(allImageModules).forEach(([path, url]) => {
         // Match the folder name in the path
-        // Path format: ../../../public/images/master_bedroom/mb_1.png
+        // Path format: ../../assets/images/master_bedroom/mb_1.png
         const match = path.match(/images\/([^/]+)\//)
         if (match && match[1] === folderName) {
             images.push(url)

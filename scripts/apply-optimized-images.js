@@ -12,9 +12,9 @@
 const path = require('path');
 const fs = require('fs');
 
-const IMAGES_DIR = path.join(__dirname, '../public/images');
-const OPTIMIZED_DIR = path.join(__dirname, '../public/images-optimized');
-const BACKUP_DIR = path.join(__dirname, '../public/images-backup');
+const IMAGES_DIR = path.join(__dirname, '../src/assets/images');
+const OPTIMIZED_DIR = path.join(__dirname, '../src/assets/images-optimized');
+const BACKUP_DIR = path.join(__dirname, '../src/assets/images-backup');
 
 // Format priority for duplicate removal (lower number = higher priority)
 const FORMAT_PRIORITY = {
@@ -118,8 +118,73 @@ function applyOptimizedImages() {
   console.log('🔍 Removing duplicate formats...');
   removeDuplicateFormats();
 
+  // Remove original non-JPG files that were converted (HEIC, PNG, etc.)
+  console.log('🗑️  Removing original non-JPG files (HEIC, PNG, etc.)...');
+  removeOriginalNonJpgFiles();
+
   console.log('✨ Done! Original images backed up to:', BACKUP_DIR);
-  console.log('💡 To restore originals: mv public/images-backup public/images\n');
+  console.log('💡 To restore originals: mv src/assets/images-backup src/assets/images\n');
+}
+
+function removeOriginalNonJpgFiles() {
+  let totalRemoved = 0;
+  let totalSaved = 0;
+
+  // Process root level files
+  if (fs.existsSync(IMAGES_DIR)) {
+    const rootFiles = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(heic|heif|HEIC|HEIF|png|PNG)$/i.test(name));
+
+    rootFiles.forEach(file => {
+      const filePath = path.join(IMAGES_DIR, file);
+      const baseName = path.basename(file, path.extname(file));
+      const jpgPath = path.join(IMAGES_DIR, `${baseName}.jpg`);
+      
+      // Only remove if JPG version exists (meaning it was converted)
+      if (fs.existsSync(jpgPath)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  // Process subdirectories
+  const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subdir of subdirs) {
+    const subdirPath = path.join(IMAGES_DIR, subdir);
+    const files = fs.readdirSync(subdirPath, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(heic|heif|HEIC|HEIF|png|PNG)$/i.test(name));
+
+    files.forEach(file => {
+      const filePath = path.join(subdirPath, file);
+      const baseName = path.basename(file, path.extname(file));
+      const jpgPath = path.join(subdirPath, `${baseName}.jpg`);
+      
+      // Only remove if JPG version exists (meaning it was converted)
+      if (fs.existsSync(jpgPath)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  if (totalRemoved > 0) {
+    const savedMB = (totalSaved / (1024 * 1024)).toFixed(2);
+    console.log(`   ✓ Removed ${totalRemoved} original non-JPG file(s), freed ${savedMB} MB\n`);
+  } else {
+    console.log('   ✓ No original non-JPG files to remove\n');
+  }
 }
 
 function copyDirectory(src, dest) {

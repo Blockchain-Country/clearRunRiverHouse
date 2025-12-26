@@ -12,7 +12,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const IMAGES_DIR = path.join(__dirname, '../public/images');
+const IMAGES_DIR = path.join(__dirname, '../src/assets/images');
 
 // Priority order: prefer formats that are typically smaller/better for web
 const FORMAT_PRIORITY = {

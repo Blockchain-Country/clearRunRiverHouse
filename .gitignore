@@ -88,6 +88,11 @@ tmp/
 temp/
 
 # Image optimization outputs
-public/images-optimized/
-public/images-backup/
+src/assets/images-optimized/
+src/assets/images-backup/
+
+# Temporary image files from optimization
+**/temp_*.jpg
+**/temp_*.jpeg
+**/temp_*.png
 
