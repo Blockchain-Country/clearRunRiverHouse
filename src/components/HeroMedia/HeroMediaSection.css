@@ -23,8 +23,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--hero-image, url('../../assets/images/heroImage/HeroImage.JPG')) center/cover
-        no-repeat;
+    background: var(
+            --hero-image,
+            url('../../assets/images/heroImage/heroimage_1.jpg')
+        )
+        center/cover no-repeat;
     z-index: -2;
 }
 
@@ -77,4 +80,3 @@
         max-height: 320px;
     }
 }
-

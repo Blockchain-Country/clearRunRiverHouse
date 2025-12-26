@@ -30,14 +30,19 @@ const getImagesByPrefix = (prefix) => {
 // Images are matched by filename prefix (e.g., hot_tub_*.png matches "hot_tub")
 export const PREMIUM_AMENITIES = [
     {
-        title: 'Outdoor Hot Tub',
-        text: 'Soak under the stars, surrounded by tall trees and mountain air.',
-        imagePrefix: 'hot_tub', // Matches hot_tub_1.png, hot_tub_2.png, etc.
-    },
-    {
         title: 'Private Sauna',
         text: 'Warm up and unwind after a day of skiing or hiking.',
         imagePrefix: 'sauna', // Matches sauna_1.png, sauna_2.png, etc.
+    },
+    {
+        title: 'Cozy Living Room',
+        text: 'A spacious living room with a fireplace, a U-shaped sofa, and a game table for a warm, welcoming vibe.',
+        imagePrefix: 'living_room',
+    },
+    {
+        title: 'Spacious Sunroom Dining',
+        text: 'A bright sunroom with a large table for fourteen, surrounded by forest-view windows and direct access to the deck—perfect for unforgettable gatherings.',
+        imagePrefix: 'sunroom',
     },
     {
         title: 'Billiards Room',
@@ -45,9 +50,9 @@ export const PREMIUM_AMENITIES = [
         imagePrefix: 'billiards', // Matches billiards_1.png, billiards_2.png, etc.
     },
     {
-        title: 'Creek & Forest',
-        text: 'Private access to Clear Run creek and scenic forest trails.',
-        imagePrefix: 'creek', // Matches creek_1.png, creek_2.png, etc.
+        title: 'Outdoor Hot Tub',
+        text: 'Soak under the stars, surrounded by tall trees and mountain air.',
+        imagePrefix: 'hot_tub', // Matches hot_tub_1.png, hot_tub_2.png, etc.
     },
     {
         title: 'Master Bathroom',
@@ -65,14 +70,19 @@ export const PREMIUM_AMENITIES = [
         imagePrefix: 'fireplace',
     },
     {
-        title: 'Sunroom Dining',
-        text: 'A bright sunroom with a large table for fourteen, surrounded by forest-view windows and direct access to the deck.',
-        imagePrefix: 'sunroom',
+        title: 'Creek & Forest',
+        text: 'Private access to Clear Run creek and scenic forest trails.',
+        imagePrefix: 'creek', // Matches creek_1.png, creek_2.png, etc.
     },
     {
-        title: 'Cozy Living Room',
-        text: 'A spacious living room with a fireplace, a U-shaped sofa, and a game table for a warm, welcoming vibe.',
-        imagePrefix: 'living_room',
+        title: 'Gaming & Entertainment Room',
+        text: 'A dedicated gaming space with a 65-inch 120Hz TV, perfect for console play, movies, and late-night events.',
+        imagePrefix: 'gaming_room',
+    },
+    {
+        title: 'BBQ and Smoking Area',
+        text: 'A cozy covered BBQ spot where you can grill on gas or charcoal and even smoke meat in a special section.',
+        imagePrefix: 'bbq_area',
     },
 ]
 

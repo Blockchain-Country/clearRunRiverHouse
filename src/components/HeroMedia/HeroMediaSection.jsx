@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import heroImage from '../../assets/images/heroImage/HeroImage.JPG'
+import heroImage from '../../assets/images/heroImage/heroimage_1.jpg'
 import './HeroMediaSection.css'
 
 const HeroMediaSection = () => {
@@ -9,7 +9,10 @@ const HeroMediaSection = () => {
         const img = new Image()
         img.src = heroImage
         img.onload = () => {
-            document.documentElement.style.setProperty('--hero-image', `url(${heroImage})`)
+            document.documentElement.style.setProperty(
+                '--hero-image',
+                `url(${heroImage})`
+            )
         }
     }, [])
 
@@ -21,4 +24,3 @@ const HeroMediaSection = () => {
 }
 
 export default HeroMediaSection
-
