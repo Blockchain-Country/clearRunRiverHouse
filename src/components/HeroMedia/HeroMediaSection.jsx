@@ -5,7 +5,12 @@ import './HeroMediaSection.css'
 const HeroMediaSection = () => {
     // Set hero image as CSS variable for proper Vite asset handling
     useEffect(() => {
-        document.documentElement.style.setProperty('--hero-image', `url(${heroImage})`)
+        // Preload the hero image for faster rendering
+        const img = new Image()
+        img.src = heroImage
+        img.onload = () => {
+            document.documentElement.style.setProperty('--hero-image', `url(${heroImage})`)
+        }
     }, [])
 
     return (

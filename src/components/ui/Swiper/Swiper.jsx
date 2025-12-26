@@ -126,18 +126,28 @@ const Swiper = ({
       onMouseLeave={handleMouseLeave}
     >
       <div className="swiper-wrapper">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className={`swiper-slide ${index === currentIndex ? 'active' : ''}`}
-            style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
-          >
-            <div className="swiper-slide-content">
-              {item.image && (
-                <div className="swiper-slide-image">
-                  <img src={item.image} alt={item.title || `Slide ${index + 1}`} />
-                </div>
-              )}
+        {items.map((item, index) => {
+          const isActive = index === currentIndex
+          const isNearby = Math.abs(index - currentIndex) <= 1
+          
+          return (
+            <div
+              key={index}
+              className={`swiper-slide ${isActive ? 'active' : ''}`}
+              style={{ transform: `translateX(${(index - currentIndex) * 100}%)` }}
+            >
+              <div className="swiper-slide-content">
+                {item.image && (
+                  <div className="swiper-slide-image">
+                    <img 
+                      src={item.image} 
+                      alt={item.title || `Slide ${index + 1}`}
+                      loading={isNearby ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchpriority={isActive ? "high" : "low"}
+                    />
+                  </div>
+                )}
               {(item.title || item.text) && (
                 <div className="swiper-slide-text">
                   {item.title && <h3 className="swiper-slide-title">{item.title}</h3>}
@@ -146,7 +156,8 @@ const Swiper = ({
               )}
             </div>
           </div>
-        ))}
+          )
+        })}
       </div>
 
       {showArrows && (
