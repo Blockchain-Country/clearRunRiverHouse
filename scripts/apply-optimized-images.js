@@ -89,7 +89,7 @@ function removeDuplicateFormats() {
   }
 }
 
-function applyOptimizedImages() {
+async function applyOptimizedImages() {
   console.log('🔄 Applying optimized images...\n');
 
   // Check if optimized directory exists
@@ -108,6 +108,15 @@ function applyOptimizedImages() {
     fs.cpSync(IMAGES_DIR, BACKUP_DIR, { recursive: true });
     console.log(`   ✓ Backup created: ${BACKUP_DIR}\n`);
   }
+
+  // Remove uppercase .JPG files FIRST (before copying)
+  // This is critical on macOS which has case-insensitive filesystem
+  // mb_3.JPG and mb_3.jpg are treated as the same file!
+  console.log('🗑️  Removing uppercase .JPG files (must be done before copying on macOS)...');
+  removeUppercaseJpgFilesBeforeCopy();
+
+  // Small delay to ensure filesystem operations complete
+  await new Promise(resolve => setTimeout(resolve, 100));
 
   // Copy optimized images to images directory
   console.log('📋 Copying optimized images...');
@@ -184,6 +193,132 @@ function removeOriginalNonJpgFiles() {
     console.log(`   ✓ Removed ${totalRemoved} original non-JPG file(s), freed ${savedMB} MB\n`);
   } else {
     console.log('   ✓ No original non-JPG files to remove\n');
+  }
+}
+
+// Remove uppercase .JPG files BEFORE copying (for case-insensitive filesystems like macOS)
+// We check if the lowercase version exists in optimized folder
+function removeUppercaseJpgFilesBeforeCopy() {
+  let totalRemoved = 0;
+  let totalSaved = 0;
+
+  // Process root level files
+  if (fs.existsSync(IMAGES_DIR)) {
+    const rootFiles = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(JPG|JPEG)$/.test(name));
+
+    rootFiles.forEach(file => {
+      const filePath = path.join(IMAGES_DIR, file);
+      const baseName = path.basename(file, path.extname(file));
+      const lowercaseInOptimized = path.join(OPTIMIZED_DIR, `${baseName.toLowerCase()}.jpg`);
+      
+      // Remove if lowercase version exists in optimized folder (we're about to copy it)
+      if (fs.existsSync(lowercaseInOptimized)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  // Process subdirectories
+  const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subdir of subdirs) {
+    const subdirPath = path.join(IMAGES_DIR, subdir);
+    const optimizedSubdirPath = path.join(OPTIMIZED_DIR, subdir);
+    const files = fs.readdirSync(subdirPath, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(JPG|JPEG)$/.test(name));
+
+    files.forEach(file => {
+      const filePath = path.join(subdirPath, file);
+      const baseName = path.basename(file, path.extname(file));
+      const lowercaseInOptimized = path.join(optimizedSubdirPath, `${baseName.toLowerCase()}.jpg`);
+      
+      // Remove if lowercase version exists in optimized folder (we're about to copy it)
+      if (fs.existsSync(lowercaseInOptimized)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  if (totalRemoved > 0) {
+    const savedMB = (totalSaved / (1024 * 1024)).toFixed(2);
+    console.log(`   ✓ Removed ${totalRemoved} uppercase .JPG file(s), freed ${savedMB} MB\n`);
+  } else {
+    console.log('   ✓ No uppercase .JPG files to remove\n');
+  }
+}
+
+// Remove uppercase .JPG files AFTER copying (for cleanup)
+function removeUppercaseJpgFiles() {
+  let totalRemoved = 0;
+  let totalSaved = 0;
+
+  // Process root level files
+  if (fs.existsSync(IMAGES_DIR)) {
+    const rootFiles = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(JPG|JPEG)$/.test(name));
+
+    rootFiles.forEach(file => {
+      const filePath = path.join(IMAGES_DIR, file);
+      const baseName = path.basename(file, path.extname(file));
+      const lowercasePath = path.join(IMAGES_DIR, `${baseName.toLowerCase()}.jpg`);
+      
+      // Only remove if lowercase version exists (meaning it was converted)
+      if (fs.existsSync(lowercasePath)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  // Process subdirectories
+  const subdirs = fs.readdirSync(IMAGES_DIR, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  for (const subdir of subdirs) {
+    const subdirPath = path.join(IMAGES_DIR, subdir);
+    const files = fs.readdirSync(subdirPath, { withFileTypes: true })
+      .filter(dirent => dirent.isFile())
+      .map(dirent => dirent.name)
+      .filter(name => /\.(JPG|JPEG)$/.test(name));
+
+    files.forEach(file => {
+      const filePath = path.join(subdirPath, file);
+      const baseName = path.basename(file, path.extname(file));
+      const lowercasePath = path.join(subdirPath, `${baseName.toLowerCase()}.jpg`);
+      
+      // Only remove if lowercase version exists (meaning it was converted)
+      if (fs.existsSync(lowercasePath)) {
+        const stats = fs.statSync(filePath);
+        fs.unlinkSync(filePath);
+        totalRemoved++;
+        totalSaved += stats.size;
+      }
+    });
+  }
+
+  if (totalRemoved > 0) {
+    const savedMB = (totalSaved / (1024 * 1024)).toFixed(2);
+    console.log(`   ✓ Removed ${totalRemoved} uppercase .JPG file(s), freed ${savedMB} MB\n`);
+  } else {
+    console.log('   ✓ No uppercase .JPG files to remove\n');
   }
 }
 
