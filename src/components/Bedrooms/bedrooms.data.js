@@ -1,7 +1,8 @@
 // Import all images at module level (import.meta.glob must be called at top level)
 const allImageModules = import.meta.glob('../../assets/images/*/*.{jpg,jpeg,png,JPG,PNG}', {
     eager: true,
-    as: 'url',
+    query: '?url',
+    import: 'default',
 })
 
 // Function to dynamically import all images from a specific folder

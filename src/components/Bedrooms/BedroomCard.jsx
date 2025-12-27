@@ -19,12 +19,13 @@ const BedroomCard = ({ bedroom }) => {
     }, [bedroom])
 
     // Convert bedroom images to Modal format
+    // All images in the same folder share the same title and text
     const modalItems = useMemo(() => {
         if (!bedroom.images || bedroom.images.length === 0) return []
-        return bedroom.images.map((img, idx) => ({
+        return bedroom.images.map((img) => ({
             image: img,
-            title: idx === 0 ? bedroom.title : '',
-            text: idx === 0 ? bedroom.text : '',
+            title: bedroom.title,
+            text: bedroom.text,
         }))
     }, [bedroom])
 

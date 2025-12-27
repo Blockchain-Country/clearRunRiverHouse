@@ -9,3 +9,15 @@
     width: 100%;
     max-width: 100%;
 }
+
+/* Override section-header margin-bottom for Premium Amenities */
+#amenities .section-header {
+    margin-bottom: 30px;
+}
+
+/* Reduce margin on mobile/tablet screens */
+@media (max-width: 768px) {
+    #amenities .section-header {
+        margin-bottom: 20px;
+    }
+}

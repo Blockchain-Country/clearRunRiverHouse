@@ -1,3 +1,15 @@
+/* Override section-header margin-bottom for Guest Information */
+#guest-info .section-header {
+    margin-bottom: 30px;
+}
+
+/* Reduce margin on mobile/tablet screens */
+@media (max-width: 768px) {
+    #guest-info .section-header {
+        margin-bottom: 20px;
+    }
+}
+
 /* Основной аккордеон */
 
 .guest_info_accordion {

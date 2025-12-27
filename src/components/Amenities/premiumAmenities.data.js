@@ -3,7 +3,8 @@ const allImageModules = import.meta.glob(
     '../../assets/images/premiumAmenities/*.{jpg,jpeg,png,JPG,PNG}',
     {
         eager: true,
-        as: 'url',
+        query: '?url',
+        import: 'default',
     }
 )
 
@@ -39,7 +40,7 @@ export const PREMIUM_AMENITIES = [
         imagePrefix: 'living_room',
     },
     {
-        title: 'Spacious Sunroom Dining',
+        title: 'Sunroom Dining',
         text: 'A bright sunroom with a large table for fourteen, surrounded by forest-view windows and direct access to the deck—perfect for unforgettable gatherings.',
         imagePrefix: 'sunroom',
     },

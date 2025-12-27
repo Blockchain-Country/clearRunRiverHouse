@@ -12,6 +12,18 @@
     gap: var(--spacing-2xl);
 }
 
+/* Override section-header margin-bottom for Bedrooms Gallery */
+#bedrooms .section-header {
+    margin-bottom: 30px;
+}
+
+/* Reduce margin on mobile/tablet screens */
+@media (max-width: 768px) {
+    #bedrooms .section-header {
+        margin-bottom: 20px;
+    }
+}
+
 /* Responsive - Tablet */
 @media (max-width: 1024px) {
     .bedroom-grid {
