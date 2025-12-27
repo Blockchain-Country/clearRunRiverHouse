@@ -16,6 +16,7 @@ const Modal = ({
 }) => {
   const modalRef = useRef(null)
   const swiperRef = useRef(null)
+  const dotsRef = useRef(null)
   const scrollYRef = useRef(0)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -88,6 +89,25 @@ const Modal = ({
       return () => clearInterval(interval)
     }
   }, [open, items])
+
+  // Auto-scroll dots container to center active dot
+  useEffect(() => {
+    if (!dotsRef.current || !showDots || items.length <= 1) return
+    
+    const dotsContainer = dotsRef.current
+    const activeDot = dotsContainer.querySelector('.modal-dot.active')
+    if (!activeDot) return
+
+    const containerWidth = dotsContainer.offsetWidth
+    const dotLeft = activeDot.offsetLeft
+    const dotWidth = activeDot.offsetWidth
+    const scrollPosition = dotLeft - (containerWidth / 2) + (dotWidth / 2)
+
+    dotsContainer.scrollTo({
+      left: Math.max(0, scrollPosition),
+      behavior: 'smooth'
+    })
+  }, [currentIndex, showDots, items.length])
 
   if (!open) return null
   if (!items || items.length === 0) return null
@@ -185,7 +205,7 @@ const Modal = ({
 
       {/* Dots Indicator - Always render when showDots is true to maintain fixed height */}
       {showDots && (
-        <div className="modal-dots">
+        <div className="modal-dots" ref={dotsRef}>
           {items.length > 1 ? (
             items.map((_, index) => (
               <button
