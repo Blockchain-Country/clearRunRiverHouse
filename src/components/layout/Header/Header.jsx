@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Button from '../../ui/Buttons/Button'
 import './Header.css'
 
 const Header = () => {
@@ -68,15 +69,16 @@ const Header = () => {
                     <a href="#location" className="nav-link" onClick={closeMenu}>
                         Location
                     </a>
-                    <a
-                        className="button button-outline header-book-button"
-                        href="https://t.vrbo.io/N8kGLzBMoZb"
+                    <Button
+                        variant="ghost"
+                        className="header-book-button"
+                        href=""
                         target="_blank"
                         rel="noreferrer"
                         onClick={closeMenu}
                     >
-                        Book on VRBO
-                    </a>
+                        Check Availability
+                    </Button>
                 </nav>
             </div>
         </header>

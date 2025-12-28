@@ -1,0 +1,150 @@
+/* Base Button Styles */
+.button {
+    border-radius: 12px;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Primary Button Variant (default) - uses .button class */
+.button:not(.button-ghost):not(.button-outline) {
+    background: linear-gradient(135deg, #4a7c2a, #5a8a3a);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(74, 124, 42, 0.3),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.button:not(.button-ghost):not(.button-outline)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.button:not(.button-ghost):not(.button-outline):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 124, 42, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+    background: linear-gradient(135deg, #5a8a3a, #6a9a4a);
+}
+
+.button:not(.button-ghost):not(.button-outline):hover::before {
+    opacity: 1;
+}
+
+.button:not(.button-ghost):not(.button-outline):active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(74, 124, 42, 0.3);
+}
+
+/* Ghost Button Variant */
+.button-ghost {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.button-ghost:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.button-ghost:active {
+    transform: scale(0.98);
+}
+
+/* Outline Button Variant (used for "Book on VRBO") */
+.button-outline {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 0.55rem 1.2rem;
+    font-weight: 500;
+}
+
+.button-outline:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.button-outline:active {
+    transform: scale(0.98);
+}
+
+/* Hero-specific button styles */
+.hero .button-ghost {
+    color: var(--text);
+    border-color: var(--border-medium);
+}
+
+.hero .button-ghost:hover {
+    background: var(--hover-bg);
+    color: var(--text);
+    border-color: var(--primary-accent);
+}
+
+/* Responsive Styles - Mobile */
+@media (max-width: 768px) {
+    .button {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-sm) var(--spacing-lg);
+    }
+
+    .button-outline {
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Responsive Styles - Small Mobile */
+@media (max-width: 428px) {
+    .button {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .button-outline {
+        padding: 0.45rem 0.9rem;
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* Responsive Styles - Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .button {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+}
+
+/* Responsive Styles - Desktop */
+@media (min-width: 1025px) {
+    .button {
+        padding: var(--spacing-md) var(--spacing-xl);
+    }
+}
+
