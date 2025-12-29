@@ -1,0 +1,384 @@
+/* ============================================================
+   BASE
+   ============================================================ */
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+                 'Segoe UI', sans-serif;
+    color: #1a1610;
+    background: #ffffff;
+}
+
+
+/* ============================================================
+   HEADERS & TITLES
+   ============================================================ */
+
+.flex-calendar-month-title {
+    display: block;
+    color: #1a1610;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.page-header {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1a1610;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e6e0d6;
+}
+
+
+/* ============================================================
+   WIDGET CONTAINER
+   ============================================================ */
+
+.ownerrez-widget {
+    background: #ffffff;
+    border: 1px solid #d4c9b8;
+    border-radius: 16px;
+    padding: 1.5rem;
+    overflow: visible; /* REQUIRED for datepicker */
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn-default,
+.btn-primary,
+button[type="submit"],
+input[type="submit"],
+.booknow-button,
+.submit-button {
+    background: linear-gradient(135deg, #4a7c2a, #5a8a3a);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(74,124,42,0.3);
+    width: 100%;
+}
+
+.btn-default:hover,
+.btn-primary:hover,
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #5a8a3a, #6a9a4a);
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   CALENDAR BASE
+   ============================================================ */
+
+.form-control booknow-quote-source{
+
+}
+
+#calendar.flex-calendar {
+    width: 100%;
+}
+
+#calendar table {
+    border-collapse: separate;
+    border-spacing: 8px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+th.day-header {
+    color: #4a3f2f;
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+
+/* ============================================================
+   CALENDAR CELLS
+   ============================================================ */
+
+#calendar td {
+    height: 80px;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.booking-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border: 1px solid #d4c9b8;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.booking-container .day-content {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+    justify-items: center;
+    padding: 0.45rem;
+    height: 100%;
+}
+
+.day-number {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.day-rate {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5a8a3a;
+    white-space: nowrap;
+}
+
+.booking-container.flex-calendar-out-of-range .day-rate,
+.booking-container.day-rate-hidden .day-rate {
+    visibility: hidden;
+}
+
+
+/* ============================================================
+   CALENDAR STATES
+   ============================================================ */
+
+.booking-container:not(.flex-calendar-out-of-range):hover {
+    background: rgba(212,201,184,0.15);
+    border-color: #5a8a3a;
+}
+
+.booking-container.flex-calendar-out-of-range,
+.booking-container.flex-calendar-booking-middle {
+    background: #f8f6f2;
+    color: #b8a896;
+    opacity: 0.6;
+}
+
+.booking-container.flex-calendar-today {
+    border: 2px solid #5a8a3a;
+}
+
+
+/* ============================================================
+   FORM FIELDS
+   ============================================================ */
+
+label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #4a3f2f;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    border: 1px solid #d4c9b8;
+    background: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #5a8a3a;
+    box-shadow: 0 0 0 3px rgba(90,138,58,0.1);
+}
+
+.input-group-addon,
+.input-group-text {
+    background: transparent;
+    border: none;
+    color: #5a8a3a;
+}
+
+
+/* ============================================================
+   DATE INPUT GROUP (Arrival / Departure)
+   ============================================================ */
+
+.input-group.date .form-control,
+.input-group.date .input-group-btn > .btn {
+    height: 32px;
+}
+
+.input-group.date .form-control {
+    padding: 0 16px;
+    font-size: 1.05rem;
+    line-height: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group.date .input-group-btn > .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    line-height: 1;
+    background: #5a8a3a;
+    color: #ffffff;
+    border: 1px solid #5a8a3a;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group.date .input-group-btn > .btn:hover {
+    background: #4a7c2a;
+}
+
+
+/* ============================================================
+   DATEPICKER DROPDOWN
+   ============================================================ */
+
+.datepicker-dropdown {
+    margin-top: 8px;
+    z-index: 1050;
+}
+
+.datepicker {
+    background: #ffffff;
+    border: 1px solid #d4c9b8;
+    border-radius: 16px;
+    padding: 0.75rem;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    font-family: inherit;
+}
+
+.datepicker-switch {
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #1a1610;
+}
+
+.datepicker .prev,
+.datepicker .next {
+    color: #5a8a3a;
+    font-weight: 600;
+}
+
+.datepicker th.dow {
+    color: #4a3f2f;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.datepicker td.day {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #d4c9b8;
+    background: #ffffff;
+    color: #1a1610;
+    font-weight: 500;
+}
+
+.datepicker td.day:hover {
+    background: rgba(212,201,184,0.15);
+    border-color: #5a8a3a;
+}
+
+.datepicker td.today {
+    border: 2px solid #5a8a3a;
+    background: #f8f6f2;
+}
+
+.datepicker td.disabled,
+.datepicker td.disabled:hover {
+    background: #f8f6f2;
+    color: #b8a896;
+    border-color: #e6e0d6;
+    cursor: not-allowed;
+}
+
+.datepicker td.active,
+.datepicker td.active:hover {
+    background: linear-gradient(135deg, #4a7c2a, #5a8a3a);
+    color: #ffffff;
+    border-color: #4a7c2a;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 768px) {
+
+    #calendar td {
+        height: auto;
+    }
+
+    .booking-container {
+        max-height: 64px;
+    }
+
+    .booking-container .day-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px;
+    }
+
+    .day-number {
+        font-size: 0.9rem;
+    }
+
+    .day-rate {
+        font-size: 0.75rem;
+    }
+
+    .ownerrez-widget {
+        padding: 1rem;
+    }
+
+    .page-header {
+        font-size: 1.5rem;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 0.95rem;
+        padding: 0.625rem;
+    }
+
+    .input-group.date .form-control,
+    .input-group.date .input-group-btn > .btn {
+        height: 30px;
+    }
+
+    .datepicker td.day {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+}

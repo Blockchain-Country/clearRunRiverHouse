@@ -1,7 +1,8 @@
 import React from 'react'
+import Button from '../ui/Buttons/Button'
 import './HeroIntroSection.css'
 
-const HeroIntroSection = () => {
+const HeroIntroSection = ({ onBookStay }) => {
     return (
         <div className="hero-inner">
             <div className="hero-text">
@@ -15,20 +16,33 @@ const HeroIntroSection = () => {
                     with forest — perfect for family and friends.
                 </p>
                 <div className="hero-actions">
-                    <a
+                    <Button
+                        variant="ghost"
+                        href="#bedrooms"
+                    >
+                        View rooms
+                    </Button>
+                    <Button
+                        onClick={onBookStay}
+                    >
+                        Book your stay
+                    </Button>
+                    <Button
+                        variant="outline"
                         href="https://t.vrbo.io/N8kGLzBMoZb"
                         target="_blank"
                         rel="noreferrer"
-                        className="button"
                     >
-                        Book your stay
-                    </a>
-                    <a
-                        href="#bedrooms"
-                        className="button button-ghost"
+                        Book on VRBO
+                    </Button>
+                    <Button
+                        variant="outline"
+                        href="https://airbnb.com/h/clearrunriverhouse"
+                        target="_blank"
+                        rel="noreferrer"
                     >
-                        View rooms
-                    </a>
+                        Book on Airbnb
+                    </Button>
                 </div>
                 <dl className="hero-stats">
                     <div>

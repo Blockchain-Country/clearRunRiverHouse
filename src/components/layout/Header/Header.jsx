@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import Button from '../../ui/Buttons/Button'
 import './Header.css'
 
-const Header = () => {
+const Header = ({ onCheckAvailability }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     // Prevent body scroll when menu is open
@@ -68,15 +69,16 @@ const Header = () => {
                     <a href="#location" className="nav-link" onClick={closeMenu}>
                         Location
                     </a>
-                    <a
-                        className="button button-outline header-book-button"
-                        href="https://t.vrbo.io/N8kGLzBMoZb"
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={closeMenu}
+                    <Button
+                        variant="ghost"
+                        className="header-book-button"
+                        onClick={() => {
+                            closeMenu()
+                            onCheckAvailability?.()
+                        }}
                     >
-                        Book on VRBO
-                    </a>
+                        Check Availability
+                    </Button>
                 </nav>
             </div>
         </header>
