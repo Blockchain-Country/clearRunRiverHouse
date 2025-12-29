@@ -82,6 +82,10 @@ button[type="submit"]:hover {
    CALENDAR BASE
    ============================================================ */
 
+.form-control booknow-quote-source{
+
+}
+
 #calendar.flex-calendar {
     width: 100%;
 }
@@ -220,7 +224,7 @@ textarea:focus {
 
 .input-group.date .form-control,
 .input-group.date .input-group-btn > .btn {
-    height: 48px;
+    height: 32px;
 }
 
 .input-group.date .form-control {
@@ -369,7 +373,7 @@ textarea:focus {
 
     .input-group.date .form-control,
     .input-group.date .input-group-btn > .btn {
-        height: 44px;
+        height: 30px;
     }
 
     .datepicker td.day {
