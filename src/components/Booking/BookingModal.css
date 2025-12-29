@@ -1,103 +1,135 @@
-/* Booking Modal - Reuses Modal backdrop styling */
+/* ============================================================================
+   Booking Modal Styles
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   Backdrop
+   --------------------------------------------------------------------------- */
 .booking-modal-backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(44, 36, 22, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     z-index: 9999;
-    padding: 1rem;
+    padding: var(--spacing-lg);
+
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    box-sizing: border-box;
-    margin: 0;
 }
 
+/* ---------------------------------------------------------------------------
+   Modal Container (KEY CHANGE HERE)
+   --------------------------------------------------------------------------- */
 .booking-modal {
     width: min(960px, 100%);
-    max-height: calc(100vh - 2rem);
-    min-height: 500px;
+
+    /* 👇 make modal card-like, not tall */
+    height: min(75vh, 820px);
+    max-height: 75vh;
+    min-height: 560px;
+
     background: var(--bg-elevated);
     border-radius: 1.25rem;
-    padding: 0;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
+
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    position: relative;
-    margin: 0;
-    box-sizing: border-box;
+
+    margin: auto;
 }
 
+/* ---------------------------------------------------------------------------
+   Header
+   --------------------------------------------------------------------------- */
 .booking-modal-header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 1rem 1.25rem;
+
+    padding: var(--spacing-lg) var(--spacing-xl);
     flex-shrink: 0;
-    width: 100%;
-    height: 60px;
-    border-bottom: 1px solid var(--border-subtle, rgba(0, 0, 0, 0.1));
-    box-sizing: border-box;
+
+    border-bottom: 1px solid var(--border-subtle);
     position: relative;
+
+    /* subtle separation for scroll UX */
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
 .booking-modal-title {
-    margin: 0;
-    font-size: var(--font-size-xl, 1.25rem);
-    font-weight: 600;
-    color: var(--text, #2c2416);
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    margin: 0;
+
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--text);
     text-align: center;
 }
 
+/* ---------------------------------------------------------------------------
+   Content Area (scroll lives here)
+   --------------------------------------------------------------------------- */
 .booking-modal-content {
     flex: 1;
-    width: 100%;
+
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 0;
-    box-sizing: border-box;
+
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    position: relative;
 }
 
+/* subtle bottom fade to hint scroll */
+.booking-modal-content::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    display: block;
+    height: 24px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 255, 255, 0.9)
+    );
+    pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Widgets Layout
+   --------------------------------------------------------------------------- */
 .booking-modal-widgets {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 0;
 }
 
-/* Calendar Section */
-.booking-calendar-section {
-    width: 100%;
-    flex-shrink: 0;
-    padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-xl);
-    background: var(--bg-elevated);
-}
-
+/* ---------------------------------------------------------------------------
+   Section Headers
+   --------------------------------------------------------------------------- */
 .booking-section-header {
-    margin-bottom: var(--spacing-xl);
     text-align: center;
+    margin-bottom: var(--spacing-lg);
 }
 
 .booking-section-title {
     font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--text);
-    margin-bottom: var(--spacing-sm);
+    margin: 0 0 var(--spacing-xs);
     line-height: var(--line-height-tight);
 }
 
@@ -106,6 +138,13 @@
     color: var(--text-muted);
     margin: 0;
     line-height: var(--line-height-normal);
+}
+
+/* ---------------------------------------------------------------------------
+   Calendar Section
+   --------------------------------------------------------------------------- */
+.booking-calendar-section {
+    padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-lg);
 }
 
 .booking-calendar-wrapper {
@@ -117,21 +156,22 @@
     border: 1px solid var(--border-subtle);
 }
 
+/* iframe untouched (as requested) */
 .booking-calendar-iframe {
     width: 100%;
-    height: 1200px;
-    min-height: 1200px;
+    height: 650px;
+    overflow: hidden;
+    transform: translateY(-220px);
     border: none;
     display: block;
     background: var(--bg-elevated);
 }
 
-/* Booking Form Section */
+/* ---------------------------------------------------------------------------
+   Booking Form Section
+   --------------------------------------------------------------------------- */
 .booking-form-section {
-    width: 100%;
-    flex-shrink: 0;
-    padding: var(--spacing-xl) var(--spacing-2xl) var(--spacing-2xl);
-    background: var(--bg-elevated);
+    padding: 0 var(--spacing-2xl) var(--spacing-2xl);
 }
 
 .booking-section-divider {
@@ -145,7 +185,7 @@
         transparent
     );
     margin: 0 auto var(--spacing-2xl);
-    max-width: 200px;
+    max-width: 240px;
 }
 
 .booking-form-wrapper {
@@ -157,80 +197,93 @@
     border: 1px solid var(--border-subtle);
 }
 
+/* iframe untouched (as requested) */
 .booking-form-iframe {
     width: 100%;
-    height: 1200px;
-    min-height: 1200px;
+    height: 700px;
+    overflow: hidden;
+    transform: translateY(-175px);
     border: none;
     display: block;
     background: var(--bg-elevated);
 }
 
-/* Responsive Styles */
+/* ============================================================================
+   Responsive Styles
+   ============================================================================ */
+
+/* Tablet */
 @media (max-width: 768px) {
     .booking-modal-backdrop {
-        padding: 0.75rem;
+        padding: var(--spacing-md);
     }
 
     .booking-modal {
-        max-height: calc(100vh - 1.5rem);
+        height: calc(100vh - var(--spacing-xl));
+        max-height: calc(100vh - var(--spacing-xl));
         min-height: 450px;
-        width: 100%;
         border-radius: 1rem;
     }
 
     .booking-modal-header {
-        height: 55px;
-        padding: 0.75rem 1rem;
+        padding: var(--spacing-md) var(--spacing-lg);
     }
 
-    .booking-calendar-section,
+    .booking-calendar-section {
+        padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-md);
+    }
+
     .booking-form-section {
-        padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
-    }
-
-    .booking-section-header {
-        margin-bottom: var(--spacing-lg);
+        padding: 0 var(--spacing-lg) var(--spacing-xl);
     }
 
     .booking-section-title {
-        font-size: var(--font-size-lg);
+        font-size: var(--font-size-md);
     }
 
-    .booking-calendar-iframe,
+    .booking-section-divider {
+        max-width: 180px;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .booking-calendar-iframe {
+        height: 650px;
+        transform: translateY(-230px);
+    }
+
     .booking-form-iframe {
-        height: 900px;
-        min-height: 900px;
+        height: 700px;
+        transform: translateY(-180px);
     }
 }
 
+/* Mobile */
 @media (max-width: 428px) {
     .booking-modal-backdrop {
-        padding: 0.5rem;
+        padding: var(--spacing-sm);
     }
 
     .booking-modal {
-        max-height: calc(100vh - 1rem);
+        height: calc(100vh - var(--spacing-md));
+        max-height: calc(100vh - var(--spacing-md));
         min-height: 360px;
         border-radius: 0.875rem;
     }
 
     .booking-modal-header {
-        height: 50px;
-        padding: 0.625rem 0.875rem;
+        padding: var(--spacing-sm) var(--spacing-md);
     }
 
     .booking-modal-title {
-        font-size: var(--font-size-lg, 1.125rem);
+        font-size: var(--font-size-md);
     }
 
-    .booking-calendar-section,
+    .booking-calendar-section {
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+    }
+
     .booking-form-section {
-        padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-    }
-
-    .booking-section-header {
-        margin-bottom: var(--spacing-md);
+        padding: 0 var(--spacing-md) var(--spacing-lg);
     }
 
     .booking-section-title {
@@ -242,13 +295,18 @@
     }
 
     .booking-section-divider {
-        margin-bottom: var(--spacing-xl);
+        max-width: 140px;
+        margin-bottom: var(--spacing-lg);
     }
 
-    .booking-calendar-iframe,
+    .booking-calendar-iframe {
+        height: 750px;
+        transform: translateY(-255px);
+    }
+
     .booking-form-iframe {
-        height: 700px;
-        min-height: 700px;
+        height: 850px;
+        transform: translateY(-255px);
+
     }
 }
-

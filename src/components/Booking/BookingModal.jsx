@@ -147,7 +147,7 @@ const BookingModal = ({ open, onClose }) => {
       tabIndex={-1}
     >
       <header className="booking-modal-header">
-        <h3 id="booking-modal-title" className="booking-modal-title">Book Your Stay</h3>
+        <h3 id="booking-modal-title" className="booking-modal-title">Check Availability & Book Your Stay</h3>
         <IconButton
           icon="close"
           onClick={onClose}
@@ -163,7 +163,7 @@ const BookingModal = ({ open, onClose }) => {
             data-testid="booking-calendar-section"
           >
             <div className="booking-section-header">
-              <h4 className="booking-section-title">Check Availability</h4>
+              <h4 className="booking-section-title"></h4>
               <p className="booking-section-subtitle">Select your dates to see pricing</p>
             </div>
             <div className="booking-calendar-wrapper">
@@ -187,7 +187,7 @@ const BookingModal = ({ open, onClose }) => {
             >
               <div className="booking-section-divider"></div>
               <div className="booking-section-header">
-                <h4 className="booking-section-title">Book Your Stay</h4>
+                <h4 className="booking-section-title"></h4>
                 <p className="booking-section-subtitle">Complete your reservation</p>
               </div>
               <div className="booking-form-wrapper">
