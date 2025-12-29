@@ -1,0 +1,305 @@
+/* ============================================================
+   OwnerRez Multiple Month Calendar Widget - Custom CSS
+   Copy and paste this entire block into OwnerRez:
+   Settings > Widgets > [Your Calendar Widget] > CSS section
+   ============================================================ */
+
+/* General Widget Container */
+.ownerrez-widget {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+    color: #1a1610;
+    background: #ffffff;
+}
+
+/* Primary Buttons - Match site's button style */
+.ownerrez-widget .btn-default,
+.ownerrez-widget .btn-primary,
+.ownerrez-widget button[type="submit"],
+.ownerrez-widget input[type="submit"],
+.ownerrez-widget .booknow-button,
+.ownerrez-widget .ownerrez-button,
+.ownerrez-widget button.btn-default,
+.ownerrez-widget button.btn-primary {
+    background: linear-gradient(135deg, #4a7c2a, #5a8a3a);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(74, 124, 42, 0.3), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.ownerrez-widget .btn-default:hover,
+.ownerrez-widget .btn-primary:hover,
+.ownerrez-widget button[type="submit"]:hover,
+.ownerrez-widget input[type="submit"]:hover,
+.ownerrez-widget .booknow-button:hover,
+.ownerrez-widget .ownerrez-button:hover,
+.ownerrez-widget button.btn-default:hover,
+.ownerrez-widget button.btn-primary:hover {
+    background: linear-gradient(135deg, #5a8a3a, #6a9a4a);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 124, 42, 0.4), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.ownerrez-widget .btn-default:active,
+.ownerrez-widget .btn-primary:active,
+.ownerrez-widget button[type="submit"]:active,
+.ownerrez-widget input[type="submit"]:active,
+.ownerrez-widget .booknow-button:active,
+.ownerrez-widget .ownerrez-button:active,
+.ownerrez-widget button.btn-default:active,
+.ownerrez-widget button.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(74, 124, 42, 0.3);
+}
+
+/* Secondary Buttons - Clear, Reset, etc. */
+.ownerrez-widget .btn-secondary,
+.ownerrez-widget .btn-clear,
+.ownerrez-widget button[type="reset"],
+.ownerrez-widget button.btn-secondary,
+.ownerrez-widget button.btn-clear {
+    background: rgba(255, 255, 255, 0.7);
+    color: #1a1610;
+    border: 0.5px solid #d4c9b8;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.ownerrez-widget .btn-secondary:hover,
+.ownerrez-widget .btn-clear:hover,
+.ownerrez-widget button[type="reset"]:hover,
+.ownerrez-widget button.btn-secondary:hover,
+.ownerrez-widget button.btn-clear:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #b8a896;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Calendar Navigation Buttons (Previous/Next Month) */
+.ownerrez-widget .calendar-nav-button,
+.ownerrez-widget .calendar-prev,
+.ownerrez-widget .calendar-next,
+.ownerrez-widget .month-nav button,
+.ownerrez-widget button.calendar-nav-button,
+.ownerrez-widget button.calendar-prev,
+.ownerrez-widget button.calendar-next {
+    background: rgba(255, 255, 255, 0.6);
+    color: #1a1610;
+    border: 0.5px solid #d4c9b8;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.ownerrez-widget .calendar-nav-button:hover,
+.ownerrez-widget .calendar-prev:hover,
+.ownerrez-widget .calendar-next:hover,
+.ownerrez-widget .month-nav button:hover,
+.ownerrez-widget button.calendar-nav-button:hover,
+.ownerrez-widget button.calendar-prev:hover,
+.ownerrez-widget button.calendar-next:hover {
+    background: rgba(212, 201, 184, 0.15);
+    border-color: #b8a896;
+}
+
+/* Calendar Table */
+.ownerrez-widget .calendar-table,
+.ownerrez-widget table.calendar {
+    border-collapse: separate;
+    border-spacing: 4px;
+    width: 100%;
+}
+
+/* Calendar Header (Day names: Mon, Tue, Wed, etc.) */
+.ownerrez-widget .calendar-header,
+.ownerrez-widget .calendar-weekdays,
+.ownerrez-widget th.calendar-day-name {
+    color: #4a3f2f;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 0.5rem;
+}
+
+/* Calendar Cells - Available Dates */
+.ownerrez-widget .calendar-day.available,
+.ownerrez-widget .calendar-day:not(.unavailable):not(.booked):not(.blocked) {
+    background: #ffffff;
+    color: #1a1610;
+    border: 1px solid #d4c9b8;
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ownerrez-widget .calendar-day.available:hover,
+.ownerrez-widget .calendar-day:not(.unavailable):not(.booked):not(.blocked):hover {
+    background: rgba(212, 201, 184, 0.15);
+    border-color: #5a8a3a;
+    transform: translateY(-1px);
+}
+
+/* Calendar Cells - Selected Dates */
+.ownerrez-widget .calendar-day.selected,
+.ownerrez-widget .calendar-day.start-date,
+.ownerrez-widget .calendar-day.end-date {
+    background: linear-gradient(135deg, #4a7c2a, #5a8a3a);
+    color: #ffffff;
+    border-color: #5a8a3a;
+    font-weight: 600;
+}
+
+/* Calendar Cells - Unavailable/Booked Dates */
+.ownerrez-widget .calendar-day.unavailable,
+.ownerrez-widget .calendar-day.booked,
+.ownerrez-widget .calendar-day.blocked,
+.ownerrez-widget .calendar-day.past {
+    background: #f8f6f2;
+    color: #b8a896;
+    border: 1px solid #d4c9b8;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Calendar Cells - Today */
+.ownerrez-widget .calendar-day.today {
+    border: 2px solid #5a8a3a;
+    font-weight: 600;
+}
+
+/* Calendar Month/Year Header */
+.ownerrez-widget .calendar-month-header,
+.ownerrez-widget .month-year-header {
+    color: #1a1610;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Price Display */
+.ownerrez-widget .price,
+.ownerrez-widget .rate,
+.ownerrez-widget .amount {
+    color: #5a8a3a;
+    font-weight: 600;
+}
+
+/* Form Inputs (if any in calendar widget) */
+.ownerrez-widget input[type="text"],
+.ownerrez-widget input[type="email"],
+.ownerrez-widget input[type="number"],
+.ownerrez-widget select,
+.ownerrez-widget textarea {
+    background: #ffffff;
+    color: #1a1610;
+    border: 1px solid #d4c9b8;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ownerrez-widget input[type="text"]:focus,
+.ownerrez-widget input[type="email"]:focus,
+.ownerrez-widget input[type="number"]:focus,
+.ownerrez-widget select:focus,
+.ownerrez-widget textarea:focus {
+    outline: none;
+    border-color: #5a8a3a;
+    box-shadow: 0 0 0 3px rgba(90, 138, 58, 0.1);
+}
+
+/* Labels */
+.ownerrez-widget label {
+    color: #4a3f2f;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Text and Paragraphs */
+.ownerrez-widget p,
+.ownerrez-widget .text {
+    color: #4a3f2f;
+    line-height: 1.5;
+}
+
+/* Headings */
+.ownerrez-widget h1,
+.ownerrez-widget h2,
+.ownerrez-widget h3,
+.ownerrez-widget h4,
+.ownerrez-widget h5,
+.ownerrez-widget h6 {
+    color: #1a1610;
+    font-weight: 600;
+}
+
+/* Links */
+.ownerrez-widget a {
+    color: #5a8a3a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ownerrez-widget a:hover {
+    color: #4a7c2a;
+    text-decoration: underline;
+}
+
+/* Loading Spinner (if any) */
+.ownerrez-widget .spinner,
+.ownerrez-widget .loading {
+    border-color: #d4c9b8;
+    border-top-color: #5a8a3a;
+}
+
+/* Error Messages */
+.ownerrez-widget .error,
+.ownerrez-widget .alert-danger {
+    background: rgba(255, 0, 0, 0.1);
+    color: #d32f2f;
+    border: 1px solid rgba(211, 47, 47, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+/* Success Messages */
+.ownerrez-widget .success,
+.ownerrez-widget .alert-success {
+    background: rgba(90, 138, 58, 0.1);
+    color: #5a8a3a;
+    border: 1px solid rgba(90, 138, 58, 0.3);
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .ownerrez-widget .calendar-day.available,
+    .ownerrez-widget .calendar-day:not(.unavailable):not(.booked):not(.blocked) {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .ownerrez-widget .btn-default,
+    .ownerrez-widget .btn-primary,
+    .ownerrez-widget button[type="submit"],
+    .ownerrez-widget .booknow-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}

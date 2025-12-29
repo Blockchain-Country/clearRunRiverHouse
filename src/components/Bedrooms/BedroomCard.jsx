@@ -53,7 +53,8 @@ const BedroomCard = ({ bedroom }) => {
                             <Swiper 
                                 items={swiperItems}
                                 autoPlayInterval={4000}
-                                showDots={swiperItems.length > 1}
+                                // showDots={false}
+                                // showDots={swiperItems.length > 1}
                             />
                         </div>
                     ) : null}
