@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Button from '../../ui/Buttons/Button'
 import './Header.css'
 
-const Header = () => {
+const Header = ({ onCheckAvailability }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     // Prevent body scroll when menu is open
@@ -72,10 +72,10 @@ const Header = () => {
                     <Button
                         variant="ghost"
                         className="header-book-button"
-                        href=""
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={closeMenu}
+                        onClick={() => {
+                            closeMenu()
+                            onCheckAvailability?.()
+                        }}
                     >
                         Check Availability
                     </Button>

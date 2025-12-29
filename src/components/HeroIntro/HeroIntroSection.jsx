@@ -2,7 +2,7 @@ import React from 'react'
 import Button from '../ui/Buttons/Button'
 import './HeroIntroSection.css'
 
-const HeroIntroSection = () => {
+const HeroIntroSection = ({ onBookStay }) => {
     return (
         <div className="hero-inner">
             <div className="hero-text">
@@ -23,8 +23,7 @@ const HeroIntroSection = () => {
                         View rooms
                     </Button>
                     <Button
-                        href=""
-                        rel="noreferrer"
+                        onClick={onBookStay}
                     >
                         Book your stay
                     </Button>

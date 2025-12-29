@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/layout/Header/Header'
 import Footer from '../components/layout/Footer/Footer'
 import HeroMediaSection from '../components/HeroMedia/HeroMediaSection'
@@ -8,17 +8,23 @@ import PremiumAmenitiesSection from '../components/Amenities/PremiumAmenitiesSec
 import BedroomSection from '../components/Bedrooms/BedroomSection'
 import GuestInfoSection from '../components/GuestInfo/GuestInfoSection'
 import LocationSection from '../components/Location/LocationSection'
+import BookingModal from '../components/Booking/BookingModal'
 import './HomePage.css'
 
 const HomePage = () => {
+    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
+
+    const openBookingModal = () => setIsBookingModalOpen(true)
+    const closeBookingModal = () => setIsBookingModalOpen(false)
+
     return (
         <div className="app">
-            <Header />
+            <Header onCheckAvailability={openBookingModal} />
 
             <main>
                 {/* Hero */}
                 <HeroMediaSection />
-                <HeroIntroSection />
+                <HeroIntroSection onBookStay={openBookingModal} />
 
                 {/* About */}
                 <AboutSection />
@@ -37,6 +43,11 @@ const HomePage = () => {
             </main>
 
             <Footer />
+
+            <BookingModal
+                open={isBookingModalOpen}
+                onClose={closeBookingModal}
+            />
         </div>
     )
 }
