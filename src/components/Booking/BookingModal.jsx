@@ -5,7 +5,7 @@ import './BookingModal.css'
 
 // Feature flag: Enable booking/inquiry widget below calendar
 // Set VITE_ENABLE_BOOKING_WIDGET=true in .env file to enable
-const ENABLE_BOOKING_WIDGET = true
+const ENABLE_BOOKING_WIDGET = false
 
 // ============================================================================
 // OWNERREZ WIDGET CUSTOMIZATION
